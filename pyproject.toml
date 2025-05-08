@@ -1,3 +1,31 @@
+[tool.poetry]
+name = "pyowl"
+version = "1.0.0"
+description = ""
+license = "CC-BY-SA-4.0"
+readme = "README.md"
+repository = "https://github.com/giuseppefilippone/pyowl"
+authors = ["Giuseppe Filippone <filipponegiuseppe94@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.11, <4.0"
+owlready2 = "^0.47"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^4.0.1"
+pytest-cov = "^3.0.0"
+
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_variable = [
+    "pyowl/__init__.py:__version__",
+    "pyproject.toml:version"
+]
+branch = "main"
+upload_to_pypi = true
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
