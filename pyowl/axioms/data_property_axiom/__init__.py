@@ -1,0 +1,6 @@
+from .data_property_domain import OWLDataPropertyDomain
+from .data_property_range import OWLDataPropertyRange
+from .disjoint_data_properties import OWLDisjointDataProperties
+from .equivalent_data_properties import OWLEquivalentDataProperties
+from .functional_data_property import OWLFunctionalDataProperty
+from .sub_data_property_of import OWLSubDataPropertyOf

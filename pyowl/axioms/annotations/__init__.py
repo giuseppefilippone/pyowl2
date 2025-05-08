@@ -1,0 +1,4 @@
+from .annotation_assertion import OWLAnnotationAssertion
+from .annotation_property_domain import OWLAnnotationPropertyDomain
+from .annotation_property_range import OWLAnnotationPropertyRange
+from .sub_annotation_property_of import OWLSubAnnotationPropertyOf

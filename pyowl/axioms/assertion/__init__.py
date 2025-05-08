@@ -1,0 +1,7 @@
+from .class_assertion import OWLClassAssertion
+from .data_property_assertion import OWLDataPropertyAssertion
+from .different_individuals import OWLDifferentIndividuals
+from .negative_data_property_assertion import OWLNegativeDataPropertyAssertion
+from .negative_object_property_assertion import OWLNegativeObjectPropertyAssertion
+from .object_property_assertion import OWLObjectPropertyAssertion
+from .same_individual import OWLSameIndividual
