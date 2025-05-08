@@ -16,8 +16,9 @@ Features:
 ⸻
 
 # Installation
-
+```python
 pip install pyowl
+```
 
 ⸻
 
@@ -32,24 +33,24 @@ Examples of supported OWL 2 Constructs
 ⸻
 
 # Basic Usage
-
+```python
 from rdfxml import Namespace, URIRef, XSD
 from pyowl import OWLDeclaration, OWLClass, OWLObjectProperty, OWLDatatype, IRI, OWLObjectPropertyDomain, OWLObjectPropertyRange, OWLOntology, OWLEquivalentClasses
 
-## Define the namespace
+# Define the namespace
 reference = URIRef("https://example.org#")
 namespace = Namespace(reference)
 
-## Define the ontology
+# Define the ontology
 ontology = OWLOntology(reference)
 
-## Define a class
+# Define a class
 person = OWLClass(IRI(namespace, "Person"))
 
-## Define an object property
+# Define an object property
 has_spouse = OWLObjectProperty(IRI(namespace, "hasSpouse")
 
-## Define a datatype
+# Define a datatype
 birthdate = OWLDatatype(IRI(namespace, "birthDate"))
 
 ## Save axioms in the ontology
@@ -61,9 +62,10 @@ ontology.add_axioms([
   OWLEquivalentClasses(birtdate, OWLDatatype(XSD.date)),
 ])
 ontology.save(OUTPUT_PATH)
+```
 
 ## Access to the ontology elements
-
+```python
 from rdfxml import Namespace, URIRef
 from pyowl import OWLOntology, AxiomsType
 
@@ -72,39 +74,40 @@ namespace = Namespace(reference)
 ontology = OWLOntology(reference, PATH_TO_ONTOLOGY)
 
 print(ontology.get_axioms(AxiomsType.CLASSES)) # print the list of all classes in the ontology
+```
 
 ⸻
 
 # Advanced usage
-
-
+```python
 from rdfxml import Namespace, URIRef, XSD
 from pyowl import OWLFullClass, OWLFullObjectProperty, OWLFullDataRange, IRI, OWLOntology
 
-## Define the namespace
+# Define the namespace
 reference = URIRef("https://example.org#")
 namespace = Namespace(reference)
 
-## Define the ontology
+# Define the ontology
 ontology = OWLOntology(reference)
 
-## Define a class
+# Define a class
 person = OWLFullClass(IRI(namespace, "Person"))
 
-## Define an object property
+# Define an object property
 has_spouse = OWLFullObjectProperty(IRI(namespace, "hasSpouse", range=person.class_, domain=person.class_)
 
-## Define a datatype
+# Define a datatype
 birthdate = OWLFullDataRange(IRI(namespace, "birthDate"))
 birthdate.is_equivalent_to([OWLDatatype(XSD.date)])
 
-## Save axioms in the ontology
+# Save axioms in the ontology
 ontology.add_axioms([
   person,
   has_spouse,
   birtdate,
 ])
 ontology.save(OUTPUT_PATH)
+```
 
 ⸻
 
