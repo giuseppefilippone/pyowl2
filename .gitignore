@@ -2,3 +2,61 @@
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode and other IDEs
+.vscode/
+.idea/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# pytest
+.cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# tox
+.tox/
+
+# pipenv
+Pipfile.lock
+
+# local dev settings
+*.env
+.env.*
+
+# logs
+*.log
+
+# wheel files
+*.whl
