@@ -94,7 +94,11 @@ ontology = OWLOntology(reference)
 person = OWLFullClass(IRI(namespace, "Person"))
 
 # Define an object property
-has_spouse = OWLFullObjectProperty(IRI(namespace, "hasSpouse", range=person.class_, domain=person.class_)
+has_spouse = OWLFullObjectProperty(
+    IRI(namespace, "hasSpouse"),
+    range=person.class_,
+    domain=person.class_
+)
 
 # Define a datatype
 birthdate = OWLFullDataRange(IRI(namespace, "birthDate"))
