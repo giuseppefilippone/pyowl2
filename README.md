@@ -35,7 +35,17 @@ Examples of supported OWL 2 Constructs
 # Basic Usage
 ```python
 from rdfxml import Namespace, URIRef, XSD
-from pyowl import OWLDeclaration, OWLClass, OWLObjectProperty, OWLDatatype, IRI, OWLObjectPropertyDomain, OWLObjectPropertyRange, OWLOntology, OWLEquivalentClasses
+from pyowl import (
+    IRI,
+    OWLOntology,
+    OWLDeclaration,
+    OWLClass,
+    OWLObjectProperty,
+    OWLDatatype,
+    OWLObjectPropertyDomain,
+    OWLObjectPropertyRange,
+    OWLEquivalentClasses
+)
 
 # Define the namespace
 reference = URIRef("https://example.org#")
@@ -73,7 +83,8 @@ reference = URIRef("https://example.org#")
 namespace = Namespace(reference)
 ontology = OWLOntology(reference, PATH_TO_ONTOLOGY)
 
-print(ontology.get_axioms(AxiomsType.CLASSES)) # print the list of all classes in the ontology
+# print the list of all classes in the ontology
+print(ontology.get_axioms(AxiomsType.CLASSES))
 ```
 
 ⸻
@@ -81,7 +92,13 @@ print(ontology.get_axioms(AxiomsType.CLASSES)) # print the list of all classes i
 # Advanced usage
 ```python
 from rdfxml import Namespace, URIRef, XSD
-from pyowl import OWLFullClass, OWLFullObjectProperty, OWLFullDataRange, IRI, OWLOntology
+from pyowl import (
+    IRI,
+    OWLOntology,
+    OWLFullClass,
+    OWLFullObjectProperty,
+    OWLFullDataRange
+)
 
 # Define the namespace
 reference = URIRef("https://example.org#")
