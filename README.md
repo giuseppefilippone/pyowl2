@@ -8,10 +8,10 @@ PyOWL
 A lightweight Python implementation of OWL 2 constructs, designed for mapping and interacting with OWL 2 ontology elements such as Class, ObjectProperty, Datatype, AnnotationProperty, and more.
 
 Features:
-	•	Object-oriented representation of OWL 2 elements
-	•	Getter access for ontology elements
-	•	Clean, extensible Python API
-	•	Ideal for RDF/OWL-based modeling and semantic reasoning tools
+- Object-oriented representation of OWL 2 elements
+- Getter access for ontology elements
+- Clean, extensible Python API
+- Ideal for RDF/OWL-based modeling and semantic reasoning tools
 
 ⸻
 
