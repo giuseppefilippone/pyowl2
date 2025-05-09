@@ -17,7 +17,7 @@ Features:
 
 # Installation
 ```python
-pip install pyowl
+pip install pyowl2
 ```
 
 ⸻
