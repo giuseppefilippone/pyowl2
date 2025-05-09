@@ -3,7 +3,7 @@ A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-sy
 
 ⸻
 
-PyOWL
+PyOWL2
 
 A lightweight Python implementation of OWL 2 constructs, designed for mapping and interacting with OWL 2 ontology elements such as Class, ObjectProperty, Datatype, AnnotationProperty, and more.
 
