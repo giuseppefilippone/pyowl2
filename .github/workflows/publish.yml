@@ -63,6 +63,14 @@ jobs:
       url: https://pypi.org/project/pyowl/${{ github.event.release.name }}
 
     steps:
+      # release-build job
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyowl-artifact-${{ matrix.python-version }}-${{ matrix.os }}-${{ github.run_id }}-${{ github.job }}
+          path: dist/
+      
+      # pypi-publish job
       - name: Retrieve release distributions
         uses: actions/download-artifact@v4
         with:
