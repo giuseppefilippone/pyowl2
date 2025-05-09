@@ -1,5 +1,3 @@
-__version__: str = "1.0.0"
-
 from .abstracts import *
 from .base import *
 from .axioms import *

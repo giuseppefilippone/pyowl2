@@ -10,6 +10,7 @@ authors = ["Giuseppe Filippone <filipponegiuseppe94@gmail.com>"]
 [tool.poetry.dependencies]
 python = ">=3.11, <4.0"
 owlready2 = "^0.47"
+rdflib = "^7.1.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
@@ -22,7 +23,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.semantic_release]
 version_variable = [
-    "pyowl/__init__.py:__version__",
     "pyproject.toml:version"
 ]
 branch = "main"
