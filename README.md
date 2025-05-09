@@ -33,9 +33,10 @@ Examples of supported OWL 2 Constructs
 ⸻
 
 # Basic Usage
+
 ```python
 from rdfxml import Namespace, URIRef, XSD
-from pyowl import (
+from pyowl2 import (
     IRI,
     OWLOntology,
     OWLDeclaration,
@@ -65,19 +66,20 @@ birthdate = OWLDatatype(IRI(namespace, "birthDate"))
 
 ## Save axioms in the ontology
 ontology.add_axioms([
-  OWLDeclaration(person),
-  OWLDeclaration(has_spouse),
-  OWLObjectPropertyDomain(has_spouse, person),
-  OWLObjectPropertyRange(has_spouse, person),
-  OWLEquivalentClasses(birtdate, OWLDatatype(XSD.date)),
+    OWLDeclaration(person),
+    OWLDeclaration(has_spouse),
+    OWLObjectPropertyDomain(has_spouse, person),
+    OWLObjectPropertyRange(has_spouse, person),
+    OWLEquivalentClasses(birtdate, OWLDatatype(XSD.date)),
 ])
 ontology.save(OUTPUT_PATH)
 ```
 
 ## Access to the ontology elements
+
 ```python
 from rdfxml import Namespace, URIRef
-from pyowl import OWLOntology, AxiomsType
+from pyowl2 import OWLOntology, AxiomsType
 
 reference = URIRef("https://example.org#")
 namespace = Namespace(reference)
@@ -90,9 +92,10 @@ print(ontology.get_axioms(AxiomsType.CLASSES))
 ⸻
 
 # Advanced usage
+
 ```python
 from rdfxml import Namespace, URIRef, XSD
-from pyowl import (
+from pyowl2 import (
     IRI,
     OWLOntology,
     OWLFullClass,
@@ -123,9 +126,9 @@ birthdate.is_equivalent_to([OWLDatatype(XSD.date)])
 
 # Save axioms in the ontology
 ontology.add_axioms([
-  person,
-  has_spouse,
-  birtdate,
+    person,
+    has_spouse,
+    birtdate,
 ])
 ontology.save(OUTPUT_PATH)
 ```

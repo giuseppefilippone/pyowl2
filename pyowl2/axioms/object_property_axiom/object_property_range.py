@@ -1,0 +1,61 @@
+import typing
+
+from pyowl2.abstracts.class_expression import OWLClassExpression
+from pyowl2.abstracts.object_property_axiom import OWLObjectPropertyAxiom
+from pyowl2.abstracts.object_property_expression import OWLObjectPropertyExpression
+from pyowl2.abstracts.property_range import OWLPropertyRange
+from pyowl2.base.annotation import OWLAnnotation
+
+
+class OWLObjectPropertyRange(OWLPropertyRange, OWLObjectPropertyAxiom):
+    """An axiom specifying the class of individuals that can be the values of a particular object property."""
+
+    def __init__(
+        self,
+        property: OWLObjectPropertyExpression,
+        expression: OWLClassExpression,
+        annotations: typing.Optional[list[OWLAnnotation]] = None,
+    ) -> None:
+        super().__init__(annotations)
+        # super().__init__()
+        # self._axiom_annotations: typing.Optional[list[OWLAnnotation]] = (
+        #     sorted(annotations) if annotations else annotations
+        # )
+        self._object_property_expression: OWLObjectPropertyExpression = property
+        self._class_expression: OWLClassExpression = expression
+
+    # @property
+    # def axiom_annotations(self) -> typing.Optional[list[OWLAnnotation]]:
+    #     """Getter for axiom_annotations."""
+    #     return self._axiom_annotations
+
+    # @axiom_annotations.setter
+    # def axiom_annotations(self, value: typing.Optional[list[OWLAnnotation]]) -> None:
+    #     """Setter for axiom_annotations."""
+    #     self._axiom_annotations = sorted(value) if value else value
+
+    @property
+    def object_property_expression(self) -> OWLObjectPropertyExpression:
+        """Getter for object_property_expression."""
+        return self._object_property_expression
+
+    @object_property_expression.setter
+    def object_property_expression(self, value: OWLObjectPropertyExpression) -> None:
+        """Setter for object_property_expression."""
+        self._object_property_expression = value
+
+    @property
+    def class_expression(self) -> OWLClassExpression:
+        """Getter for class_expression."""
+        return self._class_expression
+
+    @class_expression.setter
+    def class_expression(self, value: OWLClassExpression) -> None:
+        """Setter for class_expression."""
+        self._class_expression = value
+
+    def __str__(self) -> str:
+        if self.axiom_annotations:
+            return f"ObjectPropertyRange({self.axiom_annotations} {self.object_property_expression} {self.class_expression})"
+        else:
+            return f"ObjectPropertyRange([] {self.object_property_expression} {self.class_expression})"
