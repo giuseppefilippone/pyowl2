@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyowl"
+name = "pyowl2"
 version = "1.0.0"
 description = ""
 license = "CC-BY-SA-4.0"
