@@ -40,7 +40,7 @@ jobs:
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
-          name: release-dists
+          name: pyowl-artifact-${{ matrix.python-version }}-${{ matrix.os }}-${{ github.run_id }}-${{ github.job }}
           path: dist/
 
   pypi-publish:
@@ -62,15 +62,7 @@ jobs:
       # ALTERNATIVE: exactly, uncomment the following line instead:
       url: https://pypi.org/project/pyowl/${{ github.event.release.name }}
 
-    steps:
-      # release-build job
-      - name: Upload distributions
-        uses: actions/upload-artifact@v4
-        with:
-          name: pyowl-artifact-${{ matrix.python-version }}-${{ matrix.os }}-${{ github.run_id }}-${{ github.job }}
-          path: dist/
-      
-      # pypi-publish job
+    steps:      
       - name: Retrieve release distributions
         uses: actions/download-artifact@v4
         with:
