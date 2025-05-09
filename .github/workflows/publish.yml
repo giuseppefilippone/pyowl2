@@ -45,6 +45,12 @@ jobs:
 
   pypi-publish:
     runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+        
     needs:
       - release-build
     permissions:
