@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pyowl2"
 version = "1.0.0"
-description = ""
+description = "A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/"
 license = "CC-BY-SA-4.0"
 readme = "README.md"
 repository = "https://github.com/giuseppefilippone/pyowl2"
