@@ -9,7 +9,6 @@ authors = ["Giuseppe Filippone <filipponegiuseppe94@gmail.com>"]
 
 [tool.poetry.urls]
 Documentation = "https://pyowl2.readthedocs.io/en/latest/"
-Source = "https://github.com/giuseppefilippone/pyowl2"
 
 [tool.poetry.dependencies]
 python = ">=3.11, <4.0"
