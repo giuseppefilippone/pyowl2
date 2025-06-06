@@ -6,14 +6,14 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'PyOWL2'
-copyright = '2025, Giuseppe Filippone'
+project = "PyOWL2"
+copyright = "2025, Giuseppe Filippone"
 author = "Giuseppe Filippone"
 # The short X.Y version
-version = "1.0.2"
+version = "1.0.3"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.2"
+release = "1.0.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -43,7 +43,7 @@ mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 
 def skip_special_members(app, what, name, obj, skip, options):
