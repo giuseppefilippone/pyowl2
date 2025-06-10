@@ -5,10 +5,8 @@ description = "A python implementation of the OWL 2 standard. See https://www.w3
 license = "CC-BY-SA-4.0"
 readme = "README.md"
 repository = "https://github.com/giuseppefilippone/pyowl2"
+documentation = "https://pyowl2.readthedocs.io/en/latest/"
 authors = ["Giuseppe Filippone <filipponegiuseppe94@gmail.com>"]
-
-[tool.poetry.urls]
-Documentation = "https://pyowl2.readthedocs.io/en/latest/"
 
 [tool.poetry.dependencies]
 python = ">=3.11, <4.0"
