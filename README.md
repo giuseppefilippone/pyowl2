@@ -1,3 +1,11 @@
+![Docs](https://img.shields.io/badge/docs-passing-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
+[![Documentation](https://img.shields.io/badge/Read%20the%20Docs-8CA1AF?logo=readthedocs&logoColor=white)](https://pyowl2.readthedocs.io/en/latest)
+[![PyPI](https://img.shields.io/pypi/v/pyowl2.svg)](https://pypi.org/project/pyowl2/)
+![Python Versions](https://img.shields.io/pypi/pyversions/pyowl2.svg)
+![Code Style](https://img.shields.io/badge/code%20style-python-green)
+
+
 # PyOWL2
 A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/
 

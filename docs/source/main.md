@@ -1,9 +1,5 @@
 # PyOWL2
-A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/
-
----
-
-PyOWL2
+A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/.
 
 A lightweight Python implementation of OWL 2 constructs, designed for mapping and interacting with OWL 2 ontology elements such as Class, ObjectProperty, Datatype, AnnotationProperty, and more.
 
@@ -13,14 +9,12 @@ Features:
 - Clean, extensible Python API
 - Ideal for RDF/OWL-based modeling and semantic reasoning tools
 
----
-
 ## Installation
+Check the [repository](https://github.com/giuseppefilippone/pyowl2/).
+
 ```python
 pip install pyowl2
 ```
-
----
 
 Examples of supported OWL 2 Constructs
 
