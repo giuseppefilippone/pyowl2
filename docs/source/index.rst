@@ -12,7 +12,9 @@ Welcome to pyowl2's documentation!
    :maxdepth: 5
    :caption: Contents:
 
-   modules
+   main
+   usage
+   api/index
 
 .. automodule:: pyowl2
    :members:
