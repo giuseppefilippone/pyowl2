@@ -14,6 +14,7 @@ Welcome to pyowl2's documentation!
 
    main
    usage
+   funding
    api/index
 
 .. automodule:: pyowl2
