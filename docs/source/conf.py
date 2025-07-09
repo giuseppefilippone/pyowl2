@@ -28,6 +28,11 @@ extensions = [
     "sphinx_toolbox.tweaks.latex_toc",
 ]
 
+myst_enable_extensions = [
+    "amsmath",
+    "dollarmath",
+]
+
 templates_path = ["_templates"]
 exclude_patterns = []
 add_module_names = False

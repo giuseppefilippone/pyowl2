@@ -13,8 +13,8 @@ Welcome to pyowl2's documentation!
    :caption: Contents:
 
    main
-   usage
    funding
+   usage
    api/index
 
 .. automodule:: pyowl2
