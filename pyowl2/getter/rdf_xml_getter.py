@@ -2,50 +2,19 @@ import enum
 import inspect
 import typing
 
-from owlready2 import (
-    AllDifferent,
-    And,
-    AnnotationPropertyClass,
-    AsymmetricProperty,
-    ConstrainedDatatype,
-    DataPropertyClass,
-    DatatypeClass,
-    EntityClass,
-    FunctionalProperty,
-    Inverse,
-    InverseFunctionalProperty,
-    IrreflexiveProperty,
-    NamedIndividual,
-    Not,
-    Nothing,
-    ObjectPropertyClass,
-    OneOf,
-    Ontology,
-    Or,
-    ReflexiveProperty,
-    Restriction,
-    SymmetricProperty,
-    Thing,
-    ThingClass,
-    TransitiveProperty,
-    World,
-)
-from owlready2.annotation import (
-    backwardCompatibleWith,
-    comment,
-    deprecated,
-    incompatibleWith,
-    isDefinedBy,
-    label,
-    priorVersion,
-    seeAlso,
-    versionInfo,
-)
-from owlready2.base import (
-    _universal_abbrev,
-    _universal_abbrev_2_iri,
-    _universal_iri_2_abbrev,
-)
+from owlready2 import (AllDifferent, And, AnnotationPropertyClass,
+                       AsymmetricProperty, ConstrainedDatatype,
+                       DataPropertyClass, DatatypeClass, EntityClass,
+                       FunctionalProperty, Inverse, InverseFunctionalProperty,
+                       IrreflexiveProperty, NamedIndividual, Not, Nothing,
+                       ObjectPropertyClass, OneOf, Ontology, Or,
+                       ReflexiveProperty, Restriction, SymmetricProperty,
+                       Thing, ThingClass, TransitiveProperty, World)
+from owlready2.annotation import (backwardCompatibleWith, comment, deprecated,
+                                  incompatibleWith, isDefinedBy, label,
+                                  priorVersion, seeAlso, versionInfo)
+from owlready2.base import (_universal_abbrev, _universal_abbrev_2_iri,
+                            _universal_iri_2_abbrev)
 from rdflib import RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF
 
@@ -59,110 +28,102 @@ from pyowl2.abstracts.data_range import OWLDataRange
 from pyowl2.abstracts.individual import OWLIndividual
 from pyowl2.abstracts.object import OWLObject
 from pyowl2.abstracts.object_property_axiom import OWLObjectPropertyAxiom
-from pyowl2.axioms.annotations import (
-    OWLAnnotationAssertion,
-    OWLAnnotationPropertyDomain,
-    OWLAnnotationPropertyRange,
-    OWLSubAnnotationPropertyOf,
-)
-from pyowl2.axioms.assertion import (
-    OWLDifferentIndividuals,
-    OWLNegativeDataPropertyAssertion,
-    OWLNegativeObjectPropertyAssertion,
-    OWLSameIndividual,
-)
+from pyowl2.axioms.annotations import (OWLAnnotationAssertion,
+                                       OWLAnnotationPropertyDomain,
+                                       OWLAnnotationPropertyRange,
+                                       OWLSubAnnotationPropertyOf)
+from pyowl2.axioms.assertion import (OWLDifferentIndividuals,
+                                     OWLNegativeDataPropertyAssertion,
+                                     OWLNegativeObjectPropertyAssertion,
+                                     OWLSameIndividual)
 from pyowl2.axioms.assertion.class_assertion import OWLClassAssertion
-from pyowl2.axioms.assertion.data_property_assertion import OWLDataPropertyAssertion
-from pyowl2.axioms.assertion.object_property_assertion import OWLObjectPropertyAssertion
+from pyowl2.axioms.assertion.data_property_assertion import \
+    OWLDataPropertyAssertion
+from pyowl2.axioms.assertion.object_property_assertion import \
+    OWLObjectPropertyAssertion
 from pyowl2.axioms.class_axiom.disjoint_classes import OWLDisjointClasses
 from pyowl2.axioms.class_axiom.disjoint_union import OWLDisjointUnion
 from pyowl2.axioms.class_axiom.equivalent_classes import OWLEquivalentClasses
 from pyowl2.axioms.class_axiom.sub_class_of import OWLSubClassOf
-from pyowl2.axioms.data_property_axiom.data_property_domain import OWLDataPropertyDomain
-from pyowl2.axioms.data_property_axiom.data_property_range import OWLDataPropertyRange
-from pyowl2.axioms.data_property_axiom.disjoint_data_properties import (
-    OWLDisjointDataProperties,
-)
-from pyowl2.axioms.data_property_axiom.equivalent_data_properties import (
-    OWLEquivalentDataProperties,
-)
-from pyowl2.axioms.data_property_axiom.functional_data_property import (
-    OWLFunctionalDataProperty,
-)
-from pyowl2.axioms.data_property_axiom.sub_data_property_of import OWLSubDataPropertyOf
+from pyowl2.axioms.data_property_axiom.data_property_domain import \
+    OWLDataPropertyDomain
+from pyowl2.axioms.data_property_axiom.data_property_range import \
+    OWLDataPropertyRange
+from pyowl2.axioms.data_property_axiom.disjoint_data_properties import \
+    OWLDisjointDataProperties
+from pyowl2.axioms.data_property_axiom.equivalent_data_properties import \
+    OWLEquivalentDataProperties
+from pyowl2.axioms.data_property_axiom.functional_data_property import \
+    OWLFunctionalDataProperty
+from pyowl2.axioms.data_property_axiom.sub_data_property_of import \
+    OWLSubDataPropertyOf
 from pyowl2.axioms.datatype_definition import OWLDatatypeDefinition
 from pyowl2.axioms.declaration import OWLDeclaration
 from pyowl2.axioms.general import OWLGeneralClassAxiom
 from pyowl2.axioms.has_key import OWLHasKey
-from pyowl2.axioms.object_property_axiom.asymmetric_object_property import (
-    OWLAsymmetricObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.disjoint_object_properties import (
-    OWLDisjointObjectProperties,
-)
-from pyowl2.axioms.object_property_axiom.equivalent_object_properties import (
-    OWLEquivalentObjectProperties,
-)
-from pyowl2.axioms.object_property_axiom.functional_object_property import (
-    OWLFunctionalObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.inverse_functional_object_property import (
-    OWLInverseFunctionalObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.inverse_object_properties import (
-    OWLInverseObjectProperties,
-)
-from pyowl2.axioms.object_property_axiom.irreflexive_object_property import (
-    OWLIrreflexiveObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.object_property_chain import (
-    OWLObjectPropertyChain,
-)
-from pyowl2.axioms.object_property_axiom.object_property_domain import (
-    OWLObjectPropertyDomain,
-)
-from pyowl2.axioms.object_property_axiom.object_property_range import (
-    OWLObjectPropertyRange,
-)
-from pyowl2.axioms.object_property_axiom.reflexive_object_property import (
-    OWLReflexiveObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.sub_object_property_of import (
-    OWLSubObjectPropertyOf,
-)
-from pyowl2.axioms.object_property_axiom.symmetric_object_property import (
-    OWLSymmetricObjectProperty,
-)
-from pyowl2.axioms.object_property_axiom.transitive_object_property import (
-    OWLTransitiveObjectProperty,
-)
+from pyowl2.axioms.object_property_axiom.asymmetric_object_property import \
+    OWLAsymmetricObjectProperty
+from pyowl2.axioms.object_property_axiom.disjoint_object_properties import \
+    OWLDisjointObjectProperties
+from pyowl2.axioms.object_property_axiom.equivalent_object_properties import \
+    OWLEquivalentObjectProperties
+from pyowl2.axioms.object_property_axiom.functional_object_property import \
+    OWLFunctionalObjectProperty
+from pyowl2.axioms.object_property_axiom.inverse_functional_object_property import \
+    OWLInverseFunctionalObjectProperty
+from pyowl2.axioms.object_property_axiom.inverse_object_properties import \
+    OWLInverseObjectProperties
+from pyowl2.axioms.object_property_axiom.irreflexive_object_property import \
+    OWLIrreflexiveObjectProperty
+from pyowl2.axioms.object_property_axiom.object_property_chain import \
+    OWLObjectPropertyChain
+from pyowl2.axioms.object_property_axiom.object_property_domain import \
+    OWLObjectPropertyDomain
+from pyowl2.axioms.object_property_axiom.object_property_range import \
+    OWLObjectPropertyRange
+from pyowl2.axioms.object_property_axiom.reflexive_object_property import \
+    OWLReflexiveObjectProperty
+from pyowl2.axioms.object_property_axiom.sub_object_property_of import \
+    OWLSubObjectPropertyOf
+from pyowl2.axioms.object_property_axiom.symmetric_object_property import \
+    OWLSymmetricObjectProperty
+from pyowl2.axioms.object_property_axiom.transitive_object_property import \
+    OWLTransitiveObjectProperty
 from pyowl2.base.annotation import OWLAnnotation
 from pyowl2.base.annotation_property import OWLAnnotationProperty
 from pyowl2.base.datatype import OWLDatatype
 from pyowl2.base.iri import IRI
 from pyowl2.base.owl_class import OWLClass
 from pyowl2.class_expression.data_all_values_from import OWLDataAllValuesFrom
-from pyowl2.class_expression.data_exact_cardinality import OWLDataExactCardinality
+from pyowl2.class_expression.data_exact_cardinality import \
+    OWLDataExactCardinality
 from pyowl2.class_expression.data_has_value import OWLDataHasValue
 from pyowl2.class_expression.data_max_cardinality import OWLDataMaxCardinality
 from pyowl2.class_expression.data_min_cardinality import OWLDataMinCardinality
 from pyowl2.class_expression.data_some_values_from import OWLDataSomeValuesFrom
-from pyowl2.class_expression.object_all_values_from import OWLObjectAllValuesFrom
+from pyowl2.class_expression.object_all_values_from import \
+    OWLObjectAllValuesFrom
 from pyowl2.class_expression.object_complement_of import OWLObjectComplementOf
-from pyowl2.class_expression.object_exact_cardinality import OWLObjectExactCardinality
+from pyowl2.class_expression.object_exact_cardinality import \
+    OWLObjectExactCardinality
 from pyowl2.class_expression.object_has_self import OWLObjectHasSelf
 from pyowl2.class_expression.object_has_value import OWLObjectHasValue
-from pyowl2.class_expression.object_intersection_of import OWLObjectIntersectionOf
-from pyowl2.class_expression.object_max_cardinality import OWLObjectMaxCardinality
-from pyowl2.class_expression.object_min_cardinality import OWLObjectMinCardinality
+from pyowl2.class_expression.object_intersection_of import \
+    OWLObjectIntersectionOf
+from pyowl2.class_expression.object_max_cardinality import \
+    OWLObjectMaxCardinality
+from pyowl2.class_expression.object_min_cardinality import \
+    OWLObjectMinCardinality
 from pyowl2.class_expression.object_one_of import OWLObjectOneOf
-from pyowl2.class_expression.object_some_values_from import OWLObjectSomeValuesFrom
+from pyowl2.class_expression.object_some_values_from import \
+    OWLObjectSomeValuesFrom
 from pyowl2.class_expression.object_union_of import OWLObjectUnionOf
 from pyowl2.data_range.data_complement_of import OWLDataComplementOf
 from pyowl2.data_range.data_intersection_of import OWLDataIntersectionOf
 from pyowl2.data_range.data_one_of import OWLDataOneOf
 from pyowl2.data_range.data_union_of import OWLDataUnionOf
-from pyowl2.data_range.datatype_restriction import OWLDatatypeRestriction, OWLFacet
+from pyowl2.data_range.datatype_restriction import (OWLDatatypeRestriction,
+                                                    OWLFacet)
 from pyowl2.expressions.data_property import OWLDataProperty
 from pyowl2.expressions.inverse_object_property import OWLInverseObjectProperty
 from pyowl2.expressions.object_property import OWLObjectProperty
@@ -3010,7 +2971,7 @@ class RDFXMLGetter:
             if isinstance(data_range, And):
                 data_range = self.to_owl_data_intersection_of(data_range)
             elif isinstance(data_range, ConstrainedDatatype):
-                data_range = self.to_owl_datatype(data_range)
+                data_range = self.to_owl_datatype_restriction(data_range)
             else:
                 data_range = OWLDatatype(
                     self.graph.value(data_range.storid, OWL.onDatatype)
