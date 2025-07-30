@@ -63,3 +63,6 @@ Pipfile.lock
 
 # wheel files
 *.whl
+
+# OWL files
+*.owl
