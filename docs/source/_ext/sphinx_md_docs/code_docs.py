@@ -480,6 +480,6 @@ def process_library(output_dir: Path, source_dir: Path, model: str) -> None:
 
 if __name__ == "__main__":
     output_dir = Path("./md")
-    source_dir = Path("./fuzzy_dl_owl2")
+    source_dir = Path("./pyowl2")
     model = "glm-4.7:cloud"
     process_library(output_dir, source_dir, model)
