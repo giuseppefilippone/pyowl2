@@ -26,7 +26,6 @@ from pathlib import Path
 from typing import Optional
 
 if typing.TYPE_CHECKING:
-    from langchain_core.messages import HumanMessage, SystemMessage
     from langchain_ollama import ChatOllama
 
 # ──────────────────────────────────────────────

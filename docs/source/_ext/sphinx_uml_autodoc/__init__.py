@@ -127,14 +127,17 @@ def _new_lines(conf: Config, uml_dir: Path, safe: str, short: str):
     landscape = _should_landscape(w, h, conf.uml_dpi)
     latex_width = _latex_width(w, h, conf.uml_dpi, landscape)
 
-    # from PIL import Image
+    try:
+        from PIL import Image
 
-    # with Image.open(png_abs).convert("RGBA") as img:
-    #     alpha = img.getchannel("A")
-    #     # if image is fully transparent -> skip it
-    #     if alpha.getextrema() == (0, 0):
-    #         logger.info(f"[uml] Skipping empty figure -> {safe}")
-    #         return new_lines
+        with Image.open(png_abs).convert("RGBA") as img:
+            alpha = img.getchannel("A")
+            # if image is fully transparent -> skip it
+            if alpha.getextrema() == (0, 0):
+                logger.info(f"[uml] Skipping empty figure -> {safe}")
+                return new_lines
+    except ImportError:
+        pass
 
     # ── HTML ────────────────────────────────────────────────────────
     new_lines.append(".. only:: html\n")

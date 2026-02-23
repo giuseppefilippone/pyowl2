@@ -161,7 +161,15 @@ latex_domain_indices = True
 
 # A dictionary mapping 'howto' and 'manual' to names of real document classes that will be used as the base for the two Sphinx classes.
 latex_docclass = {"howto": "book", "manual": "report"}
-
+latex_documents = [
+    (
+        "index",  # startdocname
+        "pyowl2-manual.tex",  # targetname  ← avoids "pyowl2.tex/pdf"
+        "PyOWL2 Documentation",  # title
+        "Giuseppe Filippone",  # author
+        "manual",  # theme
+    ),
+]
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
