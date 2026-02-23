@@ -7,7 +7,7 @@
 
 
 # PyOWL2
-A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/
+A python implementation of the OWL 2 standard. See [OWL 2 Syntax](https://www.w3.org/TR/owl2-syntax/) and [OWL 2 Mapping to RDF](https://www.w3.org/TR/owl2-mapping-to-rdf/).
 
 ---
 
