@@ -41,11 +41,13 @@ import tempfile
 from glob import glob
 from logging import DEBUG
 from pathlib import Path
-from typing import Any, Optional, Type
+from typing import TYPE_CHECKING, Any, Optional, Type
 
-from sphinx.application import Sphinx
-from sphinx.config import Config
 from sphinx.util import logging
+
+if TYPE_CHECKING:
+    from sphinx.application import Sphinx
+    from sphinx.config import Config
 
 __version__ = "6.0.0"
 logger = logging.getLogger(__name__)
@@ -116,8 +118,6 @@ _P = {
 
 
 def _new_lines(conf: Config, uml_dir: Path, safe: str, short: str):
-    from PIL import Image
-
     new_lines: list[str] = []
     # Relative path from srcdir for the figure directive
     png_rel = f"/{conf.uml_output_dir}/{safe}.png"
@@ -127,12 +127,14 @@ def _new_lines(conf: Config, uml_dir: Path, safe: str, short: str):
     landscape = _should_landscape(w, h, conf.uml_dpi)
     latex_width = _latex_width(w, h, conf.uml_dpi, landscape)
 
-    with Image.open(png_abs).convert("RGBA") as img:
-        alpha = img.getchannel("A")
-        # if image is fully transparent -> skip it
-        if alpha.getextrema() == (0, 0):
-            logger.info(f"[uml] Skipping empty figure -> {safe}")
-            return new_lines
+    # from PIL import Image
+
+    # with Image.open(png_abs).convert("RGBA") as img:
+    #     alpha = img.getchannel("A")
+    #     # if image is fully transparent -> skip it
+    #     if alpha.getextrema() == (0, 0):
+    #         logger.info(f"[uml] Skipping empty figure -> {safe}")
+    #         return new_lines
 
     # ── HTML ────────────────────────────────────────────────────────
     new_lines.append(".. only:: html\n")
@@ -456,7 +458,6 @@ def _image_dimensions(p: Path) -> tuple[int, int]:
         Image.MAX_IMAGE_PIXELS = 1 << 30  # ~1 gigapixel, just in case
         with Image.open(p) as im:
             return im.size
-
     except ImportError:
         pass
 
