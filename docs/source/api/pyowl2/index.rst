@@ -1,6 +1,26 @@
 pyowl2
 ======
 
+.. only:: html
+
+    .. figure:: /_uml/pyowl2.png
+       :alt: UML Class Diagram for pyowl2
+       :align: center
+       :width: 100%
+       :class: uml-diagram
+
+       UML Class Diagram for **pyowl2**
+
+.. only:: latex
+
+    .. figure:: /_uml/pyowl2.pdf
+       :alt: UML Class Diagram for pyowl2
+       :align: center
+       :width: 100%
+       :class: uml-diagram
+
+       UML Class Diagram for **pyowl2**
+
 .. py:module:: pyowl2
 
 

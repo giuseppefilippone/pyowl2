@@ -1,0 +1,4 @@
+# Stop after 4 passes even if references haven't stabilized.
+# autoapi generates cross-references that may never resolve in LaTeX,
+# causing latexmk to loop indefinitely.
+$max_repeat = 4;

@@ -9,8 +9,12 @@ execution_log: dict[str, dict] = dict()
 
 def timer_decorator(cls):
     """
-    Class decorator to time all method calls and log them.
+    This class decorator instruments a class by wrapping its public, non-dunder methods to measure and log their execution performance. Upon application, it iterates through the class's attributes, identifying callable members that do not start with double underscores, and replaces them with a wrapper that records the elapsed time using high-resolution timers. The wrapper accumulates the total execution time for each method in a global dictionary named `execution_log`, associating it with the fully qualified method name and truncated representations of the passed arguments and keyword arguments. While the decorator modifies the global log state and the class's method attributes, it ensures the original method's behavior and return values are preserved.
+
+    :param cls: The class whose methods will be timed and logged.
+    :type cls: typing.Any
     """
+
     for attr_name, attr_value in cls.__dict__.items():
         if callable(attr_value) and not attr_name.startswith("__"):
             # Wrap the method
@@ -50,9 +54,8 @@ def timer_decorator(cls):
 
 
 def print_execution_log():
-    """
-    Pretty-prints the execution log using tabulate.
-    """
+    """Formats and displays the current execution log as a readable grid table using the tabulate library. The output includes the function name, execution time, arguments, and keyword arguments for each recorded method call, followed by a summary of the total elapsed time across all entries. If the execution log is empty, the function prints a message indicating that no timing data is available. This function performs side effects by writing to standard output and does not return a value."""
+
     if execution_log:
         print(tabulate(list(execution_log.values()), headers="keys", tablefmt="grid"))
         print(f"\nTotal time (s) -> {sum(e['Time (s)'] for e in execution_log.values())}")

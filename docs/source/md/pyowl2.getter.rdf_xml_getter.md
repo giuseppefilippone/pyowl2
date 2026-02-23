@@ -1,0 +1,7 @@
+# Summary
+
+The software implements a comprehensive parser and transformer that extracts OWL 2 entities and axioms from an RDF/XML ontology using `owlready2` and `rdflib`, converting them into a structured object model.
+
+## Description
+
+The core functionality revolves around the `RDFXMLGetter` class, which acts as an adapter to bridge the gap between the raw RDF graph representation and a high-level object-oriented model of OWL 2 concepts. Upon initialization, the class converts the ontology into an `rdflib` graph to facilitate SPARQL querying and establishes a complex caching system to store transformed entities, ensuring that repeated access to the same ontology element returns the same object instance. It systematically retrieves various ontology components—ranging from classes, object and data properties, and individuals to complex class expressions like unions, intersections, and restrictions—by executing targeted SPARQL queries and mapping the results to specific abstract classes. The design emphasizes robustness and compatibility, handling edge cases such as OWL 1 DL constructs, reified annotations, and property chains, while a dispatcher method allows consumers to request specific axiom types defined in the `AxiomsType` enumeration. By separating the logic for querying the graph from the logic for constructing object representations, the architecture efficiently transforms low-level RDF triples into a semantic hierarchy of axioms and expressions.

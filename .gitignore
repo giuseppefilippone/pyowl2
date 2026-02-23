@@ -2,6 +2,12 @@
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+pyowl2_tmp
+autodoc*
+./code_docs.py
+code_stats.py
+docstrings.json
+docs/make_run.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

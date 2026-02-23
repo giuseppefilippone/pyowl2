@@ -1,0 +1,7 @@
+# Summary
+
+A comprehensive interface for creating, loading, and manipulating OWL ontologies by wrapping the Owlready2 library to manage entities, axioms, and annotations.
+
+## Description
+
+The software serves as a high-level abstraction over the Owlready2 library, enabling the creation, loading, and modification of Web Ontology Language (OWL) structures. It manages the lifecycle of an ontology by initializing a specific "World" context, which can either generate a new knowledge base from a base IRI or load an existing structure from a file path. To facilitate the manipulation of logical entities, the implementation delegates the translation of high-level objects—such as classes, properties, and individuals—into RDF triples using an internal mapping component. This mapping process includes specialized logic to decompose complex entities into their constituent declarations, domains, ranges, and nested axioms, ensuring that the underlying graph accurately reflects the intended semantic relationships. Beyond logical axioms, the system supports the attachment of metadata annotations to the ontology itself, specific elements, or individual relations, thereby enriching the knowledge base with descriptive details. Finally, the interface provides mechanisms for querying specific axiom types and serializing the complete graph to various file formats, ensuring that the data can be persisted and shared.

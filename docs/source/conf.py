@@ -6,14 +6,20 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("../../"))
+sys.path.insert(0, os.path.abspath("_ext"))  # local Sphinx extensions
+
 project = "PyOWL2"
 copyright = "2025, Giuseppe Filippone"
 author = "Giuseppe Filippone"
 # The short X.Y version
-version = "1.0.3"
+version = "1.0.4"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.3"
+release = "1.0.4"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,17 +32,24 @@ extensions = [
     "autoapi.extension",
     "sphinx.ext.viewcode",  # optional: adds links to source code
     "sphinx_toolbox.tweaks.latex_toc",
+    "sphinx.ext.graphviz",  # https://stackoverflow.com/a/59319659/14851404
+    "sphinx_uml_autodoc",  # ← UML class diagram generation
+    "sphinx_md_docs",  # ← custom extension to inject markdown into AutoAPI output
 ]
 
 myst_enable_extensions = [
     "amsmath",
     "dollarmath",
+    "colon_fence",
 ]
+myst_dmath_double_inline = True
 
 templates_path = ["_templates"]
-exclude_patterns = []
+exclude_patterns = ["_uml", "md"]
 add_module_names = False
 python_maximum_signature_line_length = 128
+
+# -- Options for autodoc and autoapi --------------------------------------
 
 # Tell AutoAPI where your package lives:
 autoapi_dirs = ["../../pyowl2"]
@@ -48,6 +61,8 @@ autoapi_options = [
     "show-inheritance",
     "show-module-summary",
     "special-members",
+    "show-inheritance-diagram",
+    "private-members",
 ]
 
 autoapi_keep_files = True  # keep intermediate .rst files for tweaking
@@ -60,11 +75,43 @@ suppress_warnings = [
     "docutils",
 ]
 
-# Optional: if you use numpy-style or Google-style docstrings
+# -- Custom Sphinx extension: Markdown Injector --------------------------------
+# Point to the directory code_documenter.py wrote into.
+# Absolute path, or relative to the directory containing conf.py.
+sphinx_md_injector_dir = "./md"
+# (Optional) override if you changed autoapi_root from its default "autoapi"
+sphinx_md_injector_autoapi_root = autoapi_root
+
+# --- Custom Sphinx extension: UML Autodoc --------------------------------
+# Optional: if you use numpy-style or Google-style docstrings and want to support them in autodoc as well as regular .rst files, configure Napoleon:
+# Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = True
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = True
+napoleon_use_ivar = True
+napoleon_use_param = True
+napoleon_use_rtype = True
+napoleon_preprocess_types = True
+napoleon_type_aliases = None
+napoleon_attr_annotations = True
 
 autosummary_generate = True
+
+# -- UML class diagram settings (sphinx_uml_autodoc) ----------------------
+uml_dpi = 150  # PNG resolution
+uml_output_dir = "_uml"  # image dir (relative to docs srcdir)
+uml_font_name = "Sans"  # Graphviz font family
+uml_font_size = 12  # base font size (pt)
+uml_max_inheritance_depth = 3  # ancestor levels (pyreverse -a)
+uml_association_depth = 1  # associated-class depth (pyreverse -s)
+uml_show_private = True  # include _private members
+uml_rankdir = "RL"  # TB | BT | LR | RL
+uml_backend = "auto"  # "pyreverse" | "inspect" | "auto"
 
 # -- Options for LaTeX math rendering ---------------------------------
 
@@ -78,7 +125,16 @@ latex_elements = {
     "fncychap": r"\usepackage[Bjarne]{fncychap}",
     "extraclassoptions": "openany",
     "preamble": r"""
+        %% --- Fix "Dimension too large" for high-DPI PNGs ---
+        %% pdfLaTeX assumes 72 DPI for images without DPI metadata,
+        %% turning a 5000 px PNG into 70 inches — which overflows
+        %% TeX's dimension register BEFORE any width= scaling applies.
+        %% This tells pdfLaTeX to assume 300 DPI, so the same image
+        %% is 16.9 cm — well within limits and close to true size.
+        \pdfimageresolution=300
+
         \hypersetup{unicode=true}
+        \DeclareUnicodeCharacter{2212}{\ensuremath{-}}
 
         % Redefine sphinxtheindex environment to use one column and smaller font
         \usepackage{etoolbox}
@@ -96,6 +152,10 @@ latex_elements = {
     "passoptionstopackages": r"\PassOptionsToPackage{hyphens}{url}",
     "sphinxsetup": r"verbatimwithframe=true, verbatimwrapslines=true, verbatimforcewraps=true, inlineliteralwraps=true",
 }
+
+latex_show_urls = "footnote"
+latex_show_pagerefs = True
+latex_domain_indices = True
 
 # A dictionary mapping 'howto' and 'manual' to names of real document classes that will be used as the base for the two Sphinx classes.
 latex_docclass = {"howto": "book", "manual": "report"}
