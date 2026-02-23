@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_same_individual_OWLSameIndividual.png
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_same_individual_OWLSameIndividual.png
        :alt: UML Class Diagram for OWLSameIndividual
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_same_individual_OWLSameIndividual.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_same_individual_OWLSameIndividual.pdf
        :alt: UML Class Diagram for OWLSameIndividual
        :align: center
        :width: 100%

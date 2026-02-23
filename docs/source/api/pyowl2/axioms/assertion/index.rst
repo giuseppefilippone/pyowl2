@@ -3,7 +3,7 @@ pyowl2.axioms.assertion
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_assertion.png
+    .. figure:: /_uml/module_pyowl2_axioms_assertion.png
        :alt: UML Class Diagram for pyowl2.axioms.assertion
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.axioms.assertion
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_assertion.pdf
+    .. figure:: /_uml/module_pyowl2_axioms_assertion.pdf
        :alt: UML Class Diagram for pyowl2.axioms.assertion
        :align: center
        :width: 100%

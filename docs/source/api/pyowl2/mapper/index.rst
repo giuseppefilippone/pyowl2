@@ -3,7 +3,7 @@ pyowl2.mapper
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_mapper.png
+    .. figure:: /_uml/module_pyowl2_mapper.png
        :alt: UML Class Diagram for pyowl2.mapper
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.mapper
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_mapper.pdf
+    .. figure:: /_uml/module_pyowl2_mapper.pdf
        :alt: UML Class Diagram for pyowl2.mapper
        :align: center
        :width: 100%

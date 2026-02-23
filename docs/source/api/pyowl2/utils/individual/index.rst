@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_utils_individual_OWLFullIndividual.png
+    .. figure:: /_uml/class_pyowl2_utils_individual_OWLFullIndividual.png
        :alt: UML Class Diagram for OWLFullIndividual
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_utils_individual_OWLFullIndividual.pdf
+    .. figure:: /_uml/class_pyowl2_utils_individual_OWLFullIndividual.pdf
        :alt: UML Class Diagram for OWLFullIndividual
        :align: center
        :width: 100%

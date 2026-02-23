@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_property_range_OWLPropertyRange.png
+    .. figure:: /_uml/class_pyowl2_abstracts_property_range_OWLPropertyRange.png
        :alt: UML Class Diagram for OWLPropertyRange
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_property_range_OWLPropertyRange.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_property_range_OWLPropertyRange.pdf
        :alt: UML Class Diagram for OWLPropertyRange
        :align: center
-       :width: 9.8cm
+       :width: 4.9cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLPropertyRange**

@@ -112,7 +112,7 @@ uml_font_size = 12  # base font size (pt)
 uml_max_inheritance_depth = 3  # ancestor levels (pyreverse -a)
 uml_association_depth = 1  # associated-class depth (pyreverse -s)
 uml_show_private = True  # include _private members
-uml_rankdir = "RL"  # TB | BT | LR | RL
+uml_rankdir = "LR"  # TB | BT | LR | RL
 uml_backend = "auto"  # "pyreverse" | "inspect" | "auto"
 
 # -- Options for LaTeX math rendering ---------------------------------
@@ -164,8 +164,8 @@ latex_docclass = {"howto": "book", "manual": "report"}
 latex_documents = [
     (
         "index",  # startdocname
-        "pyowl2-manual.tex",  # targetname  ← avoids "pyowl2.tex/pdf"
-        "PyOWL2 Documentation",  # title
+        "pyowl2-documentation.tex",  # targetname  ← avoids "pyowl2.tex/pdf"
+        "PyOWL 2 Documentation",  # title
         "Giuseppe Filippone",  # author
         "manual",  # theme
     ),

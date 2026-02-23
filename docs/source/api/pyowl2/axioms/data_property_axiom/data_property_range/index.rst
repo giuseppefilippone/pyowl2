@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_data_property_range_OWLDataPropertyRange.png
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_data_property_range_OWLDataPropertyRange.png
        :alt: UML Class Diagram for OWLDataPropertyRange
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_data_property_range_OWLDataPropertyRange.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_data_property_range_OWLDataPropertyRange.pdf
        :alt: UML Class Diagram for OWLDataPropertyRange
        :align: center
        :width: 100%

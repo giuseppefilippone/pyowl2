@@ -3,7 +3,7 @@ pyowl2.axioms.annotations
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_annotations.png
+    .. figure:: /_uml/module_pyowl2_axioms_annotations.png
        :alt: UML Class Diagram for pyowl2.axioms.annotations
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.axioms.annotations
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_annotations.pdf
+    .. figure:: /_uml/module_pyowl2_axioms_annotations.pdf
        :alt: UML Class Diagram for pyowl2.axioms.annotations
        :align: center
        :width: 100%

@@ -3,7 +3,7 @@ pyowl2.data_range
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range.png
+    .. figure:: /_uml/module_pyowl2_data_range.png
        :alt: UML Class Diagram for pyowl2.data_range
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.data_range
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range.pdf
+    .. figure:: /_uml/module_pyowl2_data_range.pdf
        :alt: UML Class Diagram for pyowl2.data_range
        :align: center
        :width: 100%

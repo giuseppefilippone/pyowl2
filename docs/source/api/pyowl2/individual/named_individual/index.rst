@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_individual_named_individual_OWLNamedIndividual.png
+    .. figure:: /_uml/class_pyowl2_individual_named_individual_OWLNamedIndividual.png
        :alt: UML Class Diagram for OWLNamedIndividual
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_individual_named_individual_OWLNamedIndividual.pdf
+    .. figure:: /_uml/class_pyowl2_individual_named_individual_OWLNamedIndividual.pdf
        :alt: UML Class Diagram for OWLNamedIndividual
        :align: center
-       :width: 10.9cm
+       :width: 9.4cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLNamedIndividual**

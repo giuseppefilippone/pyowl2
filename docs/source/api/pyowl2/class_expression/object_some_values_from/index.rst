@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression_object_some_values_from_OWLObjectSomeValuesFrom.png
+    .. figure:: /_uml/class_pyowl2_class_expression_object_some_values_from_OWLObjectSomeValuesFrom.png
        :alt: UML Class Diagram for OWLObjectSomeValuesFrom
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression_object_some_values_from_OWLObjectSomeValuesFrom.pdf
+    .. figure:: /_uml/class_pyowl2_class_expression_object_some_values_from_OWLObjectSomeValuesFrom.pdf
        :alt: UML Class Diagram for OWLObjectSomeValuesFrom
        :align: center
        :width: 100%

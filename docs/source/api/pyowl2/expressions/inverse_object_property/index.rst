@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_expressions_inverse_object_property_OWLInverseObjectProperty.png
+    .. figure:: /_uml/class_pyowl2_expressions_inverse_object_property_OWLInverseObjectProperty.png
        :alt: UML Class Diagram for OWLInverseObjectProperty
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_expressions_inverse_object_property_OWLInverseObjectProperty.pdf
+    .. figure:: /_uml/class_pyowl2_expressions_inverse_object_property_OWLInverseObjectProperty.pdf
        :alt: UML Class Diagram for OWLInverseObjectProperty
        :align: center
        :width: 11.6cm

@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_sub_data_property_of_OWLSubDataPropertyOf.png
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_sub_data_property_of_OWLSubDataPropertyOf.png
        :alt: UML Class Diagram for OWLSubDataPropertyOf
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_sub_data_property_of_OWLSubDataPropertyOf.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_sub_data_property_of_OWLSubDataPropertyOf.pdf
        :alt: UML Class Diagram for OWLSubDataPropertyOf
        :align: center
        :width: 100%

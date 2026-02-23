@@ -33,7 +33,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLDatatypeRestriction.png
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLDatatypeRestriction.png
        :alt: UML Class Diagram for OWLDatatypeRestriction
        :align: center
        :width: 100%
@@ -43,7 +43,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLDatatypeRestriction.pdf
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLDatatypeRestriction.pdf
        :alt: UML Class Diagram for OWLDatatypeRestriction
        :align: center
        :width: 11.7cm
@@ -108,7 +108,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLFacet.png
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLFacet.png
        :alt: UML Class Diagram for OWLFacet
        :align: center
        :width: 100%
@@ -118,7 +118,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLFacet.pdf
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLFacet.pdf
        :alt: UML Class Diagram for OWLFacet
        :align: center
        :width: 100%
@@ -314,7 +314,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLFacetTypes.png
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLFacetTypes.png
        :alt: UML Class Diagram for OWLFacetTypes
        :align: center
        :width: 100%
@@ -324,10 +324,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range_datatype_restriction_OWLFacetTypes.pdf
+    .. figure:: /_uml/class_pyowl2_data_range_datatype_restriction_OWLFacetTypes.pdf
        :alt: UML Class Diagram for OWLFacetTypes
        :align: center
-       :width: 8.4cm
+       :width: 4.2cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLFacetTypes**

@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_annotations_sub_annotation_property_of_OWLSubAnnotationPropertyOf.png
+    .. figure:: /_uml/class_pyowl2_axioms_annotations_sub_annotation_property_of_OWLSubAnnotationPropertyOf.png
        :alt: UML Class Diagram for OWLSubAnnotationPropertyOf
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_annotations_sub_annotation_property_of_OWLSubAnnotationPropertyOf.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_annotations_sub_annotation_property_of_OWLSubAnnotationPropertyOf.pdf
        :alt: UML Class Diagram for OWLSubAnnotationPropertyOf
        :align: center
        :width: 100%

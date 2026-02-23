@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_class_assertion_OWLClassAssertion.png
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_class_assertion_OWLClassAssertion.png
        :alt: UML Class Diagram for OWLClassAssertion
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_class_assertion_OWLClassAssertion.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_class_assertion_OWLClassAssertion.pdf
        :alt: UML Class Diagram for OWLClassAssertion
        :align: center
        :width: 100%

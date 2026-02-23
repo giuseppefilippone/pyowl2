@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_object_OWLObject.png
+    .. figure:: /_uml/class_pyowl2_abstracts_object_OWLObject.png
        :alt: UML Class Diagram for OWLObject
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_object_OWLObject.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_object_OWLObject.pdf
        :alt: UML Class Diagram for OWLObject
        :align: center
-       :width: 8.3cm
+       :width: 4.1cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLObject**

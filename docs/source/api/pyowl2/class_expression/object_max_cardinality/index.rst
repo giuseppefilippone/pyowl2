@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression_object_max_cardinality_OWLObjectMaxCardinality.png
+    .. figure:: /_uml/class_pyowl2_class_expression_object_max_cardinality_OWLObjectMaxCardinality.png
        :alt: UML Class Diagram for OWLObjectMaxCardinality
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression_object_max_cardinality_OWLObjectMaxCardinality.pdf
+    .. figure:: /_uml/class_pyowl2_class_expression_object_max_cardinality_OWLObjectMaxCardinality.pdf
        :alt: UML Class Diagram for OWLObjectMaxCardinality
        :align: center
        :width: 100%

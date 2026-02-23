@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_data_property_assertion_OWLDataPropertyAssertion.png
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_data_property_assertion_OWLDataPropertyAssertion.png
        :alt: UML Class Diagram for OWLDataPropertyAssertion
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_data_property_assertion_OWLDataPropertyAssertion.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_data_property_assertion_OWLDataPropertyAssertion.pdf
        :alt: UML Class Diagram for OWLDataPropertyAssertion
        :align: center
        :width: 100%

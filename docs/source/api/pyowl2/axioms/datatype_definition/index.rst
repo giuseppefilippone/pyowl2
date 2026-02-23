@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_datatype_definition_OWLDatatypeDefinition.png
+    .. figure:: /_uml/class_pyowl2_axioms_datatype_definition_OWLDatatypeDefinition.png
        :alt: UML Class Diagram for OWLDatatypeDefinition
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_datatype_definition_OWLDatatypeDefinition.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_datatype_definition_OWLDatatypeDefinition.pdf
        :alt: UML Class Diagram for OWLDatatypeDefinition
        :align: center
        :width: 13.7cm

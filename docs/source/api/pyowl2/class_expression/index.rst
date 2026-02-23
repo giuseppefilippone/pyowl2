@@ -3,7 +3,7 @@ pyowl2.class_expression
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression.png
+    .. figure:: /_uml/module_pyowl2_class_expression.png
        :alt: UML Class Diagram for pyowl2.class_expression
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.class_expression
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression.pdf
+    .. figure:: /_uml/module_pyowl2_class_expression.pdf
        :alt: UML Class Diagram for pyowl2.class_expression
        :align: center
        :width: 100%

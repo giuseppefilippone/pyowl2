@@ -40,7 +40,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_clear_RDFXMLClear.png
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_clear_RDFXMLClear.png
        :alt: UML Class Diagram for RDFXMLClear
        :align: center
        :width: 100%
@@ -50,7 +50,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_clear_RDFXMLClear.pdf
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_clear_RDFXMLClear.pdf
        :alt: UML Class Diagram for RDFXMLClear
        :align: center
        :width: 100%

@@ -3,7 +3,7 @@ pyowl2.axioms
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms.png
+    .. figure:: /_uml/module_pyowl2_axioms.png
        :alt: UML Class Diagram for pyowl2.axioms
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.axioms
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms.pdf
+    .. figure:: /_uml/module_pyowl2_axioms.pdf
        :alt: UML Class Diagram for pyowl2.axioms
        :align: center
        :width: 9.6cm

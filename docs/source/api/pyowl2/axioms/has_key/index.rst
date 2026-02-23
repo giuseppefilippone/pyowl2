@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_has_key_OWLHasKey.png
+    .. figure:: /_uml/class_pyowl2_axioms_has_key_OWLHasKey.png
        :alt: UML Class Diagram for OWLHasKey
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_has_key_OWLHasKey.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_has_key_OWLHasKey.pdf
        :alt: UML Class Diagram for OWLHasKey
        :align: center
        :width: 100%

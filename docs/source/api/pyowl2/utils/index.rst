@@ -3,7 +3,7 @@ pyowl2.utils
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_utils.png
+    .. figure:: /_uml/module_pyowl2_utils.png
        :alt: UML Class Diagram for pyowl2.utils
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.utils
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_utils.pdf
+    .. figure:: /_uml/module_pyowl2_utils.pdf
        :alt: UML Class Diagram for pyowl2.utils
        :align: center
        :width: 100%

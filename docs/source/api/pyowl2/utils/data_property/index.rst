@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_utils_data_property_OWLFullDataProperty.png
+    .. figure:: /_uml/class_pyowl2_utils_data_property_OWLFullDataProperty.png
        :alt: UML Class Diagram for OWLFullDataProperty
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_utils_data_property_OWLFullDataProperty.pdf
+    .. figure:: /_uml/class_pyowl2_utils_data_property_OWLFullDataProperty.pdf
        :alt: UML Class Diagram for OWLFullDataProperty
        :align: center
        :width: 100%

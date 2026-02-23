@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range_data_one_of_OWLDataOneOf.png
+    .. figure:: /_uml/class_pyowl2_data_range_data_one_of_OWLDataOneOf.png
        :alt: UML Class Diagram for OWLDataOneOf
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range_data_one_of_OWLDataOneOf.pdf
+    .. figure:: /_uml/class_pyowl2_data_range_data_one_of_OWLDataOneOf.pdf
        :alt: UML Class Diagram for OWLDataOneOf
        :align: center
-       :width: 12.2cm
+       :width: 8.4cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLDataOneOf**

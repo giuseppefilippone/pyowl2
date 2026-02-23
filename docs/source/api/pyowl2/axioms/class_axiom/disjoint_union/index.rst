@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_class_axiom_disjoint_union_OWLDisjointUnion.png
+    .. figure:: /_uml/class_pyowl2_axioms_class_axiom_disjoint_union_OWLDisjointUnion.png
        :alt: UML Class Diagram for OWLDisjointUnion
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_class_axiom_disjoint_union_OWLDisjointUnion.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_class_axiom_disjoint_union_OWLDisjointUnion.pdf
        :alt: UML Class Diagram for OWLDisjointUnion
        :align: center
        :width: 100%

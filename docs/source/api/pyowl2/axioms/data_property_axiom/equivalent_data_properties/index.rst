@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_equivalent_data_properties_OWLEquivalentDataProperties.png
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_equivalent_data_properties_OWLEquivalentDataProperties.png
        :alt: UML Class Diagram for OWLEquivalentDataProperties
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_data_property_axiom_equivalent_data_properties_OWLEquivalentDataProperties.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_data_property_axiom_equivalent_data_properties_OWLEquivalentDataProperties.pdf
        :alt: UML Class Diagram for OWLEquivalentDataProperties
        :align: center
        :width: 100%

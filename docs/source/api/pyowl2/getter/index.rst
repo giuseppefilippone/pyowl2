@@ -3,7 +3,7 @@ pyowl2.getter
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_getter.png
+    .. figure:: /_uml/module_pyowl2_getter.png
        :alt: UML Class Diagram for pyowl2.getter
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.getter
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_getter.pdf
+    .. figure:: /_uml/module_pyowl2_getter.pdf
        :alt: UML Class Diagram for pyowl2.getter
        :align: center
        :width: 100%

@@ -35,7 +35,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLLiteral.png
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLLiteral.png
        :alt: UML Class Diagram for OWLLiteral
        :align: center
        :width: 100%
@@ -45,7 +45,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLLiteral.pdf
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLLiteral.pdf
        :alt: UML Class Diagram for OWLLiteral
        :align: center
        :width: 100%
@@ -234,7 +234,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLStringLiteralNoLanguage.png
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLStringLiteralNoLanguage.png
        :alt: UML Class Diagram for OWLStringLiteralNoLanguage
        :align: center
        :width: 100%
@@ -244,10 +244,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLStringLiteralNoLanguage.pdf
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLStringLiteralNoLanguage.pdf
        :alt: UML Class Diagram for OWLStringLiteralNoLanguage
        :align: center
-       :width: 8.0cm
+       :width: 6.8cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLStringLiteralNoLanguage**
@@ -303,7 +303,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLStringLiteralWithLanguage.png
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLStringLiteralWithLanguage.png
        :alt: UML Class Diagram for OWLStringLiteralWithLanguage
        :align: center
        :width: 100%
@@ -313,10 +313,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLStringLiteralWithLanguage.pdf
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLStringLiteralWithLanguage.pdf
        :alt: UML Class Diagram for OWLStringLiteralWithLanguage
        :align: center
-       :width: 9.4cm
+       :width: 8.4cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLStringLiteralWithLanguage**
@@ -388,7 +388,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLTypedLiteral.png
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLTypedLiteral.png
        :alt: UML Class Diagram for OWLTypedLiteral
        :align: center
        :width: 100%
@@ -398,7 +398,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_literal_literal_OWLTypedLiteral.pdf
+    .. figure:: /_uml/class_pyowl2_literal_literal_OWLTypedLiteral.pdf
        :alt: UML Class Diagram for OWLTypedLiteral
        :align: center
        :width: 10.6cm

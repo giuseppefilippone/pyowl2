@@ -3,7 +3,7 @@ pyowl2.axioms.object_property_axiom
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom.png
+    .. figure:: /_uml/module_pyowl2_axioms_object_property_axiom.png
        :alt: UML Class Diagram for pyowl2.axioms.object_property_axiom
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.axioms.object_property_axiom
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom.pdf
+    .. figure:: /_uml/module_pyowl2_axioms_object_property_axiom.pdf
        :alt: UML Class Diagram for pyowl2.axioms.object_property_axiom
        :align: center
        :width: 100%

@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_annotation_value_OWLAnnotationValue.png
+    .. figure:: /_uml/class_pyowl2_abstracts_annotation_value_OWLAnnotationValue.png
        :alt: UML Class Diagram for OWLAnnotationValue
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_annotation_value_OWLAnnotationValue.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_annotation_value_OWLAnnotationValue.pdf
        :alt: UML Class Diagram for OWLAnnotationValue
        :align: center
-       :width: 12.4cm
+       :width: 6.2cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLAnnotationValue**

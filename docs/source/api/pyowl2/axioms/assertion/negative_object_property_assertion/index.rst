@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_negative_object_property_assertion_OWLNegativeObjectPropertyAssertion.png
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_negative_object_property_assertion_OWLNegativeObjectPropertyAssertion.png
        :alt: UML Class Diagram for OWLNegativeObjectPropertyAssertion
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_assertion_negative_object_property_assertion_OWLNegativeObjectPropertyAssertion.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_assertion_negative_object_property_assertion_OWLNegativeObjectPropertyAssertion.pdf
        :alt: UML Class Diagram for OWLNegativeObjectPropertyAssertion
        :align: center
        :width: 100%

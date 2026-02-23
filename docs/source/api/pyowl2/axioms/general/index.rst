@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_general_OWLGeneralClassAxiom.png
+    .. figure:: /_uml/class_pyowl2_axioms_general_OWLGeneralClassAxiom.png
        :alt: UML Class Diagram for OWLGeneralClassAxiom
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_general_OWLGeneralClassAxiom.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_general_OWLGeneralClassAxiom.pdf
        :alt: UML Class Diagram for OWLGeneralClassAxiom
        :align: center
        :width: 100%

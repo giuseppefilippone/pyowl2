@@ -3,7 +3,7 @@ pyowl2.literal
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_literal.png
+    .. figure:: /_uml/module_pyowl2_literal.png
        :alt: UML Class Diagram for pyowl2.literal
        :align: center
        :width: 100%
@@ -19,7 +19,7 @@ pyowl2.literal
 
        \vspace*{\fill}
 
-    .. figure:: /_uml/pyowl2_literal.pdf
+    .. figure:: /_uml/module_pyowl2_literal.pdf
        :alt: UML Class Diagram for pyowl2.literal
        :align: center
        :width: 100%

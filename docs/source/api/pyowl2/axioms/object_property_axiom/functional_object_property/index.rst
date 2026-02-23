@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom_functional_object_property_OWLFunctionalObjectProperty.png
+    .. figure:: /_uml/class_pyowl2_axioms_object_property_axiom_functional_object_property_OWLFunctionalObjectProperty.png
        :alt: UML Class Diagram for OWLFunctionalObjectProperty
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom_functional_object_property_OWLFunctionalObjectProperty.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_object_property_axiom_functional_object_property_OWLFunctionalObjectProperty.pdf
        :alt: UML Class Diagram for OWLFunctionalObjectProperty
        :align: center
        :width: 100%

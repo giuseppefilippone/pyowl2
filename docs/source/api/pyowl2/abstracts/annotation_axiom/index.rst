@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_annotation_axiom_OWLAnnotationAxiom.png
+    .. figure:: /_uml/class_pyowl2_abstracts_annotation_axiom_OWLAnnotationAxiom.png
        :alt: UML Class Diagram for OWLAnnotationAxiom
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_annotation_axiom_OWLAnnotationAxiom.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_annotation_axiom_OWLAnnotationAxiom.pdf
        :alt: UML Class Diagram for OWLAnnotationAxiom
        :align: center
-       :width: 100%
+       :width: 13.8cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLAnnotationAxiom**

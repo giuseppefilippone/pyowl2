@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_individual_anonymous_individual_OWLAnonymousIndividual.png
+    .. figure:: /_uml/class_pyowl2_individual_anonymous_individual_OWLAnonymousIndividual.png
        :alt: UML Class Diagram for OWLAnonymousIndividual
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_individual_anonymous_individual_OWLAnonymousIndividual.pdf
+    .. figure:: /_uml/class_pyowl2_individual_anonymous_individual_OWLAnonymousIndividual.pdf
        :alt: UML Class Diagram for OWLAnonymousIndividual
        :align: center
        :width: 12.1cm

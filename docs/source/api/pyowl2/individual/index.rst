@@ -3,7 +3,7 @@ pyowl2.individual
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_individual.png
+    .. figure:: /_uml/module_pyowl2_individual.png
        :alt: UML Class Diagram for pyowl2.individual
        :align: center
        :width: 100%
@@ -13,25 +13,13 @@ pyowl2.individual
 
 .. only:: latex
 
-    .. raw:: latex
-
-       \begin{landscape}
-
-       \vspace*{\fill}
-
-    .. figure:: /_uml/pyowl2_individual.pdf
+    .. figure:: /_uml/module_pyowl2_individual.pdf
        :alt: UML Class Diagram for pyowl2.individual
        :align: center
        :width: 100%
        :class: uml-diagram
 
        UML Class Diagram for **pyowl2.individual**
-
-    .. raw:: latex
-
-       \vspace*{\fill}
-
-       \end{landscape}
 
 .. py:module:: pyowl2.individual
 

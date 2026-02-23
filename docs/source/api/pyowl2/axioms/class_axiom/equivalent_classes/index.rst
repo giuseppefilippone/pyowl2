@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_class_axiom_equivalent_classes_OWLEquivalentClasses.png
+    .. figure:: /_uml/class_pyowl2_axioms_class_axiom_equivalent_classes_OWLEquivalentClasses.png
        :alt: UML Class Diagram for OWLEquivalentClasses
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_class_axiom_equivalent_classes_OWLEquivalentClasses.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_class_axiom_equivalent_classes_OWLEquivalentClasses.pdf
        :alt: UML Class Diagram for OWLEquivalentClasses
        :align: center
        :width: 100%

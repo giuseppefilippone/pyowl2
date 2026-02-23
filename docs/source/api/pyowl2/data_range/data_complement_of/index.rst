@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_data_range_data_complement_of_OWLDataComplementOf.png
+    .. figure:: /_uml/class_pyowl2_data_range_data_complement_of_OWLDataComplementOf.png
        :alt: UML Class Diagram for OWLDataComplementOf
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_data_range_data_complement_of_OWLDataComplementOf.pdf
+    .. figure:: /_uml/class_pyowl2_data_range_data_complement_of_OWLDataComplementOf.pdf
        :alt: UML Class Diagram for OWLDataComplementOf
        :align: center
-       :width: 13.4cm
+       :width: 9.6cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLDataComplementOf**

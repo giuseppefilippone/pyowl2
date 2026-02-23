@@ -35,7 +35,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_utils_thing_OWLFullClass.png
+    .. figure:: /_uml/class_pyowl2_utils_thing_OWLFullClass.png
        :alt: UML Class Diagram for OWLFullClass
        :align: center
        :width: 100%
@@ -45,7 +45,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_utils_thing_OWLFullClass.pdf
+    .. figure:: /_uml/class_pyowl2_utils_thing_OWLFullClass.pdf
        :alt: UML Class Diagram for OWLFullClass
        :align: center
        :width: 100%

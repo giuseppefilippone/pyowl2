@@ -49,7 +49,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_getter_AxiomsType.png
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_getter_AxiomsType.png
        :alt: UML Class Diagram for AxiomsType
        :align: center
        :width: 100%
@@ -59,10 +59,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_getter_AxiomsType.pdf
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_getter_AxiomsType.pdf
        :alt: UML Class Diagram for AxiomsType
        :align: center
-       :width: 6.8cm
+       :width: 3.4cm
        :class: uml-diagram
 
        UML Class Diagram for **AxiomsType**
@@ -412,7 +412,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_getter_RDFXMLGetter.png
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_getter_RDFXMLGetter.png
        :alt: UML Class Diagram for RDFXMLGetter
        :align: center
        :width: 100%
@@ -422,7 +422,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_getter_rdf_xml_getter_RDFXMLGetter.pdf
+    .. figure:: /_uml/class_pyowl2_getter_rdf_xml_getter_RDFXMLGetter.pdf
        :alt: UML Class Diagram for RDFXMLGetter
        :align: center
        :width: 11.7cm

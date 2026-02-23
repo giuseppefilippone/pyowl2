@@ -3,7 +3,7 @@ pyowl2.abstracts
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts.png
+    .. figure:: /_uml/module_pyowl2_abstracts.png
        :alt: UML Class Diagram for pyowl2.abstracts
        :align: center
        :width: 100%
@@ -13,7 +13,7 @@ pyowl2.abstracts
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts.pdf
+    .. figure:: /_uml/module_pyowl2_abstracts.pdf
        :alt: UML Class Diagram for pyowl2.abstracts
        :align: center
        :width: 100%

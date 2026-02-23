@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_object_property_axiom_OWLObjectPropertyAxiom.png
+    .. figure:: /_uml/class_pyowl2_abstracts_object_property_axiom_OWLObjectPropertyAxiom.png
        :alt: UML Class Diagram for OWLObjectPropertyAxiom
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_object_property_axiom_OWLObjectPropertyAxiom.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_object_property_axiom_OWLObjectPropertyAxiom.pdf
        :alt: UML Class Diagram for OWLObjectPropertyAxiom
        :align: center
-       :width: 100%
+       :width: 13.8cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLObjectPropertyAxiom**

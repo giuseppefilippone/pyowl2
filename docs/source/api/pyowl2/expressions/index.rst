@@ -3,7 +3,7 @@ pyowl2.expressions
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_expressions.png
+    .. figure:: /_uml/module_pyowl2_expressions.png
        :alt: UML Class Diagram for pyowl2.expressions
        :align: center
        :width: 100%
@@ -19,7 +19,7 @@ pyowl2.expressions
 
        \vspace*{\fill}
 
-    .. figure:: /_uml/pyowl2_expressions.pdf
+    .. figure:: /_uml/module_pyowl2_expressions.pdf
        :alt: UML Class Diagram for pyowl2.expressions
        :align: center
        :width: 100%

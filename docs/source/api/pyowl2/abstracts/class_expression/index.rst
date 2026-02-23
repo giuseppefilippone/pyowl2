@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_abstracts_class_expression_OWLClassExpression.png
+    .. figure:: /_uml/class_pyowl2_abstracts_class_expression_OWLClassExpression.png
        :alt: UML Class Diagram for OWLClassExpression
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_abstracts_class_expression_OWLClassExpression.pdf
+    .. figure:: /_uml/class_pyowl2_abstracts_class_expression_OWLClassExpression.pdf
        :alt: UML Class Diagram for OWLClassExpression
        :align: center
-       :width: 9.6cm
+       :width: 6.2cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLClassExpression**

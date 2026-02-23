@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression_object_has_value_OWLObjectHasValue.png
+    .. figure:: /_uml/class_pyowl2_class_expression_object_has_value_OWLObjectHasValue.png
        :alt: UML Class Diagram for OWLObjectHasValue
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression_object_has_value_OWLObjectHasValue.pdf
+    .. figure:: /_uml/class_pyowl2_class_expression_object_has_value_OWLObjectHasValue.pdf
        :alt: UML Class Diagram for OWLObjectHasValue
        :align: center
        :width: 13.5cm

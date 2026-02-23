@@ -55,15 +55,15 @@ logger.setLevel(DEBUG)
 
 # ─── configuration defaults ───────────────────────────────────────────
 _DEFAULTS: dict[str, Any] = {
-    "uml_dpi": 300,
-    "uml_output_dir": "_uml",
-    "uml_font_name": "Sans",
-    "uml_font_size": 12,
-    "uml_max_inheritance_depth": 3,
-    "uml_association_depth": 1,
-    "uml_show_private": False,
-    "uml_rankdir": "RL",
-    "uml_backend": "auto",
+    "uml_dpi": 150,  # PNG resolution (DPI)
+    "uml_output_dir": "_uml",  # image dir (relative to docs srcdir)
+    "uml_font_name": "Sans",  # Graphviz font family (e.g. "Sans", "Helvetica", "Times")
+    "uml_font_size": 12,  # base font size (pt) — Graphviz scales all other fonts proportionally
+    "uml_max_inheritance_depth": 1,  # ancestor levels (pyreverse -a)
+    "uml_association_depth": 0,  # associated-class depth (pyreverse -s)
+    "uml_show_private": False,  # include _private members
+    "uml_rankdir": "LR",  # graph direction: TB | BT | LR | RL
+    "uml_backend": "auto",  # "pyreverse" | "inspect" | "auto"
 }
 
 # A4 text area with Sphinx's default LaTeX margins.
@@ -228,7 +228,7 @@ def _on_builder_inited(app: Sphinx) -> None:
     generated: set[str] = set()  # FQNs with successful PNGs
 
     for fqn, src_file in classes:
-        safe = fqn.replace(".", "_")
+        safe = "class_" + fqn.replace(".", "_")
         base = uml_dir / safe
         ok = os.path.exists(str(base) + ".pdf")  # False
 
@@ -260,7 +260,7 @@ def _on_builder_inited(app: Sphinx) -> None:
 
     generated.clear()
     for fqn, src_file in modules:
-        safe = fqn.replace(".", "_")
+        safe = "module_" + fqn.replace(".", "_")
         base = uml_dir / safe
         ok = os.path.exists(str(base) + ".pdf")  # False
 
@@ -337,7 +337,7 @@ def _on_builder_inited(app: Sphinx) -> None:
             if cls_m and "figure::" not in text:
                 class_short = cls_m.group(2)
                 fqn = f"{module_fqn}.{class_short}"
-                safe = fqn.replace(".", "_")
+                safe = "class_" + fqn.replace(".", "_")
                 png_path: Path = uml_dir / f"{safe}.png"
                 pdf_path: Path = uml_dir / f"{safe}.pdf"
 
@@ -382,7 +382,7 @@ def _on_builder_inited(app: Sphinx) -> None:
 
             if module_m and "py:class" not in text and "figure::" not in text:
                 fqn = module_fqn
-                safe = fqn.replace(".", "_")
+                safe = "module_" + fqn.replace(".", "_")
                 png_path: Path = uml_dir / f"{safe}.png"
                 pdf_path: Path = uml_dir / f"{safe}.pdf"
 

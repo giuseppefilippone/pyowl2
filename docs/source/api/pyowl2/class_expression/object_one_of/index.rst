@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression_object_one_of_OWLObjectOneOf.png
+    .. figure:: /_uml/class_pyowl2_class_expression_object_one_of_OWLObjectOneOf.png
        :alt: UML Class Diagram for OWLObjectOneOf
        :align: center
        :width: 100%
@@ -41,10 +41,10 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression_object_one_of_OWLObjectOneOf.pdf
+    .. figure:: /_uml/class_pyowl2_class_expression_object_one_of_OWLObjectOneOf.pdf
        :alt: UML Class Diagram for OWLObjectOneOf
        :align: center
-       :width: 11.4cm
+       :width: 9.9cm
        :class: uml-diagram
 
        UML Class Diagram for **OWLObjectOneOf**

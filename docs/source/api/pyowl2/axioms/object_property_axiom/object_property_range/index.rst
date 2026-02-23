@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom_object_property_range_OWLObjectPropertyRange.png
+    .. figure:: /_uml/class_pyowl2_axioms_object_property_axiom_object_property_range_OWLObjectPropertyRange.png
        :alt: UML Class Diagram for OWLObjectPropertyRange
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_axioms_object_property_axiom_object_property_range_OWLObjectPropertyRange.pdf
+    .. figure:: /_uml/class_pyowl2_axioms_object_property_axiom_object_property_range_OWLObjectPropertyRange.pdf
        :alt: UML Class Diagram for OWLObjectPropertyRange
        :align: center
        :width: 100%

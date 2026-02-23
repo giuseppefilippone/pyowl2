@@ -31,7 +31,7 @@ Module Contents
 
 .. only:: html
 
-    .. figure:: /_uml/pyowl2_class_expression_object_exact_cardinality_OWLObjectExactCardinality.png
+    .. figure:: /_uml/class_pyowl2_class_expression_object_exact_cardinality_OWLObjectExactCardinality.png
        :alt: UML Class Diagram for OWLObjectExactCardinality
        :align: center
        :width: 100%
@@ -41,7 +41,7 @@ Module Contents
 
 .. only:: latex
 
-    .. figure:: /_uml/pyowl2_class_expression_object_exact_cardinality_OWLObjectExactCardinality.pdf
+    .. figure:: /_uml/class_pyowl2_class_expression_object_exact_cardinality_OWLObjectExactCardinality.pdf
        :alt: UML Class Diagram for OWLObjectExactCardinality
        :align: center
        :width: 100%
