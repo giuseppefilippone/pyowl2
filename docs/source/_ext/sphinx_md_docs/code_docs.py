@@ -20,12 +20,14 @@ import ast
 import logging
 import sys
 import textwrap
+import typing
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_ollama import ChatOllama
+if typing.TYPE_CHECKING:
+    from langchain_core.messages import HumanMessage, SystemMessage
+    from langchain_ollama import ChatOllama
 
 # ──────────────────────────────────────────────
 # Logging
@@ -248,6 +250,8 @@ PKG_SYSTEM = textwrap.dedent(
 
 
 def _llm_call(llm: ChatOllama, system: str, user: str) -> str:
+    from langchain_core.messages import HumanMessage, SystemMessage  # noqa: F811
+
     try:
         resp = llm.invoke(
             [
@@ -433,6 +437,8 @@ def _iter_modules(pkg: PackageInfo):
 
 
 def process_library(output_dir: Path, source_dir: Path, model: str) -> None:
+    from langchain_ollama import ChatOllama  # noqa: F811
+
     if not source_dir.is_dir():
         log.error("[md_injector] Source directory does not exist: %s", source_dir)
         sys.exit(1)

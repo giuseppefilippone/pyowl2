@@ -50,12 +50,12 @@ from __future__ import annotations
 import re
 from logging import DEBUG
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from sphinx.application import Sphinx
 from sphinx.util import logging
 
-from .code_docs import process_library
+if TYPE_CHECKING:
+    from sphinx.application import Sphinx
 
 __version__ = "1.0.0"
 
@@ -325,9 +325,19 @@ def _on_builder_inited(app: Sphinx) -> None:
     if not md_dir.is_absolute():
         md_dir = Path(app.confdir) / md_dir
 
-    logger.debug("[md_injector] Starting to process library for Markdown generation...")
-    process_library(md_dir, Path((Path(app.confdir) / app.config.autoapi_dirs[0]).resolve()), LLM_MODEL)
-    logger.debug("[md_injector] Finished processing library.")
+    if app.config.sphinx_md_injector_generate:
+        logger.debug(
+            "[md_injector] Starting to process library for Markdown generation..."
+        )
+        # Lazy import — langchain is only needed here
+        from .code_docs import process_library  # noqa: F811
+
+        process_library(
+            md_dir,
+            Path((Path(app.confdir) / app.config.autoapi_dirs[0]).resolve()),
+            LLM_MODEL,
+        )
+        logger.debug("[md_injector] Finished processing library.")
 
     if not md_dir.is_dir():
         logger.error("[md_injector] Markdown directory does not exist: %s", md_dir)
@@ -384,6 +394,7 @@ def setup(app: Sphinx) -> dict[str, Any]:
 
     # Config values
     app.add_config_value("sphinx_md_injector_dir", default="", rebuild="env")
+    app.add_config_value("sphinx_md_injector_generate", default=False, rebuild="env")
     app.add_config_value("sphinx_md_injector_autoapi_root", default=None, rebuild="env")
 
     # Events
