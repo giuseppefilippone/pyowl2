@@ -11,7 +11,7 @@ class OWLClass(OWLClassExpression, OWLEntity):
     """
     Represents a named class within an OWL ontology, functioning as a conceptual grouping for individuals that share specific characteristics or properties. It is uniquely identified by an Internationalized Resource Identifier (IRI), which serves as the definitive reference for the class in axioms and assertions. To define a specific concept, instances are created by providing an IRI, such as a URI representing "Person" or "Vehicle." The class also provides static methods to access the universal class (`owl:Thing`) and the empty class (`owl:Nothing`), enabling the representation of the top and bottom elements of the class hierarchy. As a subclass of both `OWLClassExpression` and `OWLEntity`, it serves as a fundamental building block for constructing complex logical descriptions and defining relationships within the ontology.
 
-    :parm iri: Stores the Internationalized Resource Identifier (IRI) that uniquely identifies the class within the ontology, used for referencing the class in axioms and assertions.
+    :param iri: Stores the Internationalized Resource Identifier (IRI) that uniquely identifies the class within the ontology, used for referencing the class in axioms and assertions.
     :type iri: typing.Union[URIRef, IRI]
     """
 

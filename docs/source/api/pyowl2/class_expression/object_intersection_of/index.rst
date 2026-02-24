@@ -60,7 +60,7 @@ Module Contents
 
    This class expression models the logical intersection of multiple class expressions, defining a set of individuals that belong to all specified operands. It is constructed using a list of `OWLClassExpression` instances, which must contain at least two elements to form a valid intersection. Upon initialization or modification, the constituent expressions are automatically sorted to ensure a canonical representation, meaning the order of input does not affect the internal state or equality.
 
-   :parm classes_expressions: A sorted list of class expressions representing the operands of the intersection, guaranteed to contain at least two elements.
+   :param classes_expressions: A sorted list of class expressions representing the operands of the intersection, guaranteed to contain at least two elements.
    :type classes_expressions: list[OWLClassExpression]
 
 

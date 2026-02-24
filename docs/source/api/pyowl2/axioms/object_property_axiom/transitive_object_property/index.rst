@@ -60,7 +60,7 @@ Module Contents
 
    This class represents an axiom in the Web Ontology Language (OWL) that declares a specific object property to be transitive. By defining a property as transitive, the ontology enables logical inference where if the property relates individual A to individual B and individual B to individual C, it must also relate individual A to individual C. To use this class, instantiate it with the target `OWLObjectPropertyExpression` that requires this characteristic, optionally providing a list of annotations to attach metadata or context to the axiom.
 
-   :parm object_property_expression: The object property expression that is declared to be transitive.
+   :param object_property_expression: The object property expression that is declared to be transitive.
    :type object_property_expression: OWLObjectPropertyExpression
 
 

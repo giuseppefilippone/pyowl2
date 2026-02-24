@@ -60,7 +60,7 @@ Module Contents
 
    This entity represents a specific category of data values within an ontology, such as integers, strings, or dates, effectively defining a set of permissible values. It is uniquely identified by an Internationalized Resource Identifier (IRI), which links the datatype to standard definitions like those found in the XML Schema (XSD) or OWL namespaces. Users can instantiate this class with an IRI to define custom or standard datatypes, and utilize the provided helper methods to verify if the instance corresponds to common numeric, boolean, string, or date types. As a subclass of `OWLEntity` and `OWLDataRange`, it serves as a fundamental building block for typing data properties and literals in semantic web applications.
 
-   :parm iri: Stores the unique Internationalized Resource Identifier (IRI) that identifies the datatype. This value determines the specific nature of the data range (e.g., integer, string) and is used for unambiguous reference within the ontology.
+   :param iri: Stores the unique Internationalized Resource Identifier (IRI) that identifies the datatype. This value determines the specific nature of the data range (e.g., integer, string) and is used for unambiguous reference within the ontology.
    :type iri: typing.Union[IRI, URIRef]
 
 

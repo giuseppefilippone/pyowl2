@@ -10,7 +10,7 @@ class OWLNamedIndividual(OWLIndividual):
     """
     This class represents a specific entity within an OWL ontology that is distinguished by a unique Internationalized Resource Identifier (IRI). Unlike anonymous individuals, this entity possesses a persistent, globally resolvable identifier that allows it to be unambiguously referenced in axioms and assertions. It is typically used to model concrete instances of classes, such as specific people, objects, or data points, and provides mechanisms to initialize, access, and modify its associated IRI.
 
-    :parm iri: The unique Internationalized Resource Identifier (IRI) that identifies the named individual within the ontology, allowing for unambiguous reference in axioms and assertions.
+    :param iri: The unique Internationalized Resource Identifier (IRI) that identifies the named individual within the ontology, allowing for unambiguous reference in axioms and assertions.
     :type iri: typing.Union[URIRef, IRI]
     """
 

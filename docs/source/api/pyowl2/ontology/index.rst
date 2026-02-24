@@ -53,21 +53,21 @@ Module Contents
 
    This class provides a comprehensive interface for creating, manipulating, and persisting OWL (Web Ontology Language) ontologies. It acts as a central container for knowledge representation, managing entities such as classes, properties, individuals, and the axioms that define their logical relationships. Users can initialize the instance with a base IRI to create a new ontology or provide a file path to load an existing one. The class facilitates the addition of complex logical structures through methods that handle declarations, domains, ranges, and nested axioms, while also offering robust capabilities for attaching metadata annotations to the ontology itself, specific elements, or individual relations. Internally, it utilizes mapping and retrieval components to translate high-level objects into RDF/XML and query the underlying graph, ultimately supporting the export of the ontology to various file formats.
 
-   :parm ontology_iri: The Internationalized Resource Identifier (IRI) that uniquely identifies the ontology. It serves as the base IRI for the namespace and is used to retrieve or create the ontology instance within the underlying world.
+   :param ontology_iri: The Internationalized Resource Identifier (IRI) that uniquely identifies the ontology. It serves as the base IRI for the namespace and is used to retrieve or create the ontology instance within the underlying world.
    :type ontology_iri: typing.Optional[URIRef]
-   :parm axioms: A list of axioms that define the logical statements and relationships within the ontology.
+   :param axioms: A list of axioms that define the logical statements and relationships within the ontology.
    :type axioms: list[OWLAxiom]
-   :parm ontology_annotations: Internal storage for the list of annotations providing metadata about the ontology itself, such as creator, version, or other descriptive details.
+   :param ontology_annotations: Internal storage for the list of annotations providing metadata about the ontology itself, such as creator, version, or other descriptive details.
    :type ontology_annotations: typing.Optional[list[OWLAnnotation]]
-   :parm world: The World instance that manages the ontology's context and provides access to the underlying RDF graph.
+   :param world: The World instance that manages the ontology's context and provides access to the underlying RDF graph.
    :type world: World
-   :parm ontology: The underlying ontology instance managed by the World object, serving as the core data structure for storing, loading, and persisting the ontology's contents.
+   :param ontology: The underlying ontology instance managed by the World object, serving as the core data structure for storing, loading, and persisting the ontology's contents.
    :type ontology: Ontology
-   :parm clear: An instance used to clear the ontology's content during initialization, ensuring a clean state for newly created ontologies.
+   :param clear: An instance used to clear the ontology's content during initialization, ensuring a clean state for newly created ontologies.
    :type clear: RDFXMLClear
-   :parm mapper: Internal component that maps OWL axioms and annotations to the underlying RDF graph, enabling the translation of high-level ontology constructs into a storable format.
+   :param mapper: Internal component that maps OWL axioms and annotations to the underlying RDF graph, enabling the translation of high-level ontology constructs into a storable format.
    :type mapper: RDFXMLMapper
-   :parm getter: Responsible for retrieving axioms and annotations from the ontology, providing methods to query and extract specific elements based on various criteria.
+   :param getter: Responsible for retrieving axioms and annotations from the ontology, providing methods to query and extract specific elements based on various criteria.
    :type getter: RDFXMLGetter
 
 

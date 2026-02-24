@@ -60,9 +60,9 @@ Module Contents
 
    This class represents an OWL object property restriction that defines a class of individuals which must be related to a specific, named individual via a particular object property. It is used to express exact value constraints, such as defining the class of "people who have a specific child" or "cities located at a specific coordinate." To use this class, instantiate it with an `OWLObjectPropertyExpression` that defines the relationship and an `OWLIndividual` that serves as the required target value. This restriction can then be employed as a class expression within axioms to construct complex logical definitions or to assert necessary conditions for class membership in an ontology.
 
-   :parm object_property_expression: The object property expression defining the relationship between the subject individual and the specific individual value in the restriction.
+   :param object_property_expression: The object property expression defining the relationship between the subject individual and the specific individual value in the restriction.
    :type object_property_expression: OWLObjectPropertyExpression
-   :parm individual: The specific individual instance that the subject must be related to via the object property expression to satisfy the restriction.
+   :param individual: The specific individual instance that the subject must be related to via the object property expression to satisfy the restriction.
    :type individual: OWLIndividual
 
 

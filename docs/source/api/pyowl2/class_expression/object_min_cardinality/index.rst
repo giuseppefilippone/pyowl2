@@ -60,11 +60,11 @@ Module Contents
 
    This class models a restriction that requires an individual to be linked to at least a specific number of other individuals through a defined object property. To use it, instantiate the class with a non-negative integer representing the minimum count, an object property expression describing the relationship, and an optional class expression to filter the type of the target individuals. If the class expression is omitted, the restriction applies to any related individual; if included, it creates a qualified restriction where the targets must also belong to the specified class. As a subclass of class expression, it can be nested within other logical constructs to define complex ontology axioms.
 
-   :parm cardinality: The non-negative integer value representing the minimum number of individuals that the subject individual must be related to via the specified object property.
+   :param cardinality: The non-negative integer value representing the minimum number of individuals that the subject individual must be related to via the specified object property.
    :type cardinality: int
-   :parm object_property_expression: The object property expression defining the relationship that the subject individual must satisfy a minimum number of times. It can be a simple property or a complex expression involving inverses or property chains.
+   :param object_property_expression: The object property expression defining the relationship that the subject individual must satisfy a minimum number of times. It can be a simple property or a complex expression involving inverses or property chains.
    :type object_property_expression: OWLObjectPropertyExpression
-   :parm class_expression: Optional class expression that restricts the type of individuals counted towards the minimum cardinality. If provided, the restriction is qualified, requiring related individuals to be instances of this class; if omitted, the restriction applies to any related individual.
+   :param class_expression: Optional class expression that restricts the type of individuals counted towards the minimum cardinality. If provided, the restriction is qualified, requiring related individuals to be instances of this class; if omitted, the restriction applies to any related individual.
    :type class_expression: typing.Optional[OWLClassExpression]
 
 

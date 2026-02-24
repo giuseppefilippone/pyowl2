@@ -9,7 +9,7 @@ class OWLEquivalentObjectProperties(OWLObjectPropertyAxiom):
     """
     This class models an axiom used to declare that a group of object properties are semantically equivalent, implying that any relationship defined by one property holds true for the others. To utilize this class, instantiate it with a list containing at least two object property expressions; providing fewer than two will raise an assertion error. The input expressions are automatically sorted upon initialization and modification to maintain a consistent internal order, and optional annotations may be attached to provide additional context or metadata about the equivalence statement.
 
-    :parm object_property_expressions: Internal storage for the sorted list of object property expressions declared to be equivalent. The list is guaranteed to contain at least two expressions.
+    :param object_property_expressions: Internal storage for the sorted list of object property expressions declared to be equivalent. The list is guaranteed to contain at least two expressions.
     :type object_property_expressions: list[OWLObjectPropertyExpression]
     """
 

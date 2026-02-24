@@ -6,9 +6,9 @@ class OWLObjectSomeValuesFrom(OWLClassExpression):
     """
     This class models an existential restriction within the Web Ontology Language (OWL), defining a set of individuals that must be connected to at least one member of a specific class through a particular object property. It serves as a complex class expression that constrains the existence of relationships, enabling the definition of classes based on the properties of their neighbors rather than their intrinsic attributes. To utilize this restriction, one must provide an object property expression, which defines the nature of the relationship, and a class expression, which specifies the type of the related individual. This construct is fundamental for creating nuanced ontological definitions, such as describing a "Parent" as an entity that has at least one child who is a "Person".
 
-    :parm object_property_expression: The object property expression defining the relationship between the subject individual and the class expression, which may be a simple property or a complex expression involving inverses.
+    :param object_property_expression: The object property expression defining the relationship between the subject individual and the class expression, which may be a simple property or a complex expression involving inverses.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm class_expression: The class expression defining the type of individuals that the subject individual must be related to via the object property expression.
+    :param class_expression: The class expression defining the type of individuals that the subject individual must be related to via the object property expression.
     :type class_expression: OWLClassExpression
     """
 

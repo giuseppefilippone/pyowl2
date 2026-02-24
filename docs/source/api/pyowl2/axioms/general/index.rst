@@ -60,11 +60,11 @@ Module Contents
 
    This class models a logical assertion within an ontology that defines a relationship between two class expressions via a specific property. It enables the representation of complex constraints and associations by linking a subject class expression to an object class expression through an intermediate property identified by an IRI. To use this component, instantiate it with the left and right class expressions along with the property IRI, optionally providing a list of annotations to attach metadata to the axiom. The structure is fully mutable, allowing users to update the class expressions, the property IRI, or the annotations after creation to reflect changes in the underlying ontology model.
 
-   :parm left_expression: The class expression on the left side of the axiom, representing the subject of the relationship asserted by the property.
+   :param left_expression: The class expression on the left side of the axiom, representing the subject of the relationship asserted by the property.
    :type left_expression: OWLClassExpression
-   :parm property_iri: The IRI representing the property that connects the left and right class expressions, defining the specific relationship asserted by the axiom.
+   :param property_iri: The IRI representing the property that connects the left and right class expressions, defining the specific relationship asserted by the axiom.
    :type property_iri: IRI
-   :parm right_expression: The class expression on the right side of the axiom, acting as the target of the relationship asserted by the property IRI.
+   :param right_expression: The class expression on the right side of the axiom, acting as the target of the relationship asserted by the property IRI.
    :type right_expression: OWLClassExpression
 
 

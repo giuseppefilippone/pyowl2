@@ -62,11 +62,11 @@ Module Contents
 
    This utility class is designed to sanitize and restructure an ontology by removing specific RDF/XML definitions from its underlying graph. It is initialized with an ontology instance, which provides access to the associated world and RDF graph data structures. The primary functionality is exposed through a method that systematically removes type declarations for classes, properties, and lists, effectively stripping away structural definitions. Additionally, the logic performs a normalization step that replaces certain property declarations, such as inverse functional or transitive properties, with more general types like object properties. This process modifies the ontology in place, allowing for the selective clearing of semantic metadata without deleting the entire data model.
 
-   :parm ontology: The target ontology instance from which RDF/XML data structures are removed.
+   :param ontology: The target ontology instance from which RDF/XML data structures are removed.
    :type ontology: Ontology
-   :parm world: The World instance associated with the ontology, used for accessing and querying RDF triples and the underlying graph.
+   :param world: The World instance associated with the ontology, used for accessing and querying RDF triples and the underlying graph.
    :type world: World
-   :parm graph: The RDFLib graph representation of the ontology's world, providing a standard interface for querying and manipulating RDF triples.
+   :param graph: The RDFLib graph representation of the ontology's world, providing a standard interface for querying and manipulating RDF triples.
    :type graph: Graph
 
 

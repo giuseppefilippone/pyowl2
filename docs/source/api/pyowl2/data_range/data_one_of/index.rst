@@ -60,7 +60,7 @@ Module Contents
 
    This class models a data range defined by an explicit enumeration of specific literal values, effectively restricting data membership to a finite, closed set. It is utilized within ontologies to define properties that can only take on one of the pre-defined values, such as a specific set of integers or strings. Upon instantiation, the class requires a non-empty list of `OWLLiteral` objects and automatically maintains these literals in a sorted order to ensure consistency.
 
-   :parm literals: The sorted list of literal values explicitly enumerated in this data range, guaranteed to be non-empty.
+   :param literals: The sorted list of literal values explicitly enumerated in this data range, guaranteed to be non-empty.
    :type literals: list[OWLLiteral]
 
 

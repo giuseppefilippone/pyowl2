@@ -10,11 +10,11 @@ class OWLNegativeObjectPropertyAssertion(OWLAssertion):
     """
     This class represents an axiom in the Web Ontology Language (OWL) that explicitly negates a relationship between two specific individuals. It is used to assert that a given object property expression does not link a source individual to a target individual, allowing for the precise definition of what is false within an ontology. Users can instantiate this class by providing the property to be negated, the subject and object individuals, and an optional list of annotations to attach metadata to the assertion.
 
-    :parm object_property_expression: The object property expression that is asserted not to hold between the source and target individuals.
+    :param object_property_expression: The object property expression that is asserted not to hold between the source and target individuals.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm source_individual: The individual from which the relationship is asserted not to originate.
+    :param source_individual: The individual from which the relationship is asserted not to originate.
     :type source_individual: OWLIndividual
-    :parm target_individual: The individual to which the relationship is asserted not to point.
+    :param target_individual: The individual to which the relationship is asserted not to point.
     :type target_individual: OWLIndividual
     """
 

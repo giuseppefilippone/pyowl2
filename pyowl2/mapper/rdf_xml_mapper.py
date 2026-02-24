@@ -125,9 +125,9 @@ class RDFXMLMapper:
     """
     This class serves as a utility for translating OWL ontology constructs into RDF triples within an RDFLib Graph instance. It is designed to handle a wide array of OWL elements, including classes, properties, individuals, and complex axioms such as restrictions, intersections, and unions. By initializing the mapper with a target graph and an optional flag to enforce OWL 1 annotation compatibility, users can populate the graph by passing OWL objects to the `map` method, which intelligently dispatches to specific handlers based on the input type. The process involves generating appropriate URI references or blank nodes for entities and adding the corresponding triples to the graph, thereby enabling the serialization or manipulation of OWL data in a standard RDF format.
 
-    :parm graph: The RDFLib Graph instance that stores the RDF triples generated from OWL concepts.
+    :param graph: The RDFLib Graph instance that stores the RDF triples generated from OWL concepts.
     :type graph: Graph
-    :parm owl1_annotations: A boolean flag indicating whether to use OWL 1 annotation structures. When True, the mapper uses `owl:Axiom` for annotated axioms; otherwise, it uses the OWL 2 `owl:Annotation` class.
+    :param owl1_annotations: A boolean flag indicating whether to use OWL 1 annotation structures. When True, the mapper uses `owl:Axiom` for annotated axioms; otherwise, it uses the OWL 2 `owl:Annotation` class.
     :type owl1_annotations: bool
 
     :raises TypeError: Raised when the input value is not a recognized OWL entity, expression, or RDFLib type, preventing it from being mapped to an RDF triple.

@@ -9,11 +9,11 @@ class OWLDataExactCardinality(OWLClassExpression):
     """
     This class represents a restriction used in ontology modeling to define that an individual must have exactly a specific number of values for a given data property. It functions as a class expression that can be used to construct complex class definitions, ensuring that instances satisfy a precise count of data property assertions. To use this class, instantiate it with a non-negative integer representing the required cardinality, a data property expression identifying the relationship, and an optional data range to constrain the type of values counted. If the data range is provided, the restriction becomes qualified, meaning the exact count applies only to values that fall within that specific range; otherwise, the count applies to all values associated with the property.
 
-    :parm cardinality: Stores the non-negative integer defining the exact number of data property values required for an individual to satisfy this restriction.
+    :param cardinality: Stores the non-negative integer defining the exact number of data property values required for an individual to satisfy this restriction.
     :type cardinality: int
-    :parm data_property_expression: The data property expression that defines the relationship between the subject individual and the data values.
+    :param data_property_expression: The data property expression that defines the relationship between the subject individual and the data values.
     :type data_property_expression: OWLDataPropertyExpression
-    :parm data_range: Optional data range that restricts the specific values the data property must take. If provided, the restriction is qualified, requiring the exact number of values to fall within this range; otherwise, the restriction applies to any data value.
+    :param data_range: Optional data range that restricts the specific values the data property must take. If provided, the restriction is qualified, requiring the exact number of values to fall within this range; otherwise, the restriction applies to any data value.
     :type data_range: typing.Optional[OWLDataRange]
     """
 

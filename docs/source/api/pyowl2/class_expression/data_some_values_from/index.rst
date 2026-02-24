@@ -60,9 +60,9 @@ Module Contents
 
    This class represents an existential restriction on data properties, asserting that an individual must have at least one value for a specified property that falls within a particular data range. It serves to define a class of individuals based on the existence of data values satisfying specific criteria, such as having an age within a certain integer interval. When constructing an instance, users provide a list of data property expressions and the corresponding data range; internally, the list of properties is automatically sorted to maintain a consistent order regardless of the input sequence.
 
-   :parm data_property_expressions: Sorted list of data property expressions defining the properties restricted by this class. The restriction requires that an individual has at least one value for any of these properties within the specified data range.
+   :param data_property_expressions: Sorted list of data property expressions defining the properties restricted by this class. The restriction requires that an individual has at least one value for any of these properties within the specified data range.
    :type data_property_expressions: list[OWLDataPropertyExpression]
-   :parm data_range: The data range or datatype that at least one value of the associated data properties must fall within.
+   :param data_range: The data range or datatype that at least one value of the associated data properties must fall within.
    :type data_range: OWLDataRange
 
 

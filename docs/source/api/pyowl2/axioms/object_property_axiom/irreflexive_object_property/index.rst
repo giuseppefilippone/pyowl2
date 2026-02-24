@@ -60,7 +60,7 @@ Module Contents
 
    This class models an axiom within the Web Ontology Language (OWL) that declares a specific object property to be irreflexive. By asserting this axiom, a user specifies that no individual in the ontology can be related to itself through the given property expression. It is typically used to define constraints for relationships where self-reference is logically impossible or undesirable, such as "hasParent" or "isPredecessorOf". The class accepts the target property expression and an optional list of annotations to provide metadata about the axiom itself.
 
-   :parm object_property_expression: The property expression that is asserted to be irreflexive by this axiom.
+   :param object_property_expression: The property expression that is asserted to be irreflexive by this axiom.
    :type object_property_expression: OWLObjectPropertyExpression
 
 

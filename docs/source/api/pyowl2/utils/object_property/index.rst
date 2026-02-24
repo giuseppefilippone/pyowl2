@@ -62,15 +62,15 @@ Module Contents
 
    :param PROPERTY_CLASSES: A collection of axiom types that define the specific characteristics of an object property, such as symmetry, transitivity, and functionality. This list is used to filter and identify axioms that describe the property's behavior.
    :type PROPERTY_CLASSES: list[type]
-   :parm object_property: The underlying OWLObjectProperty instance representing the fundamental relationship entity in the ontology, serving as the central reference for all associated axioms and characteristics.
+   :param object_property: The underlying OWLObjectProperty instance representing the fundamental relationship entity in the ontology, serving as the central reference for all associated axioms and characteristics.
    :type object_property: OWLObjectProperty
-   :parm domain: Internal representation of the domain axiom, defining the class of individuals that can be the subject of this object property.
+   :param domain: Internal representation of the domain axiom, defining the class of individuals that can be the subject of this object property.
    :type domain: OWLObjectPropertyDomain
-   :parm range: Internal storage for the range axiom, defining the class or classes of individuals that can be the object of this property.
+   :param range: Internal storage for the range axiom, defining the class or classes of individuals that can be the object of this property.
    :type range: OWLObjectPropertyRange
-   :parm axioms: A list of axioms defining the object property's logical characteristics, relationships, restrictions, and assertions.
+   :param axioms: A list of axioms defining the object property's logical characteristics, relationships, restrictions, and assertions.
    :type axioms: list[OWLAxiom]
-   :parm annotations: Stores an optional list of annotations that provide metadata, such as comments or labels, for the object property. These annotations serve to document the property without influencing its logical semantics.
+   :param annotations: Stores an optional list of annotations that provide metadata, such as comments or labels, for the object property. These annotations serve to document the property without influencing its logical semantics.
    :type annotations: typing.Optional[list[OWLAnnotation]]
 
 

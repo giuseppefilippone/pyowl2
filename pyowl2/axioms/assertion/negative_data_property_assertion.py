@@ -11,11 +11,11 @@ class OWLNegativeDataPropertyAssertion(OWLAssertion):
     """
     This entity models a negative assertion within an ontology, formally declaring that a specific individual is not associated with a particular literal value through a given data property. It is constructed by defining a source individual, a target data value, and the data property expression that connects them, effectively stating that the relationship does not exist. Users can optionally attach a list of annotations to the axiom to provide context or metadata. The internal components—the property, the individual, and the target value—are accessible and mutable, allowing for the assertion to be inspected or modified after creation.
 
-    :parm data_property_expression: The data property expression that is asserted not to relate the source individual to the target value.
+    :param data_property_expression: The data property expression that is asserted not to relate the source individual to the target value.
     :type data_property_expression: OWLDataPropertyExpression
-    :parm source_individual: The individual that serves as the subject of the negative assertion, representing the entity that is asserted not to possess the specified data property value.
+    :param source_individual: The individual that serves as the subject of the negative assertion, representing the entity that is asserted not to possess the specified data property value.
     :type source_individual: OWLIndividual
-    :parm target_value: The concrete data value that the source individual is asserted not to possess for the given data property.
+    :param target_value: The concrete data value that the source individual is asserted not to possess for the given data property.
     :type target_value: OWLLiteral
     """
 

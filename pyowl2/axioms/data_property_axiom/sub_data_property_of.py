@@ -9,9 +9,9 @@ class OWLSubDataPropertyOf(OWLDataPropertyAxiom):
     """
     This axiom defines a hierarchical relationship between two data properties within an OWL ontology, asserting that the first property is a subproperty of the second. By establishing this relationship, it implies that any individual associated with a specific value via the subproperty is also implicitly associated with that same value via the superproperty. To construct this axiom, provide the specific subproperty expression and the general superproperty expression, optionally including a list of annotations to attach metadata or contextual information to the statement.
 
-    :parm sub_data_property_expression: The data property expression declared as the subproperty, representing the more specific property in the relationship.
+    :param sub_data_property_expression: The data property expression declared as the subproperty, representing the more specific property in the relationship.
     :type sub_data_property_expression: OWLDataPropertyExpression
-    :parm super_data_property_expression: The data property expression that serves as the superproperty (the more general property) in the subproperty relationship.
+    :param super_data_property_expression: The data property expression that serves as the superproperty (the more general property) in the subproperty relationship.
     :type super_data_property_expression: OWLDataPropertyExpression
     """
 

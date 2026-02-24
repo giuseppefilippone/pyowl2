@@ -16,9 +16,9 @@ class OWLAnnotationPropertyDomain(OWLAnnotationAxiom):
     """
     This class represents an axiom that defines a domain restriction for an annotation property, asserting that the subject of any annotation using this property must be an instance of a specific class. It serves as a formal constraint within an ontology, linking an annotation property to a class identifier represented by a URI or IRI. To utilize this entity, one must provide the annotation property to be constrained and the domain class, along with optional metadata annotations that describe the axiom itself.
 
-    :parm annotation_property: The annotation property for which the domain is being specified by this axiom.
+    :param annotation_property: The annotation property for which the domain is being specified by this axiom.
     :type annotation_property: OWLAnnotationProperty
-    :parm domain: The IRI representing the class of subjects to which the annotation property applies.
+    :param domain: The IRI representing the class of subjects to which the annotation property applies.
     :type domain: typing.Union[URIRef, IRI]
     """
 

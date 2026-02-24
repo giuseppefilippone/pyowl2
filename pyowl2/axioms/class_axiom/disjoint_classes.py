@@ -9,7 +9,7 @@ class OWLDisjointClasses(OWLClassAxiom):
     """
     This axiom defines a mutual exclusion relationship between two or more class expressions within an ontology, asserting that no individual can be an instance of more than one of the specified classes simultaneously. To utilize this entity, instantiate it with a list of `OWLClassExpression` objects, ensuring the list contains at least two elements; the implementation automatically sorts these expressions to maintain a consistent internal order. Optional annotations can be attached to provide metadata about the axiom itself, such as provenance or confidence scores.
 
-    :parm class_expressions: The sorted list of class expressions involved in the disjointness axiom.
+    :param class_expressions: The sorted list of class expressions involved in the disjointness axiom.
     :type class_expressions: list[OWLClassExpression]
     """
 

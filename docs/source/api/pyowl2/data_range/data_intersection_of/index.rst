@@ -60,7 +60,7 @@ Module Contents
 
    This class represents a logical data range formed by the intersection of multiple constituent data ranges, defining a set of values that must belong to every specified range. It serves to construct highly specific data type constraints within an ontology by combining broader definitions, ensuring that only values satisfying all conditions are considered valid. When instantiating this class, a list of at least two `OWLDataRange` objects must be provided; note that the input list is automatically sorted upon initialization and modification to enforce a canonical ordering.
 
-   :parm data_ranges: The sorted list of data range operands that constitute the intersection, guaranteed to contain at least two elements.
+   :param data_ranges: The sorted list of data range operands that constitute the intersection, guaranteed to contain at least two elements.
    :type data_ranges: list[OWLDataRange]
 
 

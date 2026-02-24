@@ -6,9 +6,9 @@ class OWLObjectAllValuesFrom(OWLClassExpression):
     """
     This class represents a universal restriction in the Web Ontology Language (OWL), defining a condition where every individual related via a specific object property must be an instance of a designated class expression. It is initialized with an object property expression, which establishes the relationship, and a class expression, which acts as the constraint that all related individuals must satisfy. Semantically, an individual belongs to this restriction if and only if all values reachable through the specified property are members of the provided class expression, enabling the precise definition of complex class hierarchies and domain constraints.
 
-    :parm object_property_expression: The object property expression defining the relationship between the subject individual and the objects that must satisfy the class expression.
+    :param object_property_expression: The object property expression defining the relationship between the subject individual and the objects that must satisfy the class expression.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm class_expression: Defines the class that all values of the object property must be instances of.
+    :param class_expression: Defines the class that all values of the object property must be instances of.
     :type class_expression: OWLClassExpression
     """
 

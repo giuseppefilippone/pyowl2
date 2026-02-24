@@ -5,7 +5,7 @@ class OWLObjectComplementOf(OWLClassExpression):
     """
     This class represents a logical negation within an ontology, defining the set of all individuals that do not belong to a specified class expression. It serves as a wrapper around another class expression, which may be a simple named class or a complex logical construct, effectively inverting its membership criteria to represent concepts such as "non-human" or "not a parent." To utilize this functionality, an instance is created by passing the target class expression to the constructor, and the internal expression can be accessed or modified via the corresponding property, enabling the dynamic definition of exclusionary constraints in knowledge representation.
 
-    :parm expression: The class expression acting as the operand for the complement operation, representing the specific class being negated.
+    :param expression: The class expression acting as the operand for the complement operation, representing the specific class being negated.
     :type expression: OWLClassExpression
     """
 

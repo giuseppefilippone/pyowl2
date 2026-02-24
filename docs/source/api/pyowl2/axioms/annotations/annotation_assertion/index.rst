@@ -60,11 +60,11 @@ Module Contents
 
    This class represents an axiom used to attach metadata to entities within an OWL ontology by asserting that a specific annotation property holds a particular value for a given subject. It functions as a triple connecting a subject—which can be an IRI, anonymous individual, or literal—to a property and a corresponding value, effectively labeling or describing the subject. Users can instantiate this object to define relationships such as labels, comments, or custom metadata, and optionally include a list of annotations on the axiom itself to capture provenance or other contextual information.
 
-   :parm annotation_property: The annotation property being asserted to have a specific value for the subject.
+   :param annotation_property: The annotation property being asserted to have a specific value for the subject.
    :type annotation_property: OWLAnnotationProperty
-   :parm annotation_subject: The entity being annotated, which can be an IRI, an anonymous individual, or a literal.
+   :param annotation_subject: The entity being annotated, which can be an IRI, an anonymous individual, or a literal.
    :type annotation_subject: OWLAnnotationSubject
-   :parm annotation_value: The specific value being asserted for the annotation property and subject, which can be an IRI, an anonymous individual, or a literal.
+   :param annotation_value: The specific value being asserted for the annotation property and subject, which can be an IRI, an anonymous individual, or a literal.
    :type annotation_value: OWLAnnotationValue
 
 

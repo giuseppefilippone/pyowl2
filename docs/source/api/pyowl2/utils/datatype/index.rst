@@ -60,11 +60,11 @@ Module Contents
 
    This class provides a structured representation of a data range in an OWL ontology, encapsulating the core datatype definition along with its associated logical axioms and metadata annotations. It functions as a builder object, allowing users to define complex data range expressions—such as intersections, unions, complements, and facet-based restrictions—through a fluent interface that generates and stores the necessary OWL axioms. By separating the identity of the data range from its logical constraints, it facilitates the programmatic construction of rich datatype definitions while automatically managing the internal list of axioms to prevent duplicates.
 
-   :parm data_range: The core OWLDataRange instance holding the fundamental definition and IRI of the data range, which acts as the foundation for associated axioms and restrictions.
+   :param data_range: The core OWLDataRange instance holding the fundamental definition and IRI of the data range, which acts as the foundation for associated axioms and restrictions.
    :type data_range: OWLDataRange
-   :parm axioms: Stores the axioms defining the logical structure and relationships of the data range, including intersections, unions, complements, and restrictions.
+   :param axioms: Stores the axioms defining the logical structure and relationships of the data range, including intersections, unions, complements, and restrictions.
    :type axioms: list[OWLAxiom]
-   :parm annotations: Stores the optional list of annotations associated with the data range, providing metadata such as source or intended use.
+   :param annotations: Stores the optional list of annotations associated with the data range, providing metadata such as source or intended use.
    :type annotations: typing.Optional[list[OWLAnnotation]]
 
    :raises TypeError: Raised when the `value` argument is a list containing mixed types (e.g., both `OWLDataRange` and `OWLFullDataRange` instances) or invalid types.

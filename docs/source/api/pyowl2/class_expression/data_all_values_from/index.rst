@@ -60,9 +60,9 @@ Module Contents
 
    This class represents a universal restriction on data properties within an ontology, specifying that for any individual belonging to this class, all values of the associated data properties must fall within a defined data range. It is used to enforce constraints on literal values, ensuring that data such as ages or prices conform to specific types or intervals. To construct an instance, provide a list of data property expressions and the target data range; the implementation automatically sorts the property list to ensure consistent representation.
 
-   :parm data_property_expressions: Sorted data property expressions defining the properties restricted by the data range.
+   :param data_property_expressions: Sorted data property expressions defining the properties restricted by the data range.
    :type data_property_expressions: list[OWLDataPropertyExpression]
-   :parm data_range: The data range that defines the set of permissible values for the associated data properties.
+   :param data_range: The data range that defines the set of permissible values for the associated data properties.
    :type data_range: OWLDataRange
 
 

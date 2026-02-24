@@ -9,7 +9,7 @@ class OWLEquivalentDataProperties(OWLDataPropertyAxiom):
     """
     This class represents an OWL axiom asserting that two or more data properties share the same property extension, effectively treating them as synonyms for the purpose of data assertions. To utilize this class, instantiate it with a list of `OWLDataPropertyExpression` objects containing at least two members, optionally accompanied by a list of `OWLAnnotation` objects for metadata. It is important to note that the class enforces a minimum of two properties and automatically sorts the provided expressions upon initialization and assignment to maintain a consistent internal state.
 
-    :parm data_property_expressions: Internal list of data property expressions declared to be equivalent, maintained in sorted order.
+    :param data_property_expressions: Internal list of data property expressions declared to be equivalent, maintained in sorted order.
     :type data_property_expressions: list[OWLDataPropertyExpression]
     """
 

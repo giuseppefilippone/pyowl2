@@ -60,11 +60,11 @@ Module Contents
 
    This construct represents a piece of metadata attached to an ontology, axiom, or entity that does not alter the logical semantics of the underlying model. It is defined by a specific property that characterizes the type of metadata, such as a label or comment, and a corresponding value, which may be a literal, an IRI, or an anonymous individual. Users can instantiate this class to enrich ontology elements with human-readable descriptions or provenance data, and it supports recursive annotation to provide context about the annotation itself. By separating non-logical information from the axiomatic structure, it allows for the documentation of entities without impacting automated reasoning tasks.
 
-   :parm annotation_annotations: A list of annotations associated with this annotation, providing additional metadata or context about the annotation itself.
+   :param annotation_annotations: A list of annotations associated with this annotation, providing additional metadata or context about the annotation itself.
    :type annotation_annotations: typing.Optional[list[OWLAnnotation]]
-   :parm annotation_property: The property that defines the relationship between the subject and the value, characterizing the specific type of metadata being asserted.
+   :param annotation_property: The property that defines the relationship between the subject and the value, characterizing the specific type of metadata being asserted.
    :type annotation_property: OWLAnnotationProperty
-   :parm annotation_value: The specific data or content of the annotation, which can be a literal, an IRI, or an anonymous individual, serving as the value associated with the annotation property.
+   :param annotation_value: The specific data or content of the annotation, which can be a literal, an IRI, or an anonymous individual, serving as the value associated with the annotation property.
    :type annotation_value: OWLAnnotationValue
 
 

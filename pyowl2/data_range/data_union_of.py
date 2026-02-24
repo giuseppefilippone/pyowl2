@@ -5,7 +5,7 @@ class OWLDataUnionOf(OWLDataRange):
     """
     This class represents a logical union of multiple data ranges within an ontology, defining a set of permissible values that belong to at least one of the constituent ranges. It extends the base data range type and is initialized with a list of `OWLDataRange` objects, requiring a minimum of two ranges to form a valid union. Upon initialization and modification, the class automatically sorts the internal list of data ranges to maintain a canonical representation, ensuring consistent behavior for comparisons and storage.
 
-    :parm data_ranges: The sorted list of data ranges forming the union.
+    :param data_ranges: The sorted list of data ranges forming the union.
     :type data_ranges: list[OWLDataRange]
     """
 

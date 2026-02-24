@@ -8,11 +8,11 @@ class OWLObjectExactCardinality(OWLClassExpression):
     """
     Represents an object property restriction within an ontology that constrains an individual to be related to exactly a specific number of other individuals via a defined relationship. To utilize this restriction, one must provide a non-negative integer indicating the exact count and an object property expression that defines the relationship. An optional class expression can be included to create a qualified restriction, specifying that the related individuals must also be instances of a particular class; if this is omitted, the restriction applies to any individual connected via the specified property.
 
-    :parm cardinality: The exact non-negative integer count of distinct individuals that the subject must be related to via the object property to satisfy the restriction.
+    :param cardinality: The exact non-negative integer count of distinct individuals that the subject must be related to via the object property to satisfy the restriction.
     :type cardinality: int
-    :parm object_property_expression: The object property expression that defines the relationship used to count the exact number of related individuals in the restriction.
+    :param object_property_expression: The object property expression that defines the relationship used to count the exact number of related individuals in the restriction.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm class_expression: The optional class expression defining the type of individuals that the subject must be related to via the object property. If provided, it creates a qualified restriction; otherwise, the restriction applies to any individual filling the property.
+    :param class_expression: The optional class expression defining the type of individuals that the subject must be related to via the object property. If provided, it creates a qualified restriction; otherwise, the restriction applies to any individual filling the property.
     :type class_expression: typing.Optional[OWLClassExpression]
     """
 

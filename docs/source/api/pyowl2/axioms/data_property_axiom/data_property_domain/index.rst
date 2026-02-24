@@ -60,9 +60,9 @@ Module Contents
 
    Represents an axiom in the Web Ontology Language (OWL) that defines the domain restriction for a specific data property, asserting that any individual associated with the property must belong to a specified class. It links a data property expression—which connects individuals to literal values—with a class expression that defines the valid types of subjects for that property. Users can utilize this structure to enforce logical consistency within an ontology by specifying the property, its domain class, and optional annotations for metadata. The implementation supports both simple named classes and complex class expressions, allowing for nuanced constraints on the individuals that may participate in data property assertions.
 
-   :parm data_property_expression: The data property expression whose domain is defined by this axiom.
+   :param data_property_expression: The data property expression whose domain is defined by this axiom.
    :type data_property_expression: OWLDataPropertyExpression
-   :parm class_expression: Specifies the domain of the data property, defining the class of individuals that can be associated with it.
+   :param class_expression: Specifies the domain of the data property, defining the class of individuals that can be associated with it.
    :type class_expression: OWLClassExpression
 
 

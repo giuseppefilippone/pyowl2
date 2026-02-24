@@ -60,9 +60,9 @@ Module Contents
 
    This axiom represents a constraint that specifies the valid range of values for a given annotation property within an ontology. It asserts that any value associated with the property must be an instance of the class identified by the provided IRI. To use this entity, one must provide the annotation property to be constrained and the IRI representing the range class, along with optional annotations to attach metadata directly to the axiom.
 
-   :parm annotation_property: The annotation property for which the range is being specified.
+   :param annotation_property: The annotation property for which the range is being specified.
    :type annotation_property: OWLAnnotationProperty
-   :parm range: The IRI or URI reference identifying the class to which the values of the annotation property must belong.
+   :param range: The IRI or URI reference identifying the class to which the values of the annotation property must belong.
    :type range: typing.Union[URIRef, IRI]
 
 

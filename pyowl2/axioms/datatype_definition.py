@@ -10,9 +10,9 @@ class OWLDatatypeDefinition(OWLAxiom):
     """
     This axiom serves to define a new datatype within an ontology by equating it to a specific data range, which may consist of simple literals or complex restrictions on existing datatypes. It functions as a logical building block, allowing the newly created datatype to be utilized in other parts of the ontology to enforce precise value constraints. The definition is composed of a target datatype and a defining data range, and it can optionally include annotations to provide additional context or metadata about the axiom itself.
 
-    :parm datatype: The new datatype being defined by this axiom, identified by its IRI.
+    :param datatype: The new datatype being defined by this axiom, identified by its IRI.
     :type datatype: OWLDatatype
-    :parm data_range: Specifies the set of values or constraints that define the new datatype.
+    :param data_range: Specifies the set of values or constraints that define the new datatype.
     :type data_range: OWLDataRange
     """
 

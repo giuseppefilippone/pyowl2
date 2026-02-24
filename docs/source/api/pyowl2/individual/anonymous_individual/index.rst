@@ -60,7 +60,7 @@ Module Contents
 
    This class represents an entity within an OWL ontology that does not possess a globally unique identifier (IRI), serving as a mechanism to describe unnamed or local instances. It is primarily utilized when an individual needs to be referenced to define relationships or restrictions without assigning it a permanent, resolvable name. The entity is uniquely identified within the local graph context by a blank node identifier, which distinguishes it from other anonymous individuals. Functioning as both an individual and an annotation value, it allows for the expression of complex structures involving specific, yet unnamed, components of the ontology.
 
-   :parm node_id: Internal storage for the unique identifier representing the anonymous individual as a blank node in the RDF graph, ensuring local distinction without a globally unique IRI.
+   :param node_id: Internal storage for the unique identifier representing the anonymous individual as a blank node in the RDF graph, ensuring local distinction without a globally unique IRI.
    :type node_id: rdflib.URIRef
 
 

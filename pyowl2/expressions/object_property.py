@@ -11,7 +11,7 @@ class OWLObjectProperty(OWLEntity, OWLObjectPropertyExpression):
     """
     This class models an OWL Object Property, which serves as a binary relation connecting two individuals within an ontology. Users can instantiate this class by providing an IRI (Internationalized Resource Identifier) that uniquely identifies the property, such as a URI representing "hasParent". Beyond standard instantiation, the class offers static methods to retrieve the universal top property and the empty bottom property, as well as instance methods to check if the current property corresponds to these specific OWL entities.
 
-    :parm iri: Backing field for the public `iri` property, holding the Internationalized Resource Identifier (IRI) that uniquely identifies this object property within the ontology.
+    :param iri: Backing field for the public `iri` property, holding the Internationalized Resource Identifier (IRI) that uniquely identifies this object property within the ontology.
     :type iri: typing.Union[URIRef, IRI]
     """
 

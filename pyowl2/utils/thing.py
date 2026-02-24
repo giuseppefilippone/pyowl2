@@ -30,11 +30,11 @@ class OWLFullClass(OWLObject):
     """
     This class acts as a comprehensive container for an OWL (Web Ontology Language) class definition, combining the core class identity with its logical axioms and metadata annotations. It provides a fluent interface for constructing complex ontology structures, allowing users to define subclass relationships, equivalences, disjointness, and various property restrictions such as cardinality and value constraints. By managing an internal list of axioms, it ensures that duplicate logical statements are not added, while offering properties to easily retrieve specific subsets of axioms, such as intersections, unions, or class assertions. The class is designed to accept both raw class expressions and other full class instances as arguments, facilitating flexible ontology modeling.
 
-    :parm class: The underlying OWLClass instance representing the core definition of the class, identified by its IRI, which serves as the subject for the axioms and annotations managed by this wrapper.
+    :param class: The underlying OWLClass instance representing the core definition of the class, identified by its IRI, which serves as the subject for the axioms and annotations managed by this wrapper.
     :type class: OWLClass
-    :parm axioms: A list of axioms defining the logical relationships and constraints for the class, including subclass relationships, equivalence, disjointness, and cardinality restrictions.
+    :param axioms: A list of axioms defining the logical relationships and constraints for the class, including subclass relationships, equivalence, disjointness, and cardinality restrictions.
     :type axioms: list[OWLAxiom]
-    :parm annotations: Stores the optional list of annotations associated with the class, providing metadata such as labels or comments.
+    :param annotations: Stores the optional list of annotations associated with the class, providing metadata such as labels or comments.
     :type annotations: typing.Optional[list[OWLAnnotation]]
 
     :raises TypeError: Raised when the input provided to methods defining class relationships (such as equivalence, disjointness, or unions) is not an `OWLClassExpression`, an `OWLFullClass`, or a list of these types.

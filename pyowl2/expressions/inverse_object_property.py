@@ -6,7 +6,7 @@ class OWLInverseObjectProperty(OWLObjectPropertyExpression):
     """
     This class represents an expression that defines the inverse of a specific object property, effectively reversing the direction of the relationship between two individuals. It is constructed by wrapping an existing `OWLObjectProperty`, allowing the ontology to infer that if the original property relates individual A to individual B, this expression relates B to A. This mechanism is essential for modeling reciprocal relationships—such as deriving "isParentOf" from "hasChild"—thereby enhancing the expressiveness and reasoning capabilities of the ontology without requiring explicit assertions for both directions.
 
-    :parm object_property: The object property that is being inverted to represent the relationship in the opposite direction.
+    :param object_property: The object property that is being inverted to represent the relationship in the opposite direction.
     :type object_property: OWLObjectProperty
     """
 

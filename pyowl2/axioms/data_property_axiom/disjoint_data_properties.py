@@ -9,7 +9,7 @@ class OWLDisjointDataProperties(OWLDataPropertyAxiom):
     """
     This class models an axiom within an OWL ontology that declares a set of data properties to be mutually disjoint. Semantically, this implies that no single individual can possess the same literal value for any two properties included in the set. To utilize this class, instantiate it with a list containing at least two `OWLDataPropertyExpression` objects; an optional list of annotations may be provided to attach metadata to the axiom. Note that the class enforces a minimum of two properties and automatically sorts the provided expressions to ensure consistent representation.
 
-    :parm data_property_expressions: The sorted list of two or more data properties involved in the axiom, representing properties that are mutually exclusive in their values for any individual.
+    :param data_property_expressions: The sorted list of two or more data properties involved in the axiom, representing properties that are mutually exclusive in their values for any individual.
     :type data_property_expressions: list[OWLDataPropertyExpression]
     """
 

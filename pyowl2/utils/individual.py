@@ -31,11 +31,11 @@ class OWLFullIndividual(OWLObject):
     """
     This class acts as a structured wrapper for an entity within an OWL ontology, combining the individual's core identity with a collection of logical axioms and optional metadata annotations. It supports the creation of both named individuals, identified by an Internationalized Resource Identifier (IRI), and anonymous individuals, which are identified by unique node identifiers. Through its methods, users can define the individual's properties by adding class assertions, object property assertions to establish relationships with other entities, and data property assertions to assign literal values. The class also facilitates the management of identity conditions, allowing for assertions that the individual is the same as or different from others. Internally, it maintains a list of axioms, automatically preventing duplicate entries, and provides properties to filter and retrieve specific types of assertions, such as class memberships or equivalence relationships.
 
-    :parm individual: The underlying OWL individual (named or anonymous) that acts as the subject for all axioms and assertions managed by this class.
+    :param individual: The underlying OWL individual (named or anonymous) that acts as the subject for all axioms and assertions managed by this class.
     :type individual: typing.Any
-    :parm axioms: A list of axioms associated with the individual, encompassing class assertions, property assertions, and identity axioms that define its characteristics and relationships within the ontology.
+    :param axioms: A list of axioms associated with the individual, encompassing class assertions, property assertions, and identity axioms that define its characteristics and relationships within the ontology.
     :type axioms: list[OWLAxiom]
-    :parm annotations: Stores an optional list of annotations that provide additional metadata or context about the individual, such as source information or confidence levels.
+    :param annotations: Stores an optional list of annotations that provide additional metadata or context about the individual, such as source information or confidence levels.
     :type annotations: typing.Optional[list[OWLAnnotation]]
     """
 

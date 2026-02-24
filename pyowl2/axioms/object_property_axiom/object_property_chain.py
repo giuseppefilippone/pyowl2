@@ -5,7 +5,7 @@ class OWLObjectPropertyChain:
     """
     This class represents a sequence of object property expressions used to define property chain axioms within an ontology, enabling the inference of indirect relationships between individuals. It requires a list of at least two property expressions upon initialization. Notably, the implementation automatically sorts the provided expressions, meaning the input order is not preserved for equality or hashing purposes; instead, identity is determined by the sorted string representation of the chain.
 
-    :parm chain: Internal storage for the object property expressions comprising the chain, maintained in a sorted order to facilitate deterministic comparisons and string representations.
+    :param chain: Internal storage for the object property expressions comprising the chain, maintained in a sorted order to facilitate deterministic comparisons and string representations.
     :type chain: list[OWLObjectPropertyExpression]
     """
 

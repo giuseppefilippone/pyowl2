@@ -60,9 +60,9 @@ Module Contents
 
    Represents a fundamental axiom in the Web Ontology Language that defines a hierarchical relationship between two class expressions, asserting that all instances of the subclass are necessarily instances of the superclass. This construct allows for the creation of taxonomies and logical constraints by linking either simple named classes or complex, anonymous class expressions. To use this entity, instantiate it with the specific subclass and superclass expressions, optionally providing a list of annotations to attach metadata such as provenance or confidence levels to the logical statement.
 
-   :parm sub_class_expression: The class expression that is declared to be a subclass of the superclass expression.
+   :param sub_class_expression: The class expression that is declared to be a subclass of the superclass expression.
    :type sub_class_expression: OWLClassExpression
-   :parm super_class_expression: The superclass expression in the axiom, representing the more general concept that the subclass is a subset of.
+   :param super_class_expression: The superclass expression in the axiom, representing the more general concept that the subclass is a subset of.
    :type super_class_expression: OWLClassExpression
 
 

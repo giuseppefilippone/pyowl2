@@ -62,15 +62,15 @@ Module Contents
 
    :param PROPERTY_CLASSES: A list of axiom types that define the intrinsic characteristics of the data property, used to categorize and filter relevant axioms.
    :type PROPERTY_CLASSES: list[type]
-   :parm data_property: The core definition of the data property identified by its IRI, serving as the subject for all associated axioms, domains, ranges, and assertions.
+   :param data_property: The core definition of the data property identified by its IRI, serving as the subject for all associated axioms, domains, ranges, and assertions.
    :type data_property: OWLDataProperty
-   :parm domain: Internal storage for the domain restriction axiom, defining the class of individuals that can be the subject of this data property. It holds an OWLDataPropertyDomain instance or None if no domain is specified.
+   :param domain: Internal storage for the domain restriction axiom, defining the class of individuals that can be the subject of this data property. It holds an OWLDataPropertyDomain instance or None if no domain is specified.
    :type domain: OWLDataPropertyDomain
-   :parm range: Encapsulates the range restriction for the data property, defining the permissible data types or values for the property's objects.
+   :param range: Encapsulates the range restriction for the data property, defining the permissible data types or values for the property's objects.
    :type range: OWLDataPropertyRange
-   :parm axioms: Internal storage for the axioms associated with the data property, encompassing characteristics, relationships, assertions, and restrictions.
+   :param axioms: Internal storage for the axioms associated with the data property, encompassing characteristics, relationships, assertions, and restrictions.
    :type axioms: list[OWLAxiom]
-   :parm annotations: Stores the optional list of annotations associated with the data property, providing metadata such as comments or labels to enhance documentation without affecting logical meaning.
+   :param annotations: Stores the optional list of annotations associated with the data property, providing metadata such as comments or labels to enhance documentation without affecting logical meaning.
    :type annotations: typing.Optional[list[OWLAnnotation]]
 
 

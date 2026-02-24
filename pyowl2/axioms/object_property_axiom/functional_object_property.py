@@ -9,7 +9,7 @@ class OWLFunctionalObjectProperty(OWLObjectPropertyAxiom):
     """
     This axiom defines a constraint within an ontology stating that a specific object property is functional, meaning any given individual can be linked to at most one other individual via this property. Semantically, this allows reasoners to infer that if an individual is related to two distinct entities through this property, those entities must be identical (for example, if a person has two social security numbers, the numbers must refer to the same identifier). To utilize this, instantiate the class with the target `OWLObjectPropertyExpression` and an optional list of `OWLAnnotation` objects to provide metadata about the axiom itself.
 
-    :parm object_property_expression: The object property expression that is declared to be functional, meaning it can relate an individual to at most one other individual.
+    :param object_property_expression: The object property expression that is declared to be functional, meaning it can relate an individual to at most one other individual.
     :type object_property_expression: OWLObjectPropertyExpression
     """
 

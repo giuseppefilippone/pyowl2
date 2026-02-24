@@ -60,11 +60,11 @@ Module Contents
 
    This class represents a restriction in an ontology that defines an upper bound on the number of distinct individuals an entity can be related to via a specific object property. It is used to construct class expressions where instances must satisfy a condition of having at most a certain number of relationships, such as a person having no more than two siblings. The restriction can be unqualified, applying to any individual connected by the property, or qualified, where the connected individuals must also belong to a specific class expression. To utilize this class, instantiate it with a non-negative integer representing the maximum cardinality, the object property expression defining the relationship, and an optional class expression to further constrain the type of the related individuals.
 
-   :parm cardinality: The non-negative integer defining the maximum number of distinct individuals an instance can be related to via the specified object property.
+   :param cardinality: The non-negative integer defining the maximum number of distinct individuals an instance can be related to via the specified object property.
    :type cardinality: int
-   :parm object_property_expression: The object property expression defining the relationship being restricted, which may be a simple property or a complex expression involving property chains or inverses.
+   :param object_property_expression: The object property expression defining the relationship being restricted, which may be a simple property or a complex expression involving property chains or inverses.
    :type object_property_expression: OWLObjectPropertyExpression
-   :parm class_expression: Optional class expression that restricts the type of individuals the subject can be related to. If provided, it creates a qualified cardinality restriction; otherwise, the restriction applies to any individual.
+   :param class_expression: Optional class expression that restricts the type of individuals the subject can be related to. If provided, it creates a qualified cardinality restriction; otherwise, the restriction applies to any individual.
    :type class_expression: typing.Optional[OWLClassExpression]
 
 

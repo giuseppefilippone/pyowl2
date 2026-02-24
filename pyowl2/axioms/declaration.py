@@ -9,7 +9,7 @@ class OWLDeclaration(OWLAxiom):
     """
     This axiom serves as the formal mechanism for introducing a named entity—such as a class, property, or individual—into the ontology's vocabulary. By asserting the existence of an entity, this declaration enables it to be referenced and utilized within other axioms and logical expressions throughout the ontology. To use this class, instantiate it with the specific `OWLEntity` to be declared, optionally providing a list of annotations to attach metadata or contextual information to the declaration itself.
 
-    :parm entity: The OWL entity (class, property, or individual) that is being declared and introduced into the ontology.
+    :param entity: The OWL entity (class, property, or individual) that is being declared and introduced into the ontology.
     :type entity: OWLEntity
     """
 

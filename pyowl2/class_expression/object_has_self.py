@@ -6,7 +6,7 @@ class OWLObjectHasSelf(OWLClassExpression):
     """
     This class models a specific type of existential restriction in the Web Ontology Language (OWL) where an individual is required to be related to itself via a designated object property. It encapsulates a property expression, which can be a simple property or a complex inverse or chain, to define the criteria for self-relation. To utilize this restriction, instantiate it with the desired object property expression; the resulting object can then be used within class expressions to define concepts such as "self-connected" entities. The property expression is mutable, allowing for dynamic modification of the restriction's definition after instantiation.
 
-    :parm object_property_expression: The object property expression that defines the relationship an individual must have with itself to satisfy the restriction.
+    :param object_property_expression: The object property expression that defines the relationship an individual must have with itself to satisfy the restriction.
     :type object_property_expression: OWLObjectPropertyExpression
     """
 

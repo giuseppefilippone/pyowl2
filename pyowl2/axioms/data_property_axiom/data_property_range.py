@@ -11,9 +11,9 @@ class OWLDataPropertyRange(OWLPropertyRange, OWLDataPropertyAxiom):
     """
     This class represents an axiom within an ontology that defines the permissible types of literal values for a specific data property. It functions by associating a data property expression with a data range, thereby enforcing constraints such as requiring a property to hold only integers, strings, or values satisfying specific facet restrictions. Users can instantiate this entity to declare these type restrictions, optionally attaching annotations to provide additional metadata or context regarding the axiom itself.
 
-    :parm data_property_expression: The data property expression for which the range is being specified.
+    :param data_property_expression: The data property expression for which the range is being specified.
     :type data_property_expression: OWLDataPropertyExpression
-    :parm data_range: The set of data values or data types permitted for the associated data property.
+    :param data_range: The set of data values or data types permitted for the associated data property.
     :type data_range: OWLDataRange
     """
 

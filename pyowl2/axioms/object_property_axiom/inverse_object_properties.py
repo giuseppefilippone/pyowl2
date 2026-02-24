@@ -9,9 +9,9 @@ class OWLInverseObjectProperties(OWLObjectPropertyAxiom):
     """
     This class represents an axiom within an ontology that declares two object properties to be inverses of one another. It establishes a logical rule where if the first property relates an individual A to an individual B, the second property must necessarily relate B to A. To use this class, instantiate it with the two property expressions that form the inverse pair, optionally providing a list of annotations to attach metadata to the axiom. This structure is essential for defining reciprocal relationships, such as linking "hasParent" with "isChildOf", thereby allowing reasoning systems to infer bidirectional connections between entities.
 
-    :parm object_property_expression: The object property expression declared to be the inverse of the second property expression.
+    :param object_property_expression: The object property expression declared to be the inverse of the second property expression.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm inverse_object_property_expression: The object property expression that is declared to be the inverse of the first property expression.
+    :param inverse_object_property_expression: The object property expression that is declared to be the inverse of the first property expression.
     :type inverse_object_property_expression: OWLObjectPropertyExpression
     """
 

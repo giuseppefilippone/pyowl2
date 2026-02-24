@@ -11,11 +11,11 @@ class OWLDataPropertyAssertion(OWLAssertion):
     """
     This class represents a fundamental axiom used to define facts about an individual within an OWL ontology by associating it with a specific data value via a data property. It serves as a structured container linking a subject individual to a target literal—such as a number or string—through a specific property expression, enabling the representation of statements like "Alice hasAge 30". To utilize this component, one must provide the data property expression, the source individual, and the target literal during instantiation, with the option to attach annotations for further context or metadata.
 
-    :parm data_property_expression: The data property expression that relates the source individual to the target value.
+    :param data_property_expression: The data property expression that relates the source individual to the target value.
     :type data_property_expression: OWLDataPropertyExpression
-    :parm source_individual: The individual that is the subject of the assertion, possessing the specific data value for the data property.
+    :param source_individual: The individual that is the subject of the assertion, possessing the specific data value for the data property.
     :type source_individual: OWLIndividual
-    :parm target_value: The data value to which the relationship points, such as "30" in the assertion "Alice hasAge 30".
+    :param target_value: The data value to which the relationship points, such as "30" in the assertion "Alice hasAge 30".
     :type target_value: OWLLiteral
     """
 

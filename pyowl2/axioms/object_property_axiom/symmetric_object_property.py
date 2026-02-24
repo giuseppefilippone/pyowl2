@@ -9,7 +9,7 @@ class OWLSymmetricObjectProperty(OWLObjectPropertyAxiom):
     """
     This class models an axiom in the Web Ontology Language (OWL) that asserts the symmetric nature of an object property. Semantically, it enforces the rule that if a specific property connects entity A to entity B, it must also connect entity B to entity A, which is characteristic of relationships like 'isSiblingOf' or 'isSpouseOf'. Users can instantiate this object by providing the target object property expression, and optionally include a list of annotations to attach supplementary metadata or context to the axiom.
 
-    :parm object_property_expression: The object property expression that is asserted to be symmetric by this axiom.
+    :param object_property_expression: The object property expression that is asserted to be symmetric by this axiom.
     :type object_property_expression: OWLObjectPropertyExpression
     """
 

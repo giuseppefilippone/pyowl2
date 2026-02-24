@@ -60,9 +60,9 @@ Module Contents
 
    This class models an Internationalized Resource Identifier (IRI), acting as a global identifier for entities within an ontology by combining a namespace prefix with a specific local value. It is primarily used to reference classes, individuals, or properties in OWL structures and can be instantiated by providing a `Namespace` object and an optional string identifier. The class facilitates interaction with RDF data by offering a method to convert the IRI into a `URIRef`, while also providing utility methods to identify standard OWL entities such as `owl:Thing` and `owl:Nothing`. Comparisons and string representations are handled based on the full resolved identifier.
 
-   :parm namespace: The base prefix or context for the identifier, representing a collection of related entities and combining with the specific value to construct the full Internationalized Resource Identifier.
+   :param namespace: The base prefix or context for the identifier, representing a collection of related entities and combining with the specific value to construct the full Internationalized Resource Identifier.
    :type namespace: Namespace
-   :parm value: The specific identifier for an entity, which can be a local string fragment combined with the namespace or a complete URI reference.
+   :param value: The specific identifier for an entity, which can be a local string fragment combined with the namespace or a complete URI reference.
    :type value: typing.Union[str, URIRef]
 
 

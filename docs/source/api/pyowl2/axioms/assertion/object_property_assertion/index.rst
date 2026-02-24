@@ -60,11 +60,11 @@ Module Contents
 
    This axiom represents a specific factual statement within an ontology, declaring that a binary relationship defined by an object property exists between two distinct individuals. It serves to ground abstract properties by connecting a specific source individual to a specific target individual, effectively stating that the source relates to the target via the given property. To construct this assertion, provide the object property expression, the source individual, and the target individual during initialization, optionally including a list of annotations to attach metadata to the axiom itself. Once instantiated, the components of the relationship can be accessed or modified via their corresponding properties.
 
-   :parm object_property_expression: The object property expression that relates the source and target individuals.
+   :param object_property_expression: The object property expression that relates the source and target individuals.
    :type object_property_expression: OWLObjectPropertyExpression
-   :parm source_individual: The individual from which the object property relationship originates, representing the subject of the assertion.
+   :param source_individual: The individual from which the object property relationship originates, representing the subject of the assertion.
    :type source_individual: OWLIndividual
-   :parm target_individual: The individual to which the object property relationship points, serving as the object of the assertion.
+   :param target_individual: The individual to which the object property relationship points, serving as the object of the assertion.
    :type target_individual: OWLIndividual
 
 

@@ -10,9 +10,9 @@ class OWLDisjointUnion(OWLClassAxiom):
     """
     This class represents a semantic axiom within an ontology that defines a specific class as the union of a set of mutually disjoint class expressions. It asserts that the designated union class is equivalent to the logical disjunction of the provided expressions, while simultaneously enforcing that those expressions share no common instances. Users must provide a primary class and a list of at least two class expressions to define the partition; the implementation automatically sorts these expressions to maintain a canonical internal state. Additionally, optional annotations can be attached to the axiom to provide context or metadata.
 
-    :parm union_class: The named class declared to be equivalent to the union of the disjoint class expressions.
+    :param union_class: The named class declared to be equivalent to the union of the disjoint class expressions.
     :type union_class: OWLClass
-    :parm disjoint_class_expressions: The list of class expressions that are declared to be disjoint, maintained in sorted order.
+    :param disjoint_class_expressions: The list of class expressions that are declared to be disjoint, maintained in sorted order.
     :type disjoint_class_expressions: list[OWLClassExpression]
     """
 

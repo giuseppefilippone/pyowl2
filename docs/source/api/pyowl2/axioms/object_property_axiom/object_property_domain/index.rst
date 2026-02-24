@@ -60,9 +60,9 @@ Module Contents
 
    This class models an axiom within the Web Ontology Language (OWL) that constrains the types of individuals which may serve as the subject of a specific object property relationship. By associating an object property expression with a class expression, it asserts that any individual linked to another via the specified property must belong to the defined class. Users can instantiate this class by providing the target property, the defining class expression, and an optional list of annotations to attach metadata to the axiom.
 
-   :parm object_property_expression: The object property expression for which the domain is being defined.
+   :param object_property_expression: The object property expression for which the domain is being defined.
    :type object_property_expression: OWLObjectPropertyExpression
-   :parm class_expression: The class expression defining the domain of the object property, specifying the class of individuals that can be the subject of the property relationship.
+   :param class_expression: The class expression defining the domain of the object property, specifying the class of individuals that can be the subject of the property relationship.
    :type class_expression: OWLClassExpression
 
 

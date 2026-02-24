@@ -9,7 +9,7 @@ class OWLDifferentIndividuals(OWLAssertion):
     """
     This axiom asserts that a specific group of individuals within an ontology are mutually distinct, ensuring that no two individuals in the set refer to the same entity. It is utilized to enforce uniqueness constraints across the domain of discourse, preventing logical reasoners from inferring that these individuals are identical. To construct this object, a list of at least two `OWLIndividual` instances must be provided, along with an optional list of annotations for metadata. The implementation automatically sorts the provided individuals to maintain a canonical representation and raises an error if fewer than two individuals are supplied.
 
-    :parm individuals: A sorted list of at least two individuals declared to be mutually distinct, maintained in canonical order to ensure consistency.
+    :param individuals: A sorted list of at least two individuals declared to be mutually distinct, maintained in canonical order to ensure consistency.
     :type individuals: list[OWLIndividual]
     """
 

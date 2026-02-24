@@ -9,7 +9,7 @@ class OWLSameIndividual(OWLAssertion):
     """
     This class models an OWL axiom asserting that a collection of named individuals are identical within the domain of discourse. By declaring individuals as the same, any properties or assertions applicable to one individual can be inferred for the others. To use this class, instantiate it with a list containing at least two `OWLIndividual` objects; providing fewer than two will raise an assertion error. The class automatically sorts the provided list of individuals to maintain a canonical order, and it optionally accepts a list of annotations to attach metadata to the axiom.
 
-    :parm individuals: Sorted list of named individuals asserted to be identical.
+    :param individuals: Sorted list of named individuals asserted to be identical.
     :type individuals: list[OWLIndividual]
     """
 

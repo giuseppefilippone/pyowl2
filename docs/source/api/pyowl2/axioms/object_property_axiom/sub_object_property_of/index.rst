@@ -60,9 +60,9 @@ Module Contents
 
    This class represents an axiom in the Web Ontology Language (OWL) that asserts a hierarchical relationship between two object properties, indicating that the first is a subproperty of the second. It is used to define that any relationship defined by the sub-property expression necessarily implies a relationship defined by the super-property expression. The implementation supports both simple property hierarchies and complex property chains, allowing for the expression of intricate logical rules where a sequence of properties implies a more general property. To use this entity, instantiate it with the specific sub-property expression, the general super-property expression, and an optional list of annotations for metadata.
 
-   :parm sub_object_property_expression: The object property expression or property chain that serves as the subproperty in the relationship.
+   :param sub_object_property_expression: The object property expression or property chain that serves as the subproperty in the relationship.
    :type sub_object_property_expression: typing.Union[OWLObjectPropertyChain, OWLObjectPropertyExpression]
-   :parm super_object_property_expression: The object property expression declared to be the superproperty, serving as the more general property in the subproperty relationship.
+   :param super_object_property_expression: The object property expression declared to be the superproperty, serving as the more general property in the subproperty relationship.
    :type super_object_property_expression: OWLObjectPropertyExpression
 
 

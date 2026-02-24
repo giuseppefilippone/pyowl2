@@ -9,7 +9,7 @@ class OWLEquivalentClasses(OWLClassAxiom):
     """
     This axiom defines a logical equivalence between two or more class expressions, asserting that they share the exact same set of instances within an ontology. It is utilized to model scenarios where distinct concepts are semantically identical, allowing reasoners to infer that any individual belonging to one class must also belong to all others declared equivalent. To construct this object, a user must provide a list containing at least two `OWLClassExpression` instances, along with an optional list of annotations for metadata. The implementation automatically sorts the provided expressions to maintain a canonical representation, ensuring that the order of input does not affect the identity of the axiom.
 
-    :parm class_expressions: A sorted list of class expressions declared to be equivalent, containing at least two elements.
+    :param class_expressions: A sorted list of class expressions declared to be equivalent, containing at least two elements.
     :type class_expressions: list[OWLClassExpression]
     """
 

@@ -5,7 +5,7 @@ class OWLDataComplementOf(OWLDataRange):
     """
     This class models a data range expression that defines the set of all values not contained within a specific, nested data range. It is utilized within an ontology to construct complex data type definitions through negation, allowing for the specification of constraints that require values to be excluded from a particular set or type. To use this class, instantiate it with a target `OWLDataRange` object; the resulting instance will semantically represent the complement of that provided range, effectively filtering out any values that belong to it.
 
-    :parm data_range: The data range for which this expression represents the complement.
+    :param data_range: The data range for which this expression represents the complement.
     :type data_range: OWLDataRange
     """
 

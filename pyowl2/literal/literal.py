@@ -11,7 +11,7 @@ class OWLLiteral(OWLAnnotationValue):
     """
     This class serves as a unified wrapper for data values used within an ontology, such as strings, numbers, or dates. It encapsulates various underlying representations, including standard RDFLib Literals and specific OWL literal types like typed literals or language-tagged strings. By providing a common interface, it allows users to access the raw value through the `value` property while abstracting away the specific implementation details. Additionally, the class offers a suite of convenience methods—such as `is_integer`, `is_string`, and `is_boolean`—to inspect the datatype of the contained value, facilitating type checking and validation logic within ontology processing workflows.
 
-    :parm value: The underlying data representation of the literal, supporting RDFLib Literals, typed literals, and language-tagged strings.
+    :param value: The underlying data representation of the literal, supporting RDFLib Literals, typed literals, and language-tagged strings.
     :type value: typing.Union[Literal, OWLTypedLiteral, OWLStringLiteralNoLanguage, OWLStringLiteralWithLanguage]
     """
 
@@ -22,9 +22,9 @@ class OWLTypedLiteral(OWLLiteral):
     """
     Represents a typed literal value within an OWL ontology, distinguishing it from untyped strings by associating a specific data type with the value. It encapsulates a lexical form—the raw representation of the value—and an `OWLDatatype` instance that defines how that value should be interpreted (e.g., as an integer or a boolean). This class is typically used to construct precise data assertions in axioms and provides functionality to serialize the value into standard RDF formats via the `to_uriref` method.
 
-    :parm lexical_form: The lexical form or value of the literal. This represents the actual data content of the literal as it appears in the ontology, interpreted according to the specified datatype.
+    :param lexical_form: The lexical form or value of the literal. This represents the actual data content of the literal as it appears in the ontology, interpreted according to the specified datatype.
     :type lexical_form: typing.Any
-    :parm datatype: The specific type definition determining the interpretation of the literal's value.
+    :param datatype: The specific type definition determining the interpretation of the literal's value.
     :type datatype: OWLDatatype
     """
 
@@ -98,9 +98,9 @@ class OWLStringLiteralWithLanguage(OWLLiteral):
     """
     This class represents a specific type of textual data used in ontologies where the content is explicitly associated with a natural language, such as English or French. It encapsulates a string value alongside a language tag that typically follows IETF BCP 47 standards, allowing for the precise representation of multilingual information like labels or annotations. By extending the base literal interface, it facilitates the integration of language-aware strings into semantic web structures and provides mechanisms to convert the data into standard RDF formats for serialization and interchange.
 
-    :parm value: The actual text content of the literal as it appears in the ontology.
+    :param value: The actual text content of the literal as it appears in the ontology.
     :type value: str
-    :parm language: The IETF BCP 47 language tag associated with the literal, indicating the language of the text content.
+    :param language: The IETF BCP 47 language tag associated with the literal, indicating the language of the text content.
     :type language: str
     """
 
@@ -174,7 +174,7 @@ class OWLStringLiteralNoLanguage(OWLLiteral):
     """
     This class represents a textual literal within an OWL ontology that is explicitly defined without an associated language tag, distinguishing it from localized string literals. It acts as a container for raw string data, allowing the text to be associated with entities or axioms where language-specific tagging is not required. To use this class, instantiate it with the desired string content and access or modify this content via the `value` property. The class also supports conversion to an RDF representation, specifically mapping the value to a plain literal data type for interoperability with semantic web standards.
 
-    :parm value: The actual text content of the literal as it appears in the ontology.
+    :param value: The actual text content of the literal as it appears in the ontology.
     :type value: str
     """
 

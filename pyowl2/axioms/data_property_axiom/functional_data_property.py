@@ -9,7 +9,7 @@ class OWLFunctionalDataProperty(OWLDataPropertyAxiom):
     """
     This class models an axiom used to define a data property as functional, meaning that any individual in the ontology can be associated with at most one distinct data value through that specific property. It enforces a uniqueness constraint where, if an individual is linked to multiple values, those values are inferred to be identical. Users can instantiate this object by providing the target data property expression and, optionally, a list of annotations to attach metadata to the axiom itself. This construct is essential for representing attributes that must have a single value, such as a unique identifier or a specific measurement, within an OWL ontology.
 
-    :parm data_property_expression: The data property expression that is declared to be functional.
+    :param data_property_expression: The data property expression that is declared to be functional.
     :type data_property_expression: OWLDataPropertyExpression
     """
 

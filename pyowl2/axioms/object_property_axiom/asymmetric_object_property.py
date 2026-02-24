@@ -9,7 +9,7 @@ class OWLAsymmetricObjectProperty(OWLObjectPropertyAxiom):
     """
     This class represents an axiom in the Web Ontology Language (OWL) that declares a specific object property to be asymmetric. Semantically, this constraint ensures that if an individual A is related to an individual B through the specified property, then B cannot be related to A through the same property, effectively defining a one-way relationship. It is commonly used to model concepts such as parenthood or temporal precedence where reciprocity is logically impossible. To use this class, instantiate it with the target `OWLObjectPropertyExpression` and, optionally, a list of `OWLAnnotation` objects to attach metadata or context to the axiom.
 
-    :parm object_property_expression: The object property expression that is declared to be asymmetric.
+    :param object_property_expression: The object property expression that is declared to be asymmetric.
     :type object_property_expression: OWLObjectPropertyExpression
     """
 

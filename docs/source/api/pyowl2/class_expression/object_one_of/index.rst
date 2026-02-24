@@ -60,7 +60,7 @@ Module Contents
 
    This class represents an enumeration class expression, which defines a specific class by explicitly listing a finite set of individuals as its members. It is used to assert that the class extension consists exactly of the provided instances, allowing for the precise definition of classes based on specific entities rather than general properties. When initializing this expression, a non-empty list of `OWLIndividual` objects must be provided; the class automatically sorts these individuals internally to ensure a canonical representation. As a subclass of `OWLClassExpression`, it can be utilized in complex logical constructs where a specific set of instances needs to be referenced as a class.
 
-   :parm individuals: The sorted list of individuals explicitly enumerated as members of the class expression.
+   :param individuals: The sorted list of individuals explicitly enumerated as members of the class expression.
    :type individuals: list[OWLIndividual]
 
 

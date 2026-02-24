@@ -11,11 +11,11 @@ class OWLHasKey(OWLClassAxiom):
     """
     This entity represents an OWL axiom used to declare that a specific class possesses a set of properties—comprising both object and data properties—that function as a unique key for its instances. By defining this key, the ontology asserts that no two distinct individuals of the specified class can share identical values for all the listed properties, thereby facilitating efficient retrieval and reasoning. To construct this axiom, provide the class expression to which the key applies, along with lists of the object and data property expressions that form the key; optional annotations may also be supplied to attach metadata. The implementation automatically sorts the provided property lists to maintain a canonical order.
 
-    :parm class_expression: The class expression specifying the type of individuals for which the associated properties act as a unique key.
+    :param class_expression: The class expression specifying the type of individuals for which the associated properties act as a unique key.
     :type class_expression: OWLClassExpression
-    :parm object_property_expressions: A sorted list of object property expressions that form part of the key, used to uniquely identify instances by their relationships to other individuals.
+    :param object_property_expressions: A sorted list of object property expressions that form part of the key, used to uniquely identify instances by their relationships to other individuals.
     :type object_property_expressions: list[OWLObjectPropertyExpression]
-    :parm data_property_expressions: A list of data property expressions that form part of the key, relating individuals to data values to uniquely identify instances of the class.
+    :param data_property_expressions: A list of data property expressions that form part of the key, relating individuals to data values to uniquely identify instances of the class.
     :type data_property_expressions: list[OWLDataPropertyExpression]
     """
 

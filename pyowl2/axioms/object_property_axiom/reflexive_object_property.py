@@ -9,7 +9,7 @@ class OWLReflexiveObjectProperty(OWLObjectPropertyAxiom):
     """
     This class represents an axiom in the Web Ontology Language (OWL) that declares a specific object property to be reflexive, meaning that every individual in the ontology is necessarily related to itself through that property. It is typically used to model relationships where self-reference is a universal truth, such as a 'hasIdentity' property. To utilize this class, instantiate it with the target `OWLObjectPropertyExpression` and, optionally, a list of `OWLAnnotation` objects to provide metadata about the axiom. Once asserted, this axiom enables logical reasoners to infer that for any individual $x$, the statement $P(x, x)$ holds true.
 
-    :parm object_property_expression: The object property expression that is asserted to be reflexive, meaning it relates every individual to itself.
+    :param object_property_expression: The object property expression that is asserted to be reflexive, meaning it relates every individual to itself.
     :type object_property_expression: OWLObjectPropertyExpression
     """
 

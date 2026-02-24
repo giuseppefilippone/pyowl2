@@ -60,9 +60,9 @@ Module Contents
 
    This class represents a restriction in the Web Ontology Language (OWL) that defines a class of individuals based on the existence of a specific data property value. It asserts that an individual belongs to the defined class if it possesses a particular data property filled with a specific literal value, such as having an age of exactly 30. By encapsulating a data property expression and a target literal, this entity enables the precise formulation of class definitions that depend on concrete data assertions within an ontology.
 
-   :parm data_property_expression: The data property expression that defines the relationship between the subject individual and the specific literal value required by the restriction.
+   :param data_property_expression: The data property expression that defines the relationship between the subject individual and the specific literal value required by the restriction.
    :type data_property_expression: OWLDataPropertyExpression
-   :parm literal: The specific literal value that the data property expression must take for the restriction to be satisfied.
+   :param literal: The specific literal value that the data property expression must take for the restriction to be satisfied.
    :type literal: OWLLiteral
 
 

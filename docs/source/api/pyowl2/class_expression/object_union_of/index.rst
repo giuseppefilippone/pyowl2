@@ -60,7 +60,7 @@ Module Contents
 
    This class models a logical union (disjunction) of class expressions, defining a group of individuals that belong to at least one of the constituent classes. It is used to construct complex, inclusive definitions within an ontology by combining multiple class criteria. When initializing or modifying this object, a list of at least two `OWLClassExpression` instances must be provided; the list is automatically sorted to ensure a consistent internal representation.
 
-   :parm classes_expressions: Sorted list of class expressions comprising the union, containing at least two elements.
+   :param classes_expressions: Sorted list of class expressions comprising the union, containing at least two elements.
    :type classes_expressions: list[OWLClassExpression]
 
 

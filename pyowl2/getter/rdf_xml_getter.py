@@ -2,19 +2,50 @@ import enum
 import inspect
 import typing
 
-from owlready2 import (AllDifferent, And, AnnotationPropertyClass,
-                       AsymmetricProperty, ConstrainedDatatype,
-                       DataPropertyClass, DatatypeClass, EntityClass,
-                       FunctionalProperty, Inverse, InverseFunctionalProperty,
-                       IrreflexiveProperty, NamedIndividual, Not, Nothing,
-                       ObjectPropertyClass, OneOf, Ontology, Or,
-                       ReflexiveProperty, Restriction, SymmetricProperty,
-                       Thing, ThingClass, TransitiveProperty, World)
-from owlready2.annotation import (backwardCompatibleWith, comment, deprecated,
-                                  incompatibleWith, isDefinedBy, label,
-                                  priorVersion, seeAlso, versionInfo)
-from owlready2.base import (_universal_abbrev, _universal_abbrev_2_iri,
-                            _universal_iri_2_abbrev)
+from owlready2 import (
+    AllDifferent,
+    And,
+    AnnotationPropertyClass,
+    AsymmetricProperty,
+    ConstrainedDatatype,
+    DataPropertyClass,
+    DatatypeClass,
+    EntityClass,
+    FunctionalProperty,
+    Inverse,
+    InverseFunctionalProperty,
+    IrreflexiveProperty,
+    NamedIndividual,
+    Not,
+    Nothing,
+    ObjectPropertyClass,
+    OneOf,
+    Ontology,
+    Or,
+    ReflexiveProperty,
+    Restriction,
+    SymmetricProperty,
+    Thing,
+    ThingClass,
+    TransitiveProperty,
+    World,
+)
+from owlready2.annotation import (
+    backwardCompatibleWith,
+    comment,
+    deprecated,
+    incompatibleWith,
+    isDefinedBy,
+    label,
+    priorVersion,
+    seeAlso,
+    versionInfo,
+)
+from owlready2.base import (
+    _universal_abbrev,
+    _universal_abbrev_2_iri,
+    _universal_iri_2_abbrev,
+)
 from rdflib import RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF
 
@@ -28,102 +59,110 @@ from pyowl2.abstracts.data_range import OWLDataRange
 from pyowl2.abstracts.individual import OWLIndividual
 from pyowl2.abstracts.object import OWLObject
 from pyowl2.abstracts.object_property_axiom import OWLObjectPropertyAxiom
-from pyowl2.axioms.annotations import (OWLAnnotationAssertion,
-                                       OWLAnnotationPropertyDomain,
-                                       OWLAnnotationPropertyRange,
-                                       OWLSubAnnotationPropertyOf)
-from pyowl2.axioms.assertion import (OWLDifferentIndividuals,
-                                     OWLNegativeDataPropertyAssertion,
-                                     OWLNegativeObjectPropertyAssertion,
-                                     OWLSameIndividual)
+from pyowl2.axioms.annotations import (
+    OWLAnnotationAssertion,
+    OWLAnnotationPropertyDomain,
+    OWLAnnotationPropertyRange,
+    OWLSubAnnotationPropertyOf,
+)
+from pyowl2.axioms.assertion import (
+    OWLDifferentIndividuals,
+    OWLNegativeDataPropertyAssertion,
+    OWLNegativeObjectPropertyAssertion,
+    OWLSameIndividual,
+)
 from pyowl2.axioms.assertion.class_assertion import OWLClassAssertion
-from pyowl2.axioms.assertion.data_property_assertion import \
-    OWLDataPropertyAssertion
-from pyowl2.axioms.assertion.object_property_assertion import \
-    OWLObjectPropertyAssertion
+from pyowl2.axioms.assertion.data_property_assertion import OWLDataPropertyAssertion
+from pyowl2.axioms.assertion.object_property_assertion import OWLObjectPropertyAssertion
 from pyowl2.axioms.class_axiom.disjoint_classes import OWLDisjointClasses
 from pyowl2.axioms.class_axiom.disjoint_union import OWLDisjointUnion
 from pyowl2.axioms.class_axiom.equivalent_classes import OWLEquivalentClasses
 from pyowl2.axioms.class_axiom.sub_class_of import OWLSubClassOf
-from pyowl2.axioms.data_property_axiom.data_property_domain import \
-    OWLDataPropertyDomain
-from pyowl2.axioms.data_property_axiom.data_property_range import \
-    OWLDataPropertyRange
-from pyowl2.axioms.data_property_axiom.disjoint_data_properties import \
-    OWLDisjointDataProperties
-from pyowl2.axioms.data_property_axiom.equivalent_data_properties import \
-    OWLEquivalentDataProperties
-from pyowl2.axioms.data_property_axiom.functional_data_property import \
-    OWLFunctionalDataProperty
-from pyowl2.axioms.data_property_axiom.sub_data_property_of import \
-    OWLSubDataPropertyOf
+from pyowl2.axioms.data_property_axiom.data_property_domain import OWLDataPropertyDomain
+from pyowl2.axioms.data_property_axiom.data_property_range import OWLDataPropertyRange
+from pyowl2.axioms.data_property_axiom.disjoint_data_properties import (
+    OWLDisjointDataProperties,
+)
+from pyowl2.axioms.data_property_axiom.equivalent_data_properties import (
+    OWLEquivalentDataProperties,
+)
+from pyowl2.axioms.data_property_axiom.functional_data_property import (
+    OWLFunctionalDataProperty,
+)
+from pyowl2.axioms.data_property_axiom.sub_data_property_of import OWLSubDataPropertyOf
 from pyowl2.axioms.datatype_definition import OWLDatatypeDefinition
 from pyowl2.axioms.declaration import OWLDeclaration
 from pyowl2.axioms.general import OWLGeneralClassAxiom
 from pyowl2.axioms.has_key import OWLHasKey
-from pyowl2.axioms.object_property_axiom.asymmetric_object_property import \
-    OWLAsymmetricObjectProperty
-from pyowl2.axioms.object_property_axiom.disjoint_object_properties import \
-    OWLDisjointObjectProperties
-from pyowl2.axioms.object_property_axiom.equivalent_object_properties import \
-    OWLEquivalentObjectProperties
-from pyowl2.axioms.object_property_axiom.functional_object_property import \
-    OWLFunctionalObjectProperty
-from pyowl2.axioms.object_property_axiom.inverse_functional_object_property import \
-    OWLInverseFunctionalObjectProperty
-from pyowl2.axioms.object_property_axiom.inverse_object_properties import \
-    OWLInverseObjectProperties
-from pyowl2.axioms.object_property_axiom.irreflexive_object_property import \
-    OWLIrreflexiveObjectProperty
-from pyowl2.axioms.object_property_axiom.object_property_chain import \
-    OWLObjectPropertyChain
-from pyowl2.axioms.object_property_axiom.object_property_domain import \
-    OWLObjectPropertyDomain
-from pyowl2.axioms.object_property_axiom.object_property_range import \
-    OWLObjectPropertyRange
-from pyowl2.axioms.object_property_axiom.reflexive_object_property import \
-    OWLReflexiveObjectProperty
-from pyowl2.axioms.object_property_axiom.sub_object_property_of import \
-    OWLSubObjectPropertyOf
-from pyowl2.axioms.object_property_axiom.symmetric_object_property import \
-    OWLSymmetricObjectProperty
-from pyowl2.axioms.object_property_axiom.transitive_object_property import \
-    OWLTransitiveObjectProperty
+from pyowl2.axioms.object_property_axiom.asymmetric_object_property import (
+    OWLAsymmetricObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.disjoint_object_properties import (
+    OWLDisjointObjectProperties,
+)
+from pyowl2.axioms.object_property_axiom.equivalent_object_properties import (
+    OWLEquivalentObjectProperties,
+)
+from pyowl2.axioms.object_property_axiom.functional_object_property import (
+    OWLFunctionalObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.inverse_functional_object_property import (
+    OWLInverseFunctionalObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.inverse_object_properties import (
+    OWLInverseObjectProperties,
+)
+from pyowl2.axioms.object_property_axiom.irreflexive_object_property import (
+    OWLIrreflexiveObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.object_property_chain import (
+    OWLObjectPropertyChain,
+)
+from pyowl2.axioms.object_property_axiom.object_property_domain import (
+    OWLObjectPropertyDomain,
+)
+from pyowl2.axioms.object_property_axiom.object_property_range import (
+    OWLObjectPropertyRange,
+)
+from pyowl2.axioms.object_property_axiom.reflexive_object_property import (
+    OWLReflexiveObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.sub_object_property_of import (
+    OWLSubObjectPropertyOf,
+)
+from pyowl2.axioms.object_property_axiom.symmetric_object_property import (
+    OWLSymmetricObjectProperty,
+)
+from pyowl2.axioms.object_property_axiom.transitive_object_property import (
+    OWLTransitiveObjectProperty,
+)
 from pyowl2.base.annotation import OWLAnnotation
 from pyowl2.base.annotation_property import OWLAnnotationProperty
 from pyowl2.base.datatype import OWLDatatype
 from pyowl2.base.iri import IRI
 from pyowl2.base.owl_class import OWLClass
 from pyowl2.class_expression.data_all_values_from import OWLDataAllValuesFrom
-from pyowl2.class_expression.data_exact_cardinality import \
-    OWLDataExactCardinality
+from pyowl2.class_expression.data_exact_cardinality import OWLDataExactCardinality
 from pyowl2.class_expression.data_has_value import OWLDataHasValue
 from pyowl2.class_expression.data_max_cardinality import OWLDataMaxCardinality
 from pyowl2.class_expression.data_min_cardinality import OWLDataMinCardinality
 from pyowl2.class_expression.data_some_values_from import OWLDataSomeValuesFrom
-from pyowl2.class_expression.object_all_values_from import \
-    OWLObjectAllValuesFrom
+from pyowl2.class_expression.object_all_values_from import OWLObjectAllValuesFrom
 from pyowl2.class_expression.object_complement_of import OWLObjectComplementOf
-from pyowl2.class_expression.object_exact_cardinality import \
-    OWLObjectExactCardinality
+from pyowl2.class_expression.object_exact_cardinality import OWLObjectExactCardinality
 from pyowl2.class_expression.object_has_self import OWLObjectHasSelf
 from pyowl2.class_expression.object_has_value import OWLObjectHasValue
-from pyowl2.class_expression.object_intersection_of import \
-    OWLObjectIntersectionOf
-from pyowl2.class_expression.object_max_cardinality import \
-    OWLObjectMaxCardinality
-from pyowl2.class_expression.object_min_cardinality import \
-    OWLObjectMinCardinality
+from pyowl2.class_expression.object_intersection_of import OWLObjectIntersectionOf
+from pyowl2.class_expression.object_max_cardinality import OWLObjectMaxCardinality
+from pyowl2.class_expression.object_min_cardinality import OWLObjectMinCardinality
 from pyowl2.class_expression.object_one_of import OWLObjectOneOf
-from pyowl2.class_expression.object_some_values_from import \
-    OWLObjectSomeValuesFrom
+from pyowl2.class_expression.object_some_values_from import OWLObjectSomeValuesFrom
 from pyowl2.class_expression.object_union_of import OWLObjectUnionOf
 from pyowl2.data_range.data_complement_of import OWLDataComplementOf
 from pyowl2.data_range.data_intersection_of import OWLDataIntersectionOf
 from pyowl2.data_range.data_one_of import OWLDataOneOf
 from pyowl2.data_range.data_union_of import OWLDataUnionOf
-from pyowl2.data_range.datatype_restriction import (OWLDatatypeRestriction,
-                                                    OWLFacet)
+from pyowl2.data_range.datatype_restriction import OWLDatatypeRestriction, OWLFacet
 from pyowl2.expressions.data_property import OWLDataProperty
 from pyowl2.expressions.inverse_object_property import OWLInverseObjectProperty
 from pyowl2.expressions.object_property import OWLObjectProperty
@@ -307,7 +346,6 @@ class AxiomsType(enum.StrEnum):
     :type ANNOTATION_PROPERTY_RANGES: typing.Any
     """
 
-
     GENERAL_CLASS_AXIOMS = enum.auto()
     CLASSES = enum.auto()
     DECLARATIONS = enum.auto()
@@ -383,153 +421,152 @@ class RDFXMLGetter:
 
     :param STANDARD_ANNOTATIONS: Maps internal storage IDs of standard OWL annotation properties to their corresponding AnnotationPropertyClass instances.
     :type STANDARD_ANNOTATIONS: dict[int, AnnotationPropertyClass]
-    :parm ontology:
+    :param ontology:
     :type ontology: Ontology
-    :parm world: The OWL world instance associated with the ontology, used for SPARQL queries and entity retrieval.
+    :param world: The OWL world instance associated with the ontology, used for SPARQL queries and entity retrieval.
     :type world: World
-    :parm graph: The RDF graph representation of the OWL ontology, used for SPARQL queries and direct graph manipulations.
+    :param graph: The RDF graph representation of the OWL ontology, used for SPARQL queries and direct graph manipulations.
     :type graph: Graph
-    :parm declarations: A dictionary mapping OWL entity classes to their corresponding OWLDeclaration instances.
+    :param declarations: A dictionary mapping OWL entity classes to their corresponding OWLDeclaration instances.
     :type declarations: dict[EntityClass, EntityClass]
-    :parm classes: A dictionary mapping OWL thing classes to their corresponding OWLClass instances.
+    :param classes: A dictionary mapping OWL thing classes to their corresponding OWLClass instances.
     :type classes: dict[ThingClass, OWLClass]
-    :parm class_expressions: A dictionary mapping OWL entity classes to their corresponding OWLClassExpression instances.
+    :param class_expressions: A dictionary mapping OWL entity classes to their corresponding OWLClassExpression instances.
     :type class_expressions: dict[EntityClass, OWLClassExpression]
-    :parm object_properties: A dictionary mapping source object property classes to their corresponding OWL object property instances, serving as a cache for converted properties.
+    :param object_properties: A dictionary mapping source object property classes to their corresponding OWL object property instances, serving as a cache for converted properties.
     :type object_properties: dict[ObjectPropertyClass, OWLObjectProperty]
-    :parm data_properties: A dictionary mapping data property classes to their corresponding OWL data property instances.
+    :param data_properties: A dictionary mapping data property classes to their corresponding OWL data property instances.
     :type data_properties: dict[DataPropertyClass, OWLDataProperty]
-    :parm annotation_properties: A dictionary mapping annotation property classes to their corresponding OWLAnnotationProperty instances, used to cache converted entities.
+    :param annotation_properties: A dictionary mapping annotation property classes to their corresponding OWLAnnotationProperty instances, used to cache converted entities.
     :type annotation_properties: dict[AnnotationPropertyClass, OWLAnnotationProperty]
-    :parm individuals: A dictionary mapping named individuals to their corresponding OWLIndividual instances.
+    :param individuals: A dictionary mapping named individuals to their corresponding OWLIndividual instances.
     :type individuals: dict[NamedIndividual, OWLIndividual]
-    :parm class_assertions: A dictionary mapping tuples of OWL classes and named individuals to their corresponding OWLClassAssertion axioms.
+    :param class_assertions: A dictionary mapping tuples of OWL classes and named individuals to their corresponding OWLClassAssertion axioms.
     :type class_assertions: dict[tuple[ThingClass, NamedIndividual], OWLClassAssertion]
-    :parm subclasses_of: A dictionary mapping tuples of OWL thing classes (subclass, superclass) to their corresponding OWLSubClassOf instances.
+    :param subclasses_of: A dictionary mapping tuples of OWL thing classes (subclass, superclass) to their corresponding OWLSubClassOf instances.
     :type subclasses_of: dict[tuple[ThingClass, ThingClass], OWLSubClassOf]
-    :parm equivalent_classes: A dictionary mapping tuples of OWL classes to their corresponding OWLEquivalentClasses axiom instances.
+    :param equivalent_classes: A dictionary mapping tuples of OWL classes to their corresponding OWLEquivalentClasses axiom instances.
     :type equivalent_classes: dict[tuple[ThingClass, ...], OWLEquivalentClasses]
-    :parm disjoint_classes: A dictionary mapping tuples of OWL classes or AllDifferent instances to their corresponding OWLDisjointClasses axioms.
+    :param disjoint_classes: A dictionary mapping tuples of OWL classes or AllDifferent instances to their corresponding OWLDisjointClasses axioms.
     :type disjoint_classes: dict[typing.Union[tuple[ThingClass, ...], AllDifferent], OWLDisjointClasses]
-    :parm data_unions_of: A dictionary mapping `Or` expressions to their corresponding `OWLDataUnionOf` instances.
+    :param data_unions_of: A dictionary mapping `Or` expressions to their corresponding `OWLDataUnionOf` instances.
     :type data_unions_of: dict[tuple[Or], OWLDataUnionOf]
-    :parm object_unions_of: A dictionary mapping Or expressions to their corresponding OWLObjectUnionOf instances in the ontology.
+    :param object_unions_of: A dictionary mapping Or expressions to their corresponding OWLObjectUnionOf instances in the ontology.
     :type object_unions_of: dict[tuple[Or], OWLObjectUnionOf]
-    :parm data_intersections_of: A dictionary mapping tuples of And expressions to their corresponding OWLDataIntersectionOf instances.
+    :param data_intersections_of: A dictionary mapping tuples of And expressions to their corresponding OWLDataIntersectionOf instances.
     :type data_intersections_of: dict[tuple[And], OWLDataIntersectionOf]
-    :parm object_intersections_of: A dictionary mapping And expressions to their corresponding OWLObjectIntersectionOf instances.
+    :param object_intersections_of: A dictionary mapping And expressions to their corresponding OWLObjectIntersectionOf instances.
     :type object_intersections_of: dict[tuple[And], OWLObjectIntersectionOf]
-    :parm data_complements_of: A dictionary mapping `Not` expressions to their corresponding `OWLDataComplementOf` instances.
+    :param data_complements_of: A dictionary mapping `Not` expressions to their corresponding `OWLDataComplementOf` instances.
     :type data_complements_of: dict[tuple[Not], OWLDataComplementOf]
-    :parm object_complements_of: A dictionary mapping `Not` expressions to their corresponding `OWLObjectComplementOf` instances.
+    :param object_complements_of: A dictionary mapping `Not` expressions to their corresponding `OWLObjectComplementOf` instances.
     :type object_complements_of: dict[tuple[Not], OWLObjectComplementOf]
-    :parm data_ones_of: A dictionary mapping `OneOf` expressions to their corresponding `OWLDataOneOf` instances in the ontology.
+    :param data_ones_of: A dictionary mapping `OneOf` expressions to their corresponding `OWLDataOneOf` instances in the ontology.
     :type data_ones_of: dict[tuple[OneOf], OWLDataOneOf]
-    :parm object_ones_of: A dictionary mapping `OneOf` expressions to their corresponding `OWLObjectOneOf` instances.
+    :param object_ones_of: A dictionary mapping `OneOf` expressions to their corresponding `OWLObjectOneOf` instances.
     :type object_ones_of: dict[tuple[OneOf], OWLObjectOneOf]
-    :parm datatypes: A dictionary mapping ontology datatype classes to their corresponding OWLDatatype instances.
+    :param datatypes: A dictionary mapping ontology datatype classes to their corresponding OWLDatatype instances.
     :type datatypes: dict[DatatypeClass, OWLDatatype]
-    :parm datatype_restrictions: A dictionary mapping constrained datatypes to their corresponding OWL datatype restriction instances in the ontology.
+    :param datatype_restrictions: A dictionary mapping constrained datatypes to their corresponding OWL datatype restriction instances in the ontology.
     :type datatype_restrictions: dict[ConstrainedDatatype, OWLDatatypeRestriction]
-    :parm object_property_assertions: A dictionary mapping tuples of an object property class, a source individual, and a target individual to their corresponding OWL object property assertion instances.
+    :param object_property_assertions: A dictionary mapping tuples of an object property class, a source individual, and a target individual to their corresponding OWL object property assertion instances.
     :type object_property_assertions: dict[tuple[ObjectPropertyClass, NamedIndividual, NamedIndividual], OWLObjectPropertyAssertion]
-    :parm data_property_assertions: A dictionary mapping tuples of data properties, named individuals, and literal values to their corresponding OWLDataPropertyAssertion instances.
+    :param data_property_assertions: A dictionary mapping tuples of data properties, named individuals, and literal values to their corresponding OWLDataPropertyAssertion instances.
     :type data_property_assertions: dict[tuple[DataPropertyClass, NamedIndividual, Literal], OWLDataPropertyAssertion]
-    :parm same_individuals: A dictionary mapping tuples of named individuals to their corresponding OWL SameIndividual axioms, serving as a cache for assertions that multiple individuals represent the same entity.
+    :param same_individuals: A dictionary mapping tuples of named individuals to their corresponding OWL SameIndividual axioms, serving as a cache for assertions that multiple individuals represent the same entity.
     :type same_individuals: dict[tuple[NamedIndividual, ...], OWLSameIndividual]
-    :parm different_individuals: A dictionary mapping tuples of named individuals or AllDifferent instances to their corresponding OWLDifferentIndividuals instances.
+    :param different_individuals: A dictionary mapping tuples of named individuals or AllDifferent instances to their corresponding OWLDifferentIndividuals instances.
     :type different_individuals: dict[typing.Union[tuple[NamedIndividual, ...], AllDifferent], OWLDifferentIndividuals]
-    :parm subobject_properties_of: A dictionary mapping tuples of OWL object property classes to their corresponding OWLSubObjectPropertyOf instances in the ontology.
+    :param subobject_properties_of: A dictionary mapping tuples of OWL object property classes to their corresponding OWLSubObjectPropertyOf instances in the ontology.
     :type subobject_properties_of: dict[tuple[ObjectPropertyClass, ObjectPropertyClass], OWLSubObjectPropertyOf]
-    :parm subdata_properties_of: A dictionary mapping tuples of data properties to their corresponding OWLSubDataPropertyOf instances.
+    :param subdata_properties_of: A dictionary mapping tuples of data properties to their corresponding OWLSubDataPropertyOf instances.
     :type subdata_properties_of: dict[tuple[DataPropertyClass, DataPropertyClass], OWLSubDataPropertyOf]
-    :parm subannotation_properties_of: A dictionary mapping tuples of OWL annotation property classes to their corresponding OWLSubAnnotationPropertyOf instances in the ontology.
+    :param subannotation_properties_of: A dictionary mapping tuples of OWL annotation property classes to their corresponding OWLSubAnnotationPropertyOf instances in the ontology.
     :type subannotation_properties_of: dict[tuple[AnnotationPropertyClass, AnnotationPropertyClass], OWLSubAnnotationPropertyOf]
-    :parm annotations: A dictionary mapping ontology entities to their corresponding OWLAnnotation instances, used to cache annotations retrieved from the RDF graph.
+    :param annotations: A dictionary mapping ontology entities to their corresponding OWLAnnotation instances, used to cache annotations retrieved from the RDF graph.
     :type annotations: dict[EntityClass, tuple[URIRef, OWLAnnotation]]
-    :parm general_axioms: A dictionary mapping tuples of annotated property, source, and target to OWLGeneralClassAxiom instances representing general axioms in the ontology.
+    :param general_axioms: A dictionary mapping tuples of annotated property, source, and target to OWLGeneralClassAxiom instances representing general axioms in the ontology.
     :type general_axioms: dict[EntityClass, OWLAnnotationAssertion]
-    :parm objects_some_values_from: A dictionary mapping Restriction entities to their corresponding OWLObjectSomeValuesFrom instances in the ontology.
+    :param objects_some_values_from: A dictionary mapping Restriction entities to their corresponding OWLObjectSomeValuesFrom instances in the ontology.
     :type objects_some_values_from: dict[Restriction, OWLObjectSomeValuesFrom]
-    :parm objects_all_values_from: A dictionary mapping Restriction entities to their corresponding OWLObjectAllValuesFrom instances in the ontology.
+    :param objects_all_values_from: A dictionary mapping Restriction entities to their corresponding OWLObjectAllValuesFrom instances in the ontology.
     :type objects_all_values_from: dict[Restriction, OWLObjectAllValuesFrom]
-    :parm objects_has_value: A dictionary mapping Restriction entities to their corresponding OWLObjectHasValue instances.
+    :param objects_has_value: A dictionary mapping Restriction entities to their corresponding OWLObjectHasValue instances.
     :type objects_has_value: dict[Restriction, OWLObjectHasValue]
-    :parm objects_has_self: A dictionary mapping Restriction entities to their corresponding OWLObjectHasSelf instances in the ontology.
+    :param objects_has_self: A dictionary mapping Restriction entities to their corresponding OWLObjectHasSelf instances in the ontology.
     :type objects_has_self: dict[Restriction, OWLObjectHasSelf]
-    :parm objects_min_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectMinCardinality instances.
+    :param objects_min_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectMinCardinality instances.
     :type objects_min_cardinality: dict[Restriction, OWLObjectMinCardinality]
-    :parm objects_max_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectMaxCardinality instances.
+    :param objects_max_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectMaxCardinality instances.
     :type objects_max_cardinality: dict[Restriction, OWLObjectMaxCardinality]
-    :parm objects_exact_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectExactCardinality instances in the ontology.
+    :param objects_exact_cardinality: A dictionary mapping Restriction entities to their corresponding OWLObjectExactCardinality instances in the ontology.
     :type objects_exact_cardinality: dict[Restriction, OWLObjectExactCardinality]
-    :parm data_some_values_from: A dictionary mapping Restriction expressions to their corresponding OWLDataSomeValuesFrom instances in the ontology.
+    :param data_some_values_from: A dictionary mapping Restriction expressions to their corresponding OWLDataSomeValuesFrom instances in the ontology.
     :type data_some_values_from: dict[Restriction, OWLDataSomeValuesFrom]
-    :parm data_all_values_from: A dictionary mapping Restriction entities to their corresponding OWLDataAllValuesFrom instances in the ontology.
+    :param data_all_values_from: A dictionary mapping Restriction entities to their corresponding OWLDataAllValuesFrom instances in the ontology.
     :type data_all_values_from: dict[Restriction, OWLDataAllValuesFrom]
-    :parm data_has_value: A dictionary mapping Restriction entities to their corresponding OWLDataHasValue instances in the ontology.
+    :param data_has_value: A dictionary mapping Restriction entities to their corresponding OWLDataHasValue instances in the ontology.
     :type data_has_value: dict[Restriction, OWLDataHasValue]
-    :parm data_min_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataMinCardinality instances, representing minimum cardinality restrictions on data properties.
+    :param data_min_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataMinCardinality instances, representing minimum cardinality restrictions on data properties.
     :type data_min_cardinality: dict[Restriction, OWLDataMinCardinality]
-    :parm data_max_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataMaxCardinality instances.
+    :param data_max_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataMaxCardinality instances.
     :type data_max_cardinality: dict[Restriction, OWLDataMaxCardinality]
-    :parm data_exact_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataExactCardinality instances in the ontology.
+    :param data_exact_cardinality: A dictionary mapping Restriction entities to their corresponding OWLDataExactCardinality instances in the ontology.
     :type data_exact_cardinality: dict[Restriction, OWLDataExactCardinality]
-    :parm disjoint_unions: A dictionary mapping tuples of OWL thing classes to their corresponding OWLDisjointUnion instances in the ontology.
+    :param disjoint_unions: A dictionary mapping tuples of OWL thing classes to their corresponding OWLDisjointUnion instances in the ontology.
     :type disjoint_unions: dict[tuple[ThingClass, ...], OWLDisjointUnion]
-    :parm equivalent_object_properties: A dictionary mapping tuples of object property classes to their corresponding OWL equivalent object properties axioms.
+    :param equivalent_object_properties: A dictionary mapping tuples of object property classes to their corresponding OWL equivalent object properties axioms.
     :type equivalent_object_properties: dict[tuple[ObjectPropertyClass, ...], OWLEquivalentObjectProperties]
-    :parm disjoint_object_properties: A dictionary mapping tuples of OWL object property classes or AllDifferent instances to their corresponding OWLDisjointObjectProperties instances in the ontology.
+    :param disjoint_object_properties: A dictionary mapping tuples of OWL object property classes or AllDifferent instances to their corresponding OWLDisjointObjectProperties instances in the ontology.
     :type disjoint_object_properties: dict[typing.Union[tuple[ObjectPropertyClass, ...], AllDifferent], OWLDisjointObjectProperties]
-    :parm inverse_object_properties: A dictionary mapping tuples of OWL object property classes to their corresponding OWLInverseObjectProperties instances in the ontology.
+    :param inverse_object_properties: A dictionary mapping tuples of OWL object property classes to their corresponding OWLInverseObjectProperties instances in the ontology.
     :type inverse_object_properties: dict[tuple[ObjectPropertyClass, ...], OWLInverseObjectProperties]
-    :parm functional_object_properties: A dictionary mapping object properties to their corresponding functional property axioms, used to cache and retrieve these axioms during ontology processing.
+    :param functional_object_properties: A dictionary mapping object properties to their corresponding functional property axioms, used to cache and retrieve these axioms during ontology processing.
     :type functional_object_properties: dict[ObjectPropertyClass, OWLFunctionalObjectProperty]
-    :parm inverse_functional_object_properties: A dictionary mapping object properties to their corresponding inverse functional property axioms.
+    :param inverse_functional_object_properties: A dictionary mapping object properties to their corresponding inverse functional property axioms.
     :type inverse_functional_object_properties: dict[ObjectPropertyClass, OWLInverseFunctionalObjectProperty]
-    :parm transitive_object_properties: A dictionary mapping OWL object property classes to their corresponding transitive object property instances.
+    :param transitive_object_properties: A dictionary mapping OWL object property classes to their corresponding transitive object property instances.
     :type transitive_object_properties: dict[ObjectPropertyClass, OWLTransitiveObjectProperty]
-    :parm symmetric_object_properties: A dictionary mapping object properties to their corresponding symmetric property axioms.
+    :param symmetric_object_properties: A dictionary mapping object properties to their corresponding symmetric property axioms.
     :type symmetric_object_properties: dict[ObjectPropertyClass, OWLSymmetricObjectProperty]
-    :parm asymmetric_object_properties: A dictionary mapping OWL object property classes to their corresponding OWLAsymmetricObjectProperty instances.
+    :param asymmetric_object_properties: A dictionary mapping OWL object property classes to their corresponding OWLAsymmetricObjectProperty instances.
     :type asymmetric_object_properties: dict[ObjectPropertyClass, OWLAsymmetricObjectProperty]
-    :parm reflexive_object_properties: A dictionary mapping OWL object property classes to their corresponding OWLReflexiveObjectProperty instances.
+    :param reflexive_object_properties: A dictionary mapping OWL object property classes to their corresponding OWLReflexiveObjectProperty instances.
     :type reflexive_object_properties: dict[ObjectPropertyClass, OWLReflexiveObjectProperty]
-    :parm irreflexive_object_properties: A dictionary mapping object property classes to their corresponding irreflexive object property axioms.
+    :param irreflexive_object_properties: A dictionary mapping object property classes to their corresponding irreflexive object property axioms.
     :type irreflexive_object_properties: dict[ObjectPropertyClass, OWLIrreflexiveObjectProperty]
-    :parm functional_data_properties: A dictionary mapping OWL data property classes to their corresponding OWLFunctionalDataProperty instances in the ontology.
+    :param functional_data_properties: A dictionary mapping OWL data property classes to their corresponding OWLFunctionalDataProperty instances in the ontology.
     :type functional_data_properties: dict[DataPropertyClass, OWLFunctionalDataProperty]
-    :parm equivalent_data_properties: A dictionary mapping tuples of data properties to the axioms representing their equivalence relationships.
+    :param equivalent_data_properties: A dictionary mapping tuples of data properties to the axioms representing their equivalence relationships.
     :type equivalent_data_properties: dict[tuple[DataPropertyClass, ...], OWLEquivalentDataProperties]
-    :parm disjoint_data_properties: A dictionary mapping tuples of data properties or AllDifferent instances to their corresponding OWLDisjointDataProperties axioms.
+    :param disjoint_data_properties: A dictionary mapping tuples of data properties or AllDifferent instances to their corresponding OWLDisjointDataProperties axioms.
     :type disjoint_data_properties: dict[typing.Union[tuple[DataPropertyClass, ...], AllDifferent], OWLDisjointDataProperties]
-    :parm object_property_domains: A dictionary mapping OWL object property classes to their corresponding OWLObjectPropertyDomain instances.
+    :param object_property_domains: A dictionary mapping OWL object property classes to their corresponding OWLObjectPropertyDomain instances.
     :type object_property_domains: dict[ObjectPropertyClass, OWLObjectPropertyDomain]
-    :parm object_property_ranges: A dictionary mapping OWL object property classes to their corresponding OWLObjectPropertyRange instances in the ontology.
+    :param object_property_ranges: A dictionary mapping OWL object property classes to their corresponding OWLObjectPropertyRange instances in the ontology.
     :type object_property_ranges: dict[ObjectPropertyClass, OWLObjectPropertyRange]
-    :parm data_property_domains: A dictionary mapping data property classes to their corresponding OWL data property domain axioms.
+    :param data_property_domains: A dictionary mapping data property classes to their corresponding OWL data property domain axioms.
     :type data_property_domains: dict[DataPropertyClass, OWLDataPropertyDomain]
-    :parm data_property_ranges: A dictionary mapping data properties to their corresponding range axioms.
+    :param data_property_ranges: A dictionary mapping data properties to their corresponding range axioms.
     :type data_property_ranges: dict[DataPropertyClass, OWLDataPropertyRange]
-    :parm datatype_definitions: A dictionary mapping OWL datatype classes to their corresponding OWLDatatypeDefinition instances in the ontology.
+    :param datatype_definitions: A dictionary mapping OWL datatype classes to their corresponding OWLDatatypeDefinition instances in the ontology.
     :type datatype_definitions: dict[DatatypeClass, OWLDatatypeDefinition]
-    :parm has_keys: A dictionary mapping OWL thing classes to their corresponding OWLHasKey instances, representing the properties that uniquely identify instances of each class.
+    :param has_keys: A dictionary mapping OWL thing classes to their corresponding OWLHasKey instances, representing the properties that uniquely identify instances of each class.
     :type has_keys: dict[ThingClass, OWLHasKey]
-    :parm negative_object_property_assertions: A dictionary mapping a tuple of an object property, a source individual, and a target individual to the corresponding negative object property assertion instance.
+    :param negative_object_property_assertions: A dictionary mapping a tuple of an object property, a source individual, and a target individual to the corresponding negative object property assertion instance.
     :type negative_object_property_assertions: dict[tuple[ObjectPropertyClass, NamedIndividual, NamedIndividual], OWLNegativeObjectPropertyAssertion]
-    :parm negative_data_property_assertions: A dictionary mapping tuples of data properties, named individuals, and literals to their corresponding negative data property assertion instances.
+    :param negative_data_property_assertions: A dictionary mapping tuples of data properties, named individuals, and literals to their corresponding negative data property assertion instances.
     :type negative_data_property_assertions: dict[tuple[DataPropertyClass, NamedIndividual, Literal], OWLNegativeDataPropertyAssertion]
-    :parm annotation_property_domains: A dictionary mapping OWL annotation property classes to their corresponding OWLAnnotationPropertyDomain instances in the ontology.
+    :param annotation_property_domains: A dictionary mapping OWL annotation property classes to their corresponding OWLAnnotationPropertyDomain instances in the ontology.
     :type annotation_property_domains: dict[AnnotationPropertyClass, OWLAnnotationPropertyDomain]
-    :parm annotation_property_ranges: A dictionary mapping annotation property classes to their corresponding range axioms, used to cache and retrieve range restrictions defined in the ontology.
+    :param annotation_property_ranges: A dictionary mapping annotation property classes to their corresponding range axioms, used to cache and retrieve range restrictions defined in the ontology.
     :type annotation_property_ranges: dict[AnnotationPropertyClass, OWLAnnotationPropertyRange]
-    :parm annotation_assertions: Maps a tuple of subject, annotation property, and value to the corresponding OWLAnnotationAssertion axiom instance.
+    :param annotation_assertions: Maps a tuple of subject, annotation property, and value to the corresponding OWLAnnotationAssertion axiom instance.
     :type annotation_assertions: dict[tuple[typing.Union[NamedIndividual, URIRef, str], AnnotationPropertyClass, typing.Union[NamedIndividual, URIRef, Literal]], OWLAnnotationAssertion]
 
     :raises TypeError: Raised when the provided entity or arguments are of an invalid type for the requested conversion. This typically occurs if the input is not a recognized owlready2 entity class (e.g., ThingClass, ObjectPropertyClass), an integer identifier for standard properties, or if the argument combination does not match any available conversion logic.
     :raises ValueError: Raised when the provided axiom type is not recognized or supported for retrieval.
     """
-
 
     # Mapping of standard annotation properties to their corresponding AnnotationPropertyClass instances in owlready2
     # The keys are the internal abbreviations (storid) of the standard annotation properties, and the values are the corresponding AnnotationPropertyClass instances from owlready2.
@@ -1992,7 +2029,6 @@ class RDFXMLGetter:
         :rtype: typing.Optional[OWLObjectIntersectionOf]
         """
 
-
         if not entity or not isinstance(entity, And):
             return None
         # if any(not isinstance(c, ThingClass) for c in entity.Classes):
@@ -2664,7 +2700,6 @@ class RDFXMLGetter:
 
         :rtype: typing.Optional[OWLDatatypeRestriction]
         """
-
 
         if not entity:
             return None
@@ -5264,7 +5299,6 @@ class RDFXMLGetter:
         :rtype: list[EntityClass]
         """
 
-
         query = """
         SELECT DISTINCT ?source ?property ?target ?target_owl_type ?comment ?literal
         WHERE {
@@ -6142,7 +6176,6 @@ class RDFXMLGetter:
         :rtype: list[OWLObjectOneOf]
         """
 
-
         query = """
         SELECT DISTINCT ?class1
         WHERE {
@@ -6199,7 +6232,6 @@ class RDFXMLGetter:
         :rtype: list[OWLObjectSomeValuesFrom]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6222,7 +6254,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLObjectAllValuesFrom]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6247,7 +6278,6 @@ class RDFXMLGetter:
         :rtype: list[OWLObjectHasValue]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6270,7 +6300,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLObjectHasSelf]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6295,7 +6324,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLObjectMinCardinality]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6329,7 +6357,6 @@ class RDFXMLGetter:
         :rtype: list[OWLObjectMaxCardinality]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6361,7 +6388,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLObjectExactCardinality]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6395,7 +6421,6 @@ class RDFXMLGetter:
         :rtype: list[OWLDataSomeValuesFrom]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6427,7 +6452,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLDataAllValuesFrom]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6461,7 +6485,6 @@ class RDFXMLGetter:
         :rtype: list[OWLDataHasValue]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6485,7 +6508,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLDataMinCardinality]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -6519,7 +6541,6 @@ class RDFXMLGetter:
         :rtype: list[OWLDataMaxCardinality]
         """
 
-
         query = """
         SELECT DISTINCT ?blank
         WHERE {
@@ -6551,7 +6572,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLDataExactCardinality]
         """
-
 
         query = """
         SELECT DISTINCT ?blank
@@ -7344,7 +7364,6 @@ class RDFXMLGetter:
         :rtype: list[OWLTransitiveObjectProperty]
         """
 
-
         query = """
         SELECT DISTINCT ?property
         WHERE {
@@ -7547,7 +7566,6 @@ class RDFXMLGetter:
 
         :rtype: list[OWLDatatypeDefinition]
         """
-
 
         # ?restriction owl:onDatatype ?onDatatype .
         query = """

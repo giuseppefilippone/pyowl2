@@ -60,7 +60,7 @@ Module Contents
 
    This class represents a property within an ontology that associates an individual entity with a literal data value, such as a string, integer, or date, rather than linking to another individual. It is uniquely identified by an Internationalized Resource Identifier (IRI), which acts as its canonical name and allows it to be referenced in axioms and assertions. Instances can be created by specifying an IRI, or users can retrieve the universal and empty data properties using the static `top` and `bottom` methods. The class also includes functionality to determine if a specific instance corresponds to these special system properties, which is useful for logical reasoning and ontology validation.
 
-   :parm iri: The Internationalized Resource Identifier that uniquely identifies this data property within the ontology. It serves as the primary identifier for the entity, enabling its use in axioms, assertions, and logical comparisons.
+   :param iri: The Internationalized Resource Identifier that uniquely identifies this data property within the ontology. It serves as the primary identifier for the entity, enabling its use in axioms, assertions, and logical comparisons.
    :type iri: typing.Union[URIRef, IRI]
 
 

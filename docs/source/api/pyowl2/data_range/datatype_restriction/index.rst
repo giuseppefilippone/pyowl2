@@ -62,9 +62,9 @@ Module Contents
 
    Represents a constrained data range within an ontology that narrows the value space of a base datatype through the application of specific facet restrictions. This class is utilized to define precise data characteristics, such as limiting integers to a specific interval or strings to a maximum length, by associating a parent `OWLDatatype` with a collection of `OWLFacet` constraints. Upon instantiation, the provided list of restrictions must contain at least one facet, and the class automatically sorts these facets to maintain a canonical internal order. It serves as a specialized `OWLDataRange` that allows for the granular definition of data property domains in semantic web applications.
 
-   :parm datatype: The base datatype that serves as the foundation for the restriction, to which the specific facet constraints are applied.
+   :param datatype: The base datatype that serves as the foundation for the restriction, to which the specific facet constraints are applied.
    :type datatype: OWLDatatype
-   :parm restrictions: A sorted list of facets defining the constraints applied to the base datatype.
+   :param restrictions: A sorted list of facets defining the constraints applied to the base datatype.
    :type restrictions: list[OWLFacet]
 
 
@@ -140,9 +140,9 @@ Module Contents
    :type MAX_INCLUSIVE: URIRef
    :param MAX_EXCLUSIVE: A URI reference representing the "maxExclusive" facet, which restricts datatype values to be strictly less than a specified upper bound.
    :type MAX_EXCLUSIVE: URIRef
-   :parm constraint: The specific type of restriction applied to the datatype, identified by a URI reference or IRI. It defines the nature of the constraint (e.g., minimum or maximum value) and is restricted to valid OWL facet types.
+   :param constraint: The specific type of restriction applied to the datatype, identified by a URI reference or IRI. It defines the nature of the constraint (e.g., minimum or maximum value) and is restricted to valid OWL facet types.
    :type constraint: typing.Union[URIRef, IRI]
-   :parm value: The specific literal value defining the boundary or limit for the datatype restriction.
+   :param value: The specific literal value defining the boundary or limit for the datatype restriction.
    :type value: OWLLiteral
 
 

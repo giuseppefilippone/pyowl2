@@ -9,11 +9,11 @@ class OWLDataMinCardinality(OWLClassExpression):
     """
     This class represents a restriction within an ontology that defines a minimum threshold for the number of data values an individual must possess for a specific data property. It functions by combining a non-negative integer cardinality with a data property expression to specify that a valid individual must have at least that many associated values. Users can optionally provide a data range to create a qualified restriction, which constrains the count to only those values that match a specific datatype or set of literals, thereby enabling precise definitions of class characteristics.
 
-    :parm cardinality: The minimum number of values an individual must possess for the specified data property, represented as a non-negative integer.
+    :param cardinality: The minimum number of values an individual must possess for the specified data property, represented as a non-negative integer.
     :type cardinality: int
-    :parm data_property_expression: Defines the relationship between the subject individual and the data values subject to the minimum cardinality restriction.
+    :param data_property_expression: Defines the relationship between the subject individual and the data values subject to the minimum cardinality restriction.
     :type data_property_expression: OWLDataPropertyExpression
-    :parm data_range: An optional data range that restricts the specific values counted towards the minimum cardinality. If provided, the restriction is qualified, requiring the minimum number of values to belong to this range; otherwise, it applies to any values of the data property.
+    :param data_range: An optional data range that restricts the specific values counted towards the minimum cardinality. If provided, the restriction is qualified, requiring the minimum number of values to belong to this range; otherwise, it applies to any values of the data property.
     :type data_range: typing.Optional[OWLDataRange]
     """
 

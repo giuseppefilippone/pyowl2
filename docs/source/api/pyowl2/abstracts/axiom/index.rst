@@ -60,7 +60,7 @@ Module Contents
 
    This abstract base class represents a fundamental assertion or statement within an ontology, serving as the foundational component for defining the logical structure of the knowledge base. It supports the attachment of optional metadata through a list of annotations, which are automatically sorted upon assignment to maintain a consistent state. Instances of this class utilize their string representation to determine equality, hash values, and ordering, meaning that comparisons are based on the textual form of the axiom rather than object identity.
 
-   :parm axiom_annotations: Sorted list of annotations providing metadata about the axiom, or None if no annotations are present.
+   :param axiom_annotations: Sorted list of annotations providing metadata about the axiom, or None if no annotations are present.
    :type axiom_annotations: typing.Optional[list[OWLAnnotation]]
 
 

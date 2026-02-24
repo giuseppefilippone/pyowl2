@@ -9,9 +9,9 @@ class OWLSubAnnotationPropertyOf(OWLAnnotationAxiom):
     """
     This class represents an axiom within the Web Ontology Language (OWL) that defines a hierarchical relationship between two annotation properties, asserting that one is a subproperty of the other. By establishing this relationship, it enables semantic inference where any annotation applied using the subproperty is implicitly understood to also apply to the superproperty. To use this class, instantiate it with the specific sub-property and super-property instances, optionally including a list of annotations to provide metadata about the axiom itself, such as its source or context. The properties of the axiom can be accessed and modified directly via the provided attributes, allowing for dynamic updates to the ontology structure.
 
-    :parm sub_annotation_property: The annotation property asserted to be a subproperty of the super annotation property.
+    :param sub_annotation_property: The annotation property asserted to be a subproperty of the super annotation property.
     :type sub_annotation_property: OWLAnnotationProperty
-    :parm super_annotation_property: The annotation property asserted to be the superproperty in the subproperty relationship, representing the parent property that the sub-property implies.
+    :param super_annotation_property: The annotation property asserted to be the superproperty in the subproperty relationship, representing the parent property that the sub-property implies.
     :type super_annotation_property: OWLAnnotationProperty
     """
 

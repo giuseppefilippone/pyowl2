@@ -11,9 +11,9 @@ class OWLObjectPropertyRange(OWLPropertyRange, OWLObjectPropertyAxiom):
     """
     This entity represents an axiom within an ontology that constrains the types of individuals which may serve as values for a specific object property. It asserts that for any pair of individuals related by the given property, the target individual must be an instance of the specified class expression, thereby enforcing type consistency across relationships. To utilize this component, instantiate it with the object property expression to be constrained, the class expression defining the allowable range, and an optional list of annotations for metadata. The class provides properties to access and modify the property expression, the range class expression, and any associated annotations, serving as a fundamental building block for defining type safety in object-oriented relationships.
 
-    :parm object_property_expression: The object property expression whose range is defined by this axiom.
+    :param object_property_expression: The object property expression whose range is defined by this axiom.
     :type object_property_expression: OWLObjectPropertyExpression
-    :parm class_expression: The class expression defining the range of the object property, specifying the type of individuals that can be its values.
+    :param class_expression: The class expression defining the range of the object property, specifying the type of individuals that can be its values.
     :type class_expression: OWLClassExpression
     """
 

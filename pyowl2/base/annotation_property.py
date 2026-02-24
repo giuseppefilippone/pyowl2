@@ -14,7 +14,7 @@ class OWLAnnotationProperty(OWLEntity):
     """
     Represents an annotation property within the Web Ontology Language (OWL), serving as a mechanism to associate metadata or annotations with other entities such as IRIs, anonymous individuals, or literals. Unlike object or data properties, annotation properties do not influence the logical semantics of the ontology but are instead used for documentation, labeling, and management of metadata. To utilize this class, instantiate it with a specific Internationalized Resource Identifier (IRI) which acts as the unique identifier for the property; this IRI can be accessed or modified via the corresponding property attribute.
 
-    :parm iri: The Internationalized Resource Identifier (IRI) that uniquely identifies this annotation property.
+    :param iri: The Internationalized Resource Identifier (IRI) that uniquely identifies this annotation property.
     :type iri: typing.Union[URIRef, IRI]
     """
 

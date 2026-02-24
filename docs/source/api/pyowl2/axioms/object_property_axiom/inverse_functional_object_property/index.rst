@@ -62,7 +62,7 @@ Module Contents
 
    This class represents an axiom within the Web Ontology Language (OWL) that declares a specific object property to be inverse-functional. Semantically, this imposes a uniqueness constraint such that if two individuals are found to be related to the same target individual through this property, a reasoner must infer that the two individuals are actually identical. This is commonly used to model unique identifiers, such as social security numbers or email addresses, where a specific value should map back to a single entity. To utilize this class, instantiate it with the target `OWLObjectPropertyExpression` and, optionally, a list of annotations to provide additional metadata about the axiom.
 
-   :parm object_property_expression: The specific property that is declared to be inverse functional, ensuring that if two individuals are related to the same individual via this property, they must be the same individual.
+   :param object_property_expression: The specific property that is declared to be inverse functional, ensuring that if two individuals are related to the same individual via this property, they must be the same individual.
    :type object_property_expression: OWLObjectPropertyExpression
 
 

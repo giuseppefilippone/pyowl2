@@ -60,11 +60,11 @@ Module Contents
 
    This class represents a restriction in an ontology that defines the maximum number of data values an individual may have for a specific data property. It is constructed using a non-negative integer cardinality and a data property expression, which identifies the attribute being restricted. An optional data range can be included to create a qualified restriction, specifying that the cardinality limit applies only to values within that particular range, whereas its absence applies the limit to all values of the property.
 
-   :parm cardinality: The non-negative integer defining the upper limit of values an individual may possess for the associated data property.
+   :param cardinality: The non-negative integer defining the upper limit of values an individual may possess for the associated data property.
    :type cardinality: int
-   :parm data_property_expression: The data property expression defining the relationship between the subject individual and the data values subject to the maximum cardinality restriction.
+   :param data_property_expression: The data property expression defining the relationship between the subject individual and the data values subject to the maximum cardinality restriction.
    :type data_property_expression: OWLDataPropertyExpression
-   :parm data_range: Optional data range that restricts the values counted towards the maximum cardinality. If specified, the restriction is qualified, applying only to values within this range; otherwise, it applies to all values of the data property.
+   :param data_range: Optional data range that restricts the values counted towards the maximum cardinality. If specified, the restriction is qualified, applying only to values within this range; otherwise, it applies to all values of the data property.
    :type data_range: typing.Optional[OWLDataRange]
 
 

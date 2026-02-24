@@ -60,7 +60,7 @@ Module Contents
 
    This class models a semantic axiom asserting that a collection of object properties are mutually exclusive, meaning no single pair of individuals can be related by more than one of these properties simultaneously. It is typically used to define strict separation between relationship types within an ontology, such as ensuring that a "parent of" relationship cannot also be a "sibling of" relationship for the same entities. When constructing an instance, users must provide a list of at least two object property expressions; the class automatically sorts this list to ensure a canonical internal representation. Additionally, optional annotations may be supplied to attach metadata or contextual information to the axiom.
 
-   :parm object_property_expressions: The sorted list of object property expressions declared to be disjoint, indicating that they cannot relate the same pair of individuals.
+   :param object_property_expressions: The sorted list of object property expressions declared to be disjoint, indicating that they cannot relate the same pair of individuals.
    :type object_property_expressions: list[OWLObjectPropertyExpression]
 
 

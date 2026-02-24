@@ -10,9 +10,9 @@ class OWLClassAssertion(OWLAssertion):
     """
     This class represents a fundamental axiom in the Web Ontology Language (OWL) used to declare that a specific individual is an instance of a given class expression. It serves to classify entities within an ontology by linking an `OWLIndividual` to an `OWLClassExpression`, effectively stating that the individual belongs to the defined type. Users can instantiate this object to define type relationships, optionally providing a list of annotations to attach metadata to the assertion itself. The component allows for the modification of both the class expression and the individual after instantiation through its properties, and it integrates into the broader ontology structure by inheriting from `OWLAssertion`.
 
-    :parm class_expression: The class expression that the individual is asserted to be an instance of.
+    :param class_expression: The class expression that the individual is asserted to be an instance of.
     :type class_expression: OWLClassExpression
-    :parm individual: The specific entity that is asserted to be an instance of the class expression.
+    :param individual: The specific entity that is asserted to be an instance of the class expression.
     :type individual: OWLIndividual
     """
 
