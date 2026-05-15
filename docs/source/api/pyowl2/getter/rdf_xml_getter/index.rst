@@ -24,6 +24,7 @@ Attributes
 .. autoapisummary::
 
    pyowl2.getter.rdf_xml_getter.BASE_DATATYPES
+   pyowl2.getter.rdf_xml_getter.logger
 
 
 Classes
@@ -581,6 +582,9 @@ Module Contents
 
    :raises TypeError: Raised when the provided entity or arguments are of an invalid type for the requested conversion. This typically occurs if the input is not a recognized owlready2 entity class (e.g., ThingClass, ObjectPropertyClass), an integer identifier for standard properties, or if the argument combination does not match any available conversion logic.
    :raises ValueError: Raised when the provided axiom type is not recognized or supported for retrieval.
+
+
+   .. py:method:: _get_element_namespace(element: Any) -> str
 
 
    .. py:method:: _get_owl_chain(marked: dict[owlready2.ThingClass, bool], chain: dict[owlready2.ThingClass, owlready2.ThingClass], annotations: dict[owlready2.EntityClass, set[pyowl2.base.annotation.OWLAnnotation]]) -> Generator[tuple[tuple[owlready2.ThingClass], Optional[list[pyowl2.base.annotation.OWLAnnotation]]], None, None]
@@ -3767,3 +3771,5 @@ Module Contents
 
 
 .. py:data:: BASE_DATATYPES
+
+.. py:data:: logger

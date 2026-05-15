@@ -68,16 +68,6 @@ Module Contents
    :type annotation_value: OWLAnnotationValue
 
 
-   .. py:method:: __repr__() -> str
-
-      Returns a string representation of the OWLAnnotation instance, primarily intended for debugging and interactive use. This implementation delegates directly to the `__str__` method, ensuring that the output format is consistent with the standard string conversion of the object. Consequently, the representation is human-readable and mirrors the result of calling `str()` on the instance.
-
-      :return: Returns a string representation of the object.
-
-      :rtype: str
-
-
-
    .. py:method:: __str__() -> str
 
       Returns a string representation of the annotation formatted in a functional style. The output includes the list of meta-annotations, the annotation property, and the annotation value. If no meta-annotations are present, the representation explicitly displays an empty list in their place. This method is useful for debugging or logging to provide a concise summary of the annotation's structure.

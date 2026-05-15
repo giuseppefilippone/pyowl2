@@ -61,6 +61,54 @@ Module Contents
    This abstract base class serves as the foundational root for all entities within an OWL (Web Ontology Language) representation. It is intended to be subclassed by specific constructs such as classes, properties, and individuals, rather than instantiated directly. By establishing a common type, it enables polymorphic handling of various ontology elements throughout the module.
 
 
+   .. py:method:: __eq__(value: object) -> bool
+
+      Determines equality by comparing string representations. Two OWL objects are considered equal if their string representations match.
+
+
+
+   .. py:method:: __ge__(value: object) -> bool
+
+      Determines greater-than-or-equal ordering by comparing string representations lexicographically.
+
+
+
+   .. py:method:: __gt__(value: object) -> bool
+
+      Determines greater-than ordering by comparing string representations lexicographically.
+
+
+
+   .. py:method:: __hash__() -> int
+
+      Computes a hash code from the string representation, enabling use in hash-based collections.
+
+
+
+   .. py:method:: __le__(value: object) -> bool
+
+      Determines less-than-or-equal ordering by comparing string representations lexicographically.
+
+
+
+   .. py:method:: __lt__(value: object) -> bool
+
+      Determines less-than ordering by comparing string representations lexicographically.
+
+
+
+   .. py:method:: __ne__(value: object) -> bool
+
+      Determines inequality by comparing string representations.
+
+
+
+   .. py:method:: __repr__() -> str
+
+      Returns the string representation, used for debugging and inspection.
+
+
+
    .. py:attribute:: __slots__
       :value: ()
 

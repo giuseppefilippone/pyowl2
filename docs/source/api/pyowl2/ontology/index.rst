@@ -18,6 +18,14 @@ The software serves as a high-level abstraction over the Owlready2 library, enab
 
 .. ── LLM-GENERATED DESCRIPTION END ──
 
+Attributes
+----------
+
+.. autoapisummary::
+
+   pyowl2.ontology.logger
+
+
 Classes
 -------
 
@@ -127,29 +135,21 @@ Module Contents
 
 
 
-   .. py:method:: add_axiom(axiom: Any) -> bool
+   .. py:method:: add_axiom(axiom: Any) -> None
 
-      Adds a logical axiom to the ontology by delegating the mapping process to the internal mapper object. This operation is performed within a context manager to ensure the underlying ontology resource is managed correctly during the modification. The method returns True to indicate the completion of the operation, but if the mapper fails to process the axiom, an exception will be raised, as the implementation does not include explicit error handling to return False.
+      Adds a logical axiom to the ontology by delegating the mapping process to the internal mapper object. This operation is performed within a context manager to ensure the underlying ontology resource is managed correctly during the modification.
 
       :param axiom: The logical construct or statement to be added to the ontology, such as a class or property assertion.
       :type axiom: typing.Any
 
-      :return: True, indicating that the axiom was successfully added to the ontology.
-
-      :rtype: bool
 
 
+   .. py:method:: add_axioms(axioms: list[pyowl2.abstracts.object.OWLObject]) -> None
 
-   .. py:method:: add_axioms(axioms: list[pyowl2.abstracts.object.OWLObject]) -> bool
-
-      Adds a list of axioms to the ontology by iterating through the provided collection and mapping each logical statement to the underlying structure. The method performs specialized processing for complex entity types—specifically object properties, data properties, classes, data ranges, and individuals—by decomposing them into their constituent parts, including declarations, annotations, domains, ranges, and any associated inner axioms. Axioms that do not match these specific types are mapped directly without decomposition. Each addition operation is wrapped in a context manager to ensure the ontology is properly managed during the modification process. The method returns True upon successfully processing the entire list, though it does not currently handle exceptions internally and will propagate errors if mapping fails.
+      Adds a list of axioms to the ontology by iterating through the provided collection and mapping each logical statement to the underlying structure. The method performs specialized processing for complex entity types—specifically object properties, data properties, classes, data ranges, and individuals—by decomposing them into their constituent parts, including declarations, annotations, domains, ranges, and any associated inner axioms. Axioms that do not match these specific types are mapped directly without decomposition. Each addition operation is wrapped in a context manager to ensure the ontology is properly managed during the modification process.
 
       :param axioms: A list of OWLObject instances representing logical statements to be added to the ontology. The method processes specific types—including object properties, data properties, classes, data ranges, and individuals—by mapping their declarations, domains, ranges, and inner axioms, while mapping other types directly.
       :type axioms: list[OWLObject]
-
-      :return: True if all axioms were successfully added to the ontology.
-
-      :rtype: bool
 
 
 
@@ -189,7 +189,7 @@ Module Contents
 
    .. py:attribute:: _axioms
       :type:  list[pyowl2.abstracts.axiom.OWLAxiom]
-      :value: None
+      :value: []
 
 
 
@@ -277,3 +277,5 @@ Module Contents
       :param value: The Internationalized Resource Identifier (IRI) to assign to the ontology.
       :type value: typing.Optional[URIRef]
 
+
+.. py:data:: logger
