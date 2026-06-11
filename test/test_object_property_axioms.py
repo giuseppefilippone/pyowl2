@@ -46,7 +46,6 @@ class TestObjectPropertyAxioms(unittest.TestCase):
         )
         self.assertGreaterEqual(len(results), 1)
 
-    @unittest.expectedFailure
     def test_disjoint_object_properties(self):
         """OWLDisjointObjectProperties getter: unhashable list in dict lookup."""
         loves = ObjectPropertyExpr(IRI(NS, "loves"))

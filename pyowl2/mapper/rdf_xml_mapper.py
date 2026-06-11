@@ -1444,8 +1444,23 @@ class RDFXMLMapper:
         """
 
         cls_iri = self.map(has_key.class_expression)
-        op_iris = self.map_sequence(has_key.object_property_expressions)
-        dp_iris = self.map_sequence(has_key.data_property_expressions)
+        # map_sequence collapses single-item / empty sequences into a single
+        # URIRef or RDF.nil, but Collection needs a list[URIRef]. Normalise.
+        def _as_list(seq, mapped):
+            if not seq:
+                return []
+            if isinstance(mapped, list):
+                return mapped
+            return [mapped]
+
+        op_iris = _as_list(
+            has_key.object_property_expressions,
+            self.map_sequence(has_key.object_property_expressions),
+        )
+        dp_iris = _as_list(
+            has_key.data_property_expressions,
+            self.map_sequence(has_key.data_property_expressions),
+        )
         collect = Collection(self.graph, BNode(), op_iris + dp_iris)
         self.graph.add(
             (

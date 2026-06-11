@@ -280,6 +280,10 @@ Module Contents
       :type:  rdflib.URIRef
 
 
+   .. py:attribute:: _FACET_TYPE_TO_URI
+      :type:  dict
+
+
    .. py:attribute:: _constraint
       :type:  Union[rdflib.URIRef, pyowl2.base.iri.IRI]
 

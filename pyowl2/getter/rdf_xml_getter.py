@@ -3,6 +3,8 @@ import inspect
 import logging
 import typing
 
+# rdflib graph-level cache for sparql_query() path
+import rdflib.plugins.sparql as _sparql_plugin
 from owlready2 import (
     AllDifferent,
     And,
@@ -48,7 +50,7 @@ from owlready2.base import (
     _universal_iri_2_abbrev,
 )
 from rdflib import RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
-from rdflib.namespace import OWL, RDF, split_uri
+from rdflib.namespace import DC, DCTERMS, FOAF, OWL, PROV, RDF, SDO, SKOS, split_uri
 
 from pyowl2.abstracts.annotation_axiom import OWLAnnotationAxiom
 from pyowl2.abstracts.assertion import OWLAssertion
@@ -414,7 +416,9 @@ class AxiomsType(enum.StrEnum):
     ANNOTATION_PROPERTY_DOMAINS = enum.auto()
     ANNOTATION_PROPERTY_RANGES = enum.auto()
 
+
 logger = logging.getLogger(__name__)
+
 
 # @utils.timer_decorator
 class RDFXMLGetter:
@@ -572,6 +576,8 @@ class RDFXMLGetter:
 
     # Mapping of standard annotation properties to their corresponding AnnotationPropertyClass instances in owlready2
     # The keys are the internal abbreviations (storid) of the standard annotation properties, and the values are the corresponding AnnotationPropertyClass instances from owlready2.
+    # OWL 2 built-in annotation properties (W3C OWL 2 Syntax §5.5).
+    # Keyed by owlready2 storid for O(1) lookup against SPARQL result ints.
     STANDARD_ANNOTATIONS: dict[int, AnnotationPropertyClass] = {
         comment.storid: comment,
         label.storid: label,
@@ -582,6 +588,255 @@ class RDFXMLGetter:
         priorVersion.storid: priorVersion,
         seeAlso.storid: seeAlso,
         versionInfo.storid: versionInfo,
+    }
+
+    # IRIs of the nine OWL 2 reserved annotation properties (same set as
+    # STANDARD_ANNOTATIONS, indexed by IRI for graph-level lookups).
+    OWL2_BUILTIN_ANNOTATION_IRIS: frozenset[str] = frozenset(
+        str(u)
+        for u in (
+            RDFS.label,
+            RDFS.comment,
+            RDFS.seeAlso,
+            RDFS.isDefinedBy,
+            OWL.deprecated,
+            OWL.versionInfo,
+            OWL.priorVersion,
+            OWL.backwardCompatibleWith,
+            OWL.incompatibleWith,
+        )
+    )
+
+    # Commonly-encountered non-built-in annotation property IRIs from
+    # standard vocabularies. Used as a soft allowlist so that properties from
+    # these vocabularies are still treated as annotations when they appear in
+    # the graph without an explicit owl:AnnotationProperty declaration.
+    # Sources: Dublin Core Elements (DC), DCMI Terms (DCTERMS), SKOS, FOAF,
+    # PROV-O, schema.org (SDO), IAO / oboInOwl (hardcoded — not in rdflib).
+    WELL_KNOWN_ANNOTATION_IRIS: frozenset[str] = frozenset(
+        str(u)
+        for u in (
+            # Dublin Core Elements 1.1 — all 15 are annotation-like
+            DC.title,
+            DC.creator,
+            DC.contributor,
+            DC.publisher,
+            DC.description,
+            DC.subject,
+            DC.date,
+            DC.identifier,
+            DC.source,
+            DC.language,
+            DC.relation,
+            DC.coverage,
+            DC.rights,
+            DC.type,
+            DC.format,
+            # DCMI Terms — annotation-style subset
+            DCTERMS.title,
+            DCTERMS.creator,
+            DCTERMS.contributor,
+            DCTERMS.publisher,
+            DCTERMS.description,
+            DCTERMS.abstract,
+            DCTERMS.subject,
+            DCTERMS.date,
+            DCTERMS.created,
+            DCTERMS.modified,
+            DCTERMS.issued,
+            DCTERMS.available,
+            DCTERMS.dateAccepted,
+            DCTERMS.dateCopyrighted,
+            DCTERMS.dateSubmitted,
+            DCTERMS.valid,
+            DCTERMS.identifier,
+            DCTERMS.source,
+            DCTERMS.language,
+            DCTERMS.license,
+            DCTERMS.rights,
+            DCTERMS.rightsHolder,
+            DCTERMS.provenance,
+            DCTERMS.bibliographicCitation,
+            DCTERMS.references,
+            DCTERMS.isReferencedBy,
+            DCTERMS.replaces,
+            DCTERMS.isReplacedBy,
+            DCTERMS.requires,
+            DCTERMS.isRequiredBy,
+            DCTERMS.hasPart,
+            DCTERMS.isPartOf,
+            DCTERMS.hasVersion,
+            DCTERMS.isVersionOf,
+            DCTERMS.hasFormat,
+            DCTERMS.isFormatOf,
+            DCTERMS.format,
+            DCTERMS.type,
+            DCTERMS.coverage,
+            DCTERMS.spatial,
+            DCTERMS.temporal,
+            DCTERMS.audience,
+            DCTERMS.educationLevel,
+            DCTERMS.mediator,
+            DCTERMS.conformsTo,
+            DCTERMS.extent,
+            DCTERMS.medium,
+            DCTERMS.accessRights,
+            DCTERMS.accrualMethod,
+            DCTERMS.accrualPeriodicity,
+            DCTERMS.accrualPolicy,
+            DCTERMS.instructionalMethod,
+            DCTERMS.tableOfContents,
+            DCTERMS.alternative,
+            # SKOS labelling / documentation properties
+            SKOS.prefLabel,
+            SKOS.altLabel,
+            SKOS.hiddenLabel,
+            SKOS.definition,
+            SKOS.example,
+            SKOS.note,
+            SKOS.scopeNote,
+            SKOS.editorialNote,
+            SKOS.changeNote,
+            SKOS.historyNote,
+            SKOS.notation,
+            # FOAF annotation-like
+            FOAF.name,
+            FOAF.nick,
+            FOAF.mbox,
+            FOAF.homepage,
+            FOAF.depiction,
+            FOAF.title,
+            # PROV-O (annotation-style)
+            PROV.wasDerivedFrom,
+            PROV.wasGeneratedBy,
+            PROV.generatedAtTime,
+            PROV.invalidatedAtTime,
+            # schema.org
+            SDO.name,
+            SDO.description,
+            SDO.alternateName,
+            SDO.identifier,
+            SDO.url,
+        )
+    ) | frozenset(
+        {
+            # IAO / OBO common annotation properties (not in rdflib namespaces)
+            "http://purl.obolibrary.org/obo/IAO_0000115",  # definition
+            "http://purl.obolibrary.org/obo/IAO_0000116",  # editor note
+            "http://purl.obolibrary.org/obo/IAO_0000117",  # term editor
+            "http://purl.obolibrary.org/obo/IAO_0000118",  # alternative term
+            "http://purl.obolibrary.org/obo/IAO_0000119",  # definition source
+            "http://purl.obolibrary.org/obo/IAO_0000231",  # has obsolescence reason
+            "http://purl.obolibrary.org/obo/IAO_0000232",  # curator note
+            "http://purl.obolibrary.org/obo/IAO_0000233",  # term tracker item
+            "http://purl.obolibrary.org/obo/IAO_0000412",  # imported from
+            "http://purl.obolibrary.org/obo/IAO_0000589",  # OBO foundry unique label
+            "http://purl.obolibrary.org/obo/IAO_0000600",  # elucidation
+            "http://www.geneontology.org/formats/oboInOwl#hasExactSynonym",
+            "http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym",
+            "http://www.geneontology.org/formats/oboInOwl#hasNarrowSynonym",
+            "http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym",
+            "http://www.geneontology.org/formats/oboInOwl#hasDbXref",
+            "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+            "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+            "http://www.geneontology.org/formats/oboInOwl#hasDefinition",
+            "http://www.geneontology.org/formats/oboInOwl#inSubset",
+            # SKOS-XL (not in rdflib's SKOS namespace)
+            "http://www.w3.org/2008/05/skos-xl#literalForm",
+            "http://www.w3.org/2008/05/skos-xl#prefLabel",
+            "http://www.w3.org/2008/05/skos-xl#altLabel",
+            "http://www.w3.org/2008/05/skos-xl#hiddenLabel",
+        }
+    )
+
+    # Union of all recognized annotation property IRIs: OWL 2 reserved plus
+    # the common external vocabularies. Used as a fast Python-side membership
+    # test for predicates that are not declared `rdf:type owl:AnnotationProperty`
+    # in the ontology graph but are still semantically annotations.
+    ALL_KNOWN_ANNOTATION_IRIS: frozenset[str] = (
+        OWL2_BUILTIN_ANNOTATION_IRIS | WELL_KNOWN_ANNOTATION_IRIS
+    )
+
+    # Space-separated SPARQL IRI list (``<iri1> <iri2> ...``) over every
+    # element of ALL_KNOWN_ANNOTATION_IRIS. Interpolated into annotation
+    # queries inside a ``VALUES ?<var> { ... }`` clause so that predicates
+    # from DC/DCTERMS/SKOS/FOAF/PROV/SDO/IAO/etc. are picked up even when the
+    # ontology does not declare them as ``owl:AnnotationProperty``. Queries
+    # using this fragment must be routed through rdflib's SPARQL engine
+    # (via ``world.sparql_query`` / ``graph.query``) — owlready2's
+    # SPARQL→SQL translator emits invalid SQL for ``VALUES`` inside ``UNION``.
+    _ANNOTATION_PREDICATE_IRI_LIST: str = " ".join(
+        f"<{iri}>" for iri in sorted(ALL_KNOWN_ANNOTATION_IRIS)
+    )
+
+    # Mapping from AxiomsType enum to the corresponding instance method name.
+    # Used by get() for O(1) dispatch instead of a 66-branch if/elif chain.
+    _GET_DISPATCH: dict[AxiomsType, str] = {
+        AxiomsType.GENERAL_CLASS_AXIOMS: "get_owl_general_axiom",
+        AxiomsType.CLASS_ASSERTIONS: "get_owl_class_assertions",
+        AxiomsType.ANNOTATION_PROPERTIES: "get_owl_annotation_properties",
+        AxiomsType.CLASSES: "get_owl_classes",
+        AxiomsType.OBJECT_PROPERTIES: "get_owl_object_properties",
+        AxiomsType.DATA_PROPERTIES: "get_owl_datatype_properties",
+        AxiomsType.INDIVIDUALS: "get_owl_individuals",
+        AxiomsType.SUBCLASSES: "get_owl_subclass_relationships",
+        AxiomsType.EQUIVALENT_CLASSES: "get_owl_equivalent_classes",
+        AxiomsType.DISJOINT_CLASSES: "get_owl_disjoint_classes",
+        AxiomsType.OBJECT_UNION_OF: "get_owl_object_union_of",
+        AxiomsType.DATA_UNION_OF: "get_owl_data_union_of",
+        AxiomsType.OBJECT_INTERSECTION_OF: "get_owl_object_intersection_of",
+        AxiomsType.DATA_INTERSECTION_OF: "get_owl_data_intersection_of",
+        AxiomsType.OBJECT_COMPLEMENT_OF: "get_owl_object_complement_of",
+        AxiomsType.DATA_COMPLEMENT_OF: "get_owl_data_complement_of",
+        AxiomsType.OBJECTS_ONE_OF: "get_owl_object_one_of",
+        AxiomsType.DATA_ONE_OF: "get_owl_data_one_of",
+        AxiomsType.DATATYPE_RESTRICTIONS: "get_owl_datatype_restrictions",
+        AxiomsType.INVERSE_OBJECT_PROPERTIES: "get_owl_inverse_object_properties",
+        AxiomsType.HAS_KEYS: "get_owl_has_keys",
+        AxiomsType.DATATYPES: "get_owl_datatypes",
+        AxiomsType.NEGATIVE_OBJECT_PROPERTY_ASSERTIONS: "get_owl_negative_object_property_assertions",
+        AxiomsType.NEGATIVE_DATA_PROPERTY_ASSERTIONS: "get_owl_negative_data_property_assertions",
+        AxiomsType.OBJECT_PROPERTY_ASSERTIONS: "get_owl_object_property_assertions",
+        AxiomsType.DATA_PROPERTY_ASSERTIONS: "get_owl_data_property_assertions",
+        AxiomsType.SAME_INDIVIDUALS: "get_owl_same_individuals",
+        AxiomsType.DIFFERENT_INDIVIDUALS: "get_owl_different_individuals",
+        AxiomsType.SUB_OBJECT_PROPERTIES: "get_owl_sub_object_property_of",
+        AxiomsType.SUB_DATA_PROPERTIES: "get_owl_sub_data_property_of",
+        AxiomsType.SUB_ANNOTATION_PROPERTIES: "get_owl_sub_annotation_property_of",
+        AxiomsType.EQUIVALENT_OBJECT_PROPERTIES: "get_owl_equivalent_object_properties",
+        AxiomsType.DISJOINT_OBJECT_PROPERTIES: "get_owl_disjoint_object_properties",
+        AxiomsType.ANNOTATIONS: "get_owl_annotations",
+        AxiomsType.OBJECTS_SOME_VALUES_FROM: "get_owl_object_some_values_from",
+        AxiomsType.OBJECTS_ALL_VALUES_FROM: "get_owl_object_all_values_from",
+        AxiomsType.OBJECTS_HAS_VALUE: "get_owl_object_has_value",
+        AxiomsType.OBJECTS_HAS_SELF: "get_owl_object_has_self",
+        AxiomsType.OBJECTS_MIN_CARDINALITY: "get_owl_object_min_cardinality",
+        AxiomsType.OBJECTS_MAX_CARDINALITY: "get_owl_object_max_cardinality",
+        AxiomsType.OBJECTS_EXACT_CARDINALITY: "get_owl_object_exact_cardinality",
+        AxiomsType.DATA_SOME_VALUES_FROM: "get_owl_data_some_values_from",
+        AxiomsType.DATA_ALL_VALUES_FROM: "get_owl_data_all_values_from",
+        AxiomsType.DATAS_HAS_VALUE: "get_owl_data_has_value",
+        AxiomsType.DATA_MIN_CARDINALITY: "get_owl_data_min_cardinality",
+        AxiomsType.DATA_MAX_CARDINALITY: "get_owl_data_max_cardinality",
+        AxiomsType.DATA_EXACT_CARDINALITY: "get_owl_data_exact_cardinality",
+        AxiomsType.DISJOINT_UNIONS: "get_owl_disjoint_unions",
+        AxiomsType.FUNCTIONAL_OBJECT_PROPERTIES: "get_owl_functional_object_properties",
+        AxiomsType.INVERSE_FUNCTIONAL_OBJECT_PROPERTIES: "get_owl_inverse_functional_object_properties",
+        AxiomsType.TRANSITIVE_OBJECT_PROPERTIES: "get_owl_transitive_object_properties",
+        AxiomsType.SYMMETRIC_OBJECT_PROPERTIES: "get_owl_symmetric_object_properties",
+        AxiomsType.ASYMMETRIC_OBJECT_PROPERTIES: "get_owl_asymmetric_object_properties",
+        AxiomsType.REFLEXIVE_OBJECT_PROPERTIES: "get_owl_reflexive_object_properties",
+        AxiomsType.IRREFLEXIVE_OBJECT_PROPERTIES: "get_owl_irreflexive_object_properties",
+        AxiomsType.FUNCIONAL_DATA_PROPERTIES: "get_owl_functional_data_properties",
+        AxiomsType.EQUIVALENT_DATA_PROPERTIES: "get_owl_equivalent_data_properties",
+        AxiomsType.DISJOINT_DATA_PROPERTIES: "get_owl_disjoint_data_properties",
+        AxiomsType.OBJECT_PROPERTY_DOMAIN: "get_owl_object_property_domains",
+        AxiomsType.OBJECT_PROPERTY_RANGE: "get_owl_object_property_ranges",
+        AxiomsType.DATA_PROPERTY_DOMAIN: "get_owl_data_property_domains",
+        AxiomsType.DATA_PROPERTY_RANGE: "get_owl_data_property_ranges",
+        AxiomsType.DATATYPE_DEFINITION: "get_owl_datatype_definitions",
+        AxiomsType.ANNOTATION_PROPERTY_DOMAINS: "get_owl_annotation_property_domains",
+        AxiomsType.ANNOTATION_PROPERTY_RANGES: "get_owl_annotation_property_ranges",
     }
 
     def __init__(self, ontology: Ontology) -> None:
@@ -596,6 +851,90 @@ class RDFXMLGetter:
         self._ontology: Ontology = ontology
         self._world: World = typing.cast(World, ontology.world)
         self._graph: Graph = self._world.as_rdflib_graph()
+
+        # SPARQL prepared-query cache: both owlready2's world.sparql() and
+        # rdflib's graph.query() re-parse the query string on every call.
+        # We cache (a) owlready2 PreparedQuery objects for world.sparql()
+        # and (b) rdflib parsed Query objects for world.sparql_query()
+        # which delegates to self._graph.query().
+        self._sparql_cache: dict = {}
+        self._graph_sparql_cache: dict = {}
+
+        _orig_sparql: callable = self._world.sparql
+        _orig_graph_query: callable = self._graph.query
+
+        def _cached_sparql(
+            query, params=(), error_on_undefined_entities=True, spawn=False
+        ):
+            """
+            Intercepts calls to world.sparql() and memoizes owlready2 PreparedQuery
+            objects by the tuple (query text, error_on_undefined_entities). When
+            spawn is requested the call is forwarded unmodified to the original
+            implementation. Otherwise the method looks up a previously prepared
+            query in the internal cache; if none exists it is created via
+            world.prepare_sparql(), stored, and then executed with the supplied
+            parameters. This avoids re-parsing the same SPARQL string repeatedly
+            across the 77+ call sites in this module.
+
+            :param query: The SPARQL query string to be executed.
+            :type query: str
+            :param params: Tuple of positional parameters to bind in the prepared
+                query execution.
+            :type params: tuple
+            :param error_on_undefined_entities: Flag forwarded to owlready2 that
+                determines whether unknown IRIs in the query should raise an error.
+            :type error_on_undefined_entities: bool
+            :param spawn: When True the call is passed through to the original
+                world.sparql() without caching.
+            :type spawn: bool
+
+            :return: The result of executing the prepared query with the given
+                parameters, typically an iterable of result rows.
+            """
+            if spawn:
+                return _orig_sparql(query, params, error_on_undefined_entities, spawn)
+            key = (query, error_on_undefined_entities)
+            prepared = self._sparql_cache.get(key)
+            if prepared is None:
+                prepared = self._world.prepare_sparql(
+                    query, error_on_undefined_entities
+                )
+                self._sparql_cache[key] = prepared
+            return prepared.execute(params)
+
+        def _cached_graph_query(query_object, *args, **kwargs):
+            """
+            Intercepts calls to self._graph.query() and pre-parses raw SPARQL
+            strings using rdflib.plugins.sparql.prepareQuery so that the same
+            query text is translated only once. If query_object is already a
+            parsed rdflib Query it is passed through unchanged. The cached
+            prepared query is then forwarded to the original graph.query()
+            along with any additional positional or keyword arguments. This
+            complements _cached_sparql by optimising the sparql_query() path
+            that owlready2 routes through rdflib.
+
+            :param query_object: Either a raw SPARQL string or an already parsed
+                rdflib Query instance.
+            :type query_object: typing.Union[str, rdflib.Query]
+            :param args: Additional positional arguments forwarded to the
+                underlying graph.query() implementation.
+            :param kwargs: Additional keyword arguments forwarded to the
+                underlying graph.query() implementation.
+
+            :return: The result of the SPARQL evaluation, typically an iterable
+                of result rows.
+            """
+            if isinstance(query_object, str):
+                prepared = self._graph_sparql_cache.get(query_object)
+                if prepared is None:
+                    prepared = _sparql_plugin.prepareQuery(query_object)
+                    self._graph_sparql_cache[query_object] = prepared
+                query_object = prepared
+            return _orig_graph_query(query_object, *args, **kwargs)
+
+        # Monkey-patch owlready2 and rdflib SPARQL methods to use our caching wrappers
+        self._world.sparql = _cached_sparql
+        self._graph.query = _cached_graph_query
 
         self._declarations: dict[EntityClass, EntityClass] = dict()
         self._classes: dict[ThingClass, OWLClass] = dict()
@@ -1817,137 +2156,141 @@ class RDFXMLGetter:
                 + self.get_owl_individuals()
                 + self.get_owl_datatypes()
             )
-        if element == AxiomsType.GENERAL_CLASS_AXIOMS:
-            return self.get_owl_general_axiom()
-        if element == AxiomsType.CLASS_ASSERTIONS:
-            return self.get_owl_class_assertions()
-        if element == AxiomsType.ANNOTATION_PROPERTIES:
-            return self.get_owl_annotation_properties()
-        if element == AxiomsType.CLASSES:
-            return self.get_owl_classes()
-        if element == AxiomsType.OBJECT_PROPERTIES:
-            return self.get_owl_object_properties()
-        if element == AxiomsType.DATA_PROPERTIES:
-            return self.get_owl_datatype_properties()
-        if element == AxiomsType.INDIVIDUALS:
-            return self.get_owl_individuals()
-        if element == AxiomsType.SUBCLASSES:
-            return self.get_owl_subclass_relationships()
-        if element == AxiomsType.EQUIVALENT_CLASSES:
-            return self.get_owl_equivalent_classes()
-        if element == AxiomsType.DISJOINT_CLASSES:
-            return self.get_owl_disjoint_classes()
-        if element == AxiomsType.OBJECT_UNION_OF:
-            return self.get_owl_object_union_of()
-        if element == AxiomsType.DATA_UNION_OF:
-            return self.get_owl_data_union_of()
-        if element == AxiomsType.OBJECT_INTERSECTION_OF:
-            return self.get_owl_object_intersection_of()
-        if element == AxiomsType.DATA_INTERSECTION_OF:
-            return self.get_owl_data_intersection_of()
-        if element == AxiomsType.OBJECT_COMPLEMENT_OF:
-            return self.get_owl_object_complement_of()
-        if element == AxiomsType.DATA_COMPLEMENT_OF:
-            return self.get_owl_data_complement_of()
-        if element == AxiomsType.OBJECTS_ONE_OF:
-            return self.get_owl_object_one_of()
-        if element == AxiomsType.DATA_ONE_OF:
-            return self.get_owl_data_one_of()
-        if element == AxiomsType.DATATYPE_RESTRICTIONS:
-            return self.get_owl_datatype_restrictions()
-        if element == AxiomsType.INVERSE_OBJECT_PROPERTIES:
-            return self.get_owl_inverse_object_properties()
-        if element == AxiomsType.HAS_KEYS:
-            return self.get_owl_has_keys()
-        if element == AxiomsType.DATATYPES:
-            return self.get_owl_datatypes()
-        if element == AxiomsType.NEGATIVE_OBJECT_PROPERTY_ASSERTIONS:
-            return self.get_owl_negative_object_property_assertions()
-        if element == AxiomsType.NEGATIVE_DATA_PROPERTY_ASSERTIONS:
-            return self.get_owl_negative_data_property_assertions()
-        if element == AxiomsType.OBJECT_PROPERTY_ASSERTIONS:
-            return self.get_owl_object_property_assertions()
-        if element == AxiomsType.DATA_PROPERTY_ASSERTIONS:
-            return self.get_owl_data_property_assertions()
-        if element == AxiomsType.SAME_INDIVIDUALS:
-            return self.get_owl_same_individuals()
-        if element == AxiomsType.DIFFERENT_INDIVIDUALS:
-            return self.get_owl_different_individuals()
-        if element == AxiomsType.SUB_OBJECT_PROPERTIES:
-            return self.get_owl_sub_object_property_of()
-        if element == AxiomsType.SUB_DATA_PROPERTIES:
-            return self.get_owl_sub_data_property_of()
-        if element == AxiomsType.SUB_ANNOTATION_PROPERTIES:
-            return self.get_owl_sub_annotation_property_of()
-        if element == AxiomsType.EQUIVALENT_OBJECT_PROPERTIES:
-            return self.get_owl_equivalent_object_properties()
-        if element == AxiomsType.DISJOINT_OBJECT_PROPERTIES:
-            return self.get_owl_disjoint_object_properties()
-        if element == AxiomsType.ANNOTATIONS:
-            return self.get_owl_annotations()
-        if element == AxiomsType.OBJECTS_SOME_VALUES_FROM:
-            return self.get_owl_object_some_values_from()
-        if element == AxiomsType.OBJECTS_ALL_VALUES_FROM:
-            return self.get_owl_object_all_values_from()
-        if element == AxiomsType.OBJECTS_HAS_VALUE:
-            return self.get_owl_object_has_value()
-        if element == AxiomsType.OBJECTS_HAS_SELF:
-            return self.get_owl_object_has_self()
-        if element == AxiomsType.OBJECTS_MIN_CARDINALITY:
-            return self.get_owl_object_min_cardinality()
-        if element == AxiomsType.OBJECTS_MAX_CARDINALITY:
-            return self.get_owl_object_max_cardinality()
-        if element == AxiomsType.OBJECTS_EXACT_CARDINALITY:
-            return self.get_owl_object_exact_cardinality()
-        if element == AxiomsType.DATA_SOME_VALUES_FROM:
-            return self.get_owl_data_some_values_from()
-        if element == AxiomsType.DATA_ALL_VALUES_FROM:
-            return self.get_owl_data_all_values_from()
-        if element == AxiomsType.DATAS_HAS_VALUE:
-            return self.get_owl_data_has_value()
-        if element == AxiomsType.DATA_MIN_CARDINALITY:
-            return self.get_owl_data_min_cardinality()
-        if element == AxiomsType.DATA_MAX_CARDINALITY:
-            return self.get_owl_data_max_cardinality()
-        if element == AxiomsType.DATA_EXACT_CARDINALITY:
-            return self.get_owl_data_exact_cardinality()
-        if element == AxiomsType.DISJOINT_UNIONS:
-            return self.get_owl_disjoint_unions()
-        if element == AxiomsType.FUNCTIONAL_OBJECT_PROPERTIES:
-            return self.get_owl_functional_object_properties()
-        if element == AxiomsType.INVERSE_FUNCTIONAL_OBJECT_PROPERTIES:
-            return self.get_owl_inverse_functional_object_properties()
-        if element == AxiomsType.TRANSITIVE_OBJECT_PROPERTIES:
-            return self.get_owl_transitive_object_properties()
-        if element == AxiomsType.SYMMETRIC_OBJECT_PROPERTIES:
-            return self.get_owl_symmetric_object_properties()
-        if element == AxiomsType.ASYMMETRIC_OBJECT_PROPERTIES:
-            return self.get_owl_asymmetric_object_properties()
-        if element == AxiomsType.REFLEXIVE_OBJECT_PROPERTIES:
-            return self.get_owl_reflexive_object_properties()
-        if element == AxiomsType.IRREFLEXIVE_OBJECT_PROPERTIES:
-            return self.get_owl_irreflexive_object_properties()
-        if element == AxiomsType.FUNCIONAL_DATA_PROPERTIES:
-            return self.get_owl_functional_data_properties()
-        if element == AxiomsType.EQUIVALENT_DATA_PROPERTIES:
-            return self.get_owl_equivalent_data_properties()
-        if element == AxiomsType.DISJOINT_DATA_PROPERTIES:
-            return self.get_owl_disjoint_data_properties()
-        if element == AxiomsType.OBJECT_PROPERTY_DOMAIN:
-            return self.get_owl_object_property_domains()
-        if element == AxiomsType.OBJECT_PROPERTY_RANGE:
-            return self.get_owl_object_property_ranges()
-        if element == AxiomsType.DATA_PROPERTY_DOMAIN:
-            return self.get_owl_data_property_domains()
-        if element == AxiomsType.DATA_PROPERTY_RANGE:
-            return self.get_owl_data_property_ranges()
-        if element == AxiomsType.DATATYPE_DEFINITION:
-            return self.get_owl_datatype_definitions()
-        if element == AxiomsType.ANNOTATION_PROPERTY_DOMAINS:
-            return self.get_owl_annotation_property_domains()
-        if element == AxiomsType.ANNOTATION_PROPERTY_RANGES:
-            return self.get_owl_annotation_property_ranges()
-        raise ValueError
+        # if element == AxiomsType.GENERAL_CLASS_AXIOMS:
+        #     return self.get_owl_general_axiom()
+        # if element == AxiomsType.CLASS_ASSERTIONS:
+        #     return self.get_owl_class_assertions()
+        # if element == AxiomsType.ANNOTATION_PROPERTIES:
+        #     return self.get_owl_annotation_properties()
+        # if element == AxiomsType.CLASSES:
+        #     return self.get_owl_classes()
+        # if element == AxiomsType.OBJECT_PROPERTIES:
+        #     return self.get_owl_object_properties()
+        # if element == AxiomsType.DATA_PROPERTIES:
+        #     return self.get_owl_datatype_properties()
+        # if element == AxiomsType.INDIVIDUALS:
+        #     return self.get_owl_individuals()
+        # if element == AxiomsType.SUBCLASSES:
+        #     return self.get_owl_subclass_relationships()
+        # if element == AxiomsType.EQUIVALENT_CLASSES:
+        #     return self.get_owl_equivalent_classes()
+        # if element == AxiomsType.DISJOINT_CLASSES:
+        #     return self.get_owl_disjoint_classes()
+        # if element == AxiomsType.OBJECT_UNION_OF:
+        #     return self.get_owl_object_union_of()
+        # if element == AxiomsType.DATA_UNION_OF:
+        #     return self.get_owl_data_union_of()
+        # if element == AxiomsType.OBJECT_INTERSECTION_OF:
+        #     return self.get_owl_object_intersection_of()
+        # if element == AxiomsType.DATA_INTERSECTION_OF:
+        #     return self.get_owl_data_intersection_of()
+        # if element == AxiomsType.OBJECT_COMPLEMENT_OF:
+        #     return self.get_owl_object_complement_of()
+        # if element == AxiomsType.DATA_COMPLEMENT_OF:
+        #     return self.get_owl_data_complement_of()
+        # if element == AxiomsType.OBJECTS_ONE_OF:
+        #     return self.get_owl_object_one_of()
+        # if element == AxiomsType.DATA_ONE_OF:
+        #     return self.get_owl_data_one_of()
+        # if element == AxiomsType.DATATYPE_RESTRICTIONS:
+        #     return self.get_owl_datatype_restrictions()
+        # if element == AxiomsType.INVERSE_OBJECT_PROPERTIES:
+        #     return self.get_owl_inverse_object_properties()
+        # if element == AxiomsType.HAS_KEYS:
+        #     return self.get_owl_has_keys()
+        # if element == AxiomsType.DATATYPES:
+        #     return self.get_owl_datatypes()
+        # if element == AxiomsType.NEGATIVE_OBJECT_PROPERTY_ASSERTIONS:
+        #     return self.get_owl_negative_object_property_assertions()
+        # if element == AxiomsType.NEGATIVE_DATA_PROPERTY_ASSERTIONS:
+        #     return self.get_owl_negative_data_property_assertions()
+        # if element == AxiomsType.OBJECT_PROPERTY_ASSERTIONS:
+        #     return self.get_owl_object_property_assertions()
+        # if element == AxiomsType.DATA_PROPERTY_ASSERTIONS:
+        #     return self.get_owl_data_property_assertions()
+        # if element == AxiomsType.SAME_INDIVIDUALS:
+        #     return self.get_owl_same_individuals()
+        # if element == AxiomsType.DIFFERENT_INDIVIDUALS:
+        #     return self.get_owl_different_individuals()
+        # if element == AxiomsType.SUB_OBJECT_PROPERTIES:
+        #     return self.get_owl_sub_object_property_of()
+        # if element == AxiomsType.SUB_DATA_PROPERTIES:
+        #     return self.get_owl_sub_data_property_of()
+        # if element == AxiomsType.SUB_ANNOTATION_PROPERTIES:
+        #     return self.get_owl_sub_annotation_property_of()
+        # if element == AxiomsType.EQUIVALENT_OBJECT_PROPERTIES:
+        #     return self.get_owl_equivalent_object_properties()
+        # if element == AxiomsType.DISJOINT_OBJECT_PROPERTIES:
+        #     return self.get_owl_disjoint_object_properties()
+        # if element == AxiomsType.ANNOTATIONS:
+        #     return self.get_owl_annotations()
+        # if element == AxiomsType.OBJECTS_SOME_VALUES_FROM:
+        #     return self.get_owl_object_some_values_from()
+        # if element == AxiomsType.OBJECTS_ALL_VALUES_FROM:
+        #     return self.get_owl_object_all_values_from()
+        # if element == AxiomsType.OBJECTS_HAS_VALUE:
+        #     return self.get_owl_object_has_value()
+        # if element == AxiomsType.OBJECTS_HAS_SELF:
+        #     return self.get_owl_object_has_self()
+        # if element == AxiomsType.OBJECTS_MIN_CARDINALITY:
+        #     return self.get_owl_object_min_cardinality()
+        # if element == AxiomsType.OBJECTS_MAX_CARDINALITY:
+        #     return self.get_owl_object_max_cardinality()
+        # if element == AxiomsType.OBJECTS_EXACT_CARDINALITY:
+        #     return self.get_owl_object_exact_cardinality()
+        # if element == AxiomsType.DATA_SOME_VALUES_FROM:
+        #     return self.get_owl_data_some_values_from()
+        # if element == AxiomsType.DATA_ALL_VALUES_FROM:
+        #     return self.get_owl_data_all_values_from()
+        # if element == AxiomsType.DATAS_HAS_VALUE:
+        #     return self.get_owl_data_has_value()
+        # if element == AxiomsType.DATA_MIN_CARDINALITY:
+        #     return self.get_owl_data_min_cardinality()
+        # if element == AxiomsType.DATA_MAX_CARDINALITY:
+        #     return self.get_owl_data_max_cardinality()
+        # if element == AxiomsType.DATA_EXACT_CARDINALITY:
+        #     return self.get_owl_data_exact_cardinality()
+        # if element == AxiomsType.DISJOINT_UNIONS:
+        #     return self.get_owl_disjoint_unions()
+        # if element == AxiomsType.FUNCTIONAL_OBJECT_PROPERTIES:
+        #     return self.get_owl_functional_object_properties()
+        # if element == AxiomsType.INVERSE_FUNCTIONAL_OBJECT_PROPERTIES:
+        #     return self.get_owl_inverse_functional_object_properties()
+        # if element == AxiomsType.TRANSITIVE_OBJECT_PROPERTIES:
+        #     return self.get_owl_transitive_object_properties()
+        # if element == AxiomsType.SYMMETRIC_OBJECT_PROPERTIES:
+        #     return self.get_owl_symmetric_object_properties()
+        # if element == AxiomsType.ASYMMETRIC_OBJECT_PROPERTIES:
+        #     return self.get_owl_asymmetric_object_properties()
+        # if element == AxiomsType.REFLEXIVE_OBJECT_PROPERTIES:
+        #     return self.get_owl_reflexive_object_properties()
+        # if element == AxiomsType.IRREFLEXIVE_OBJECT_PROPERTIES:
+        #     return self.get_owl_irreflexive_object_properties()
+        # if element == AxiomsType.FUNCIONAL_DATA_PROPERTIES:
+        #     return self.get_owl_functional_data_properties()
+        # if element == AxiomsType.EQUIVALENT_DATA_PROPERTIES:
+        #     return self.get_owl_equivalent_data_properties()
+        # if element == AxiomsType.DISJOINT_DATA_PROPERTIES:
+        #     return self.get_owl_disjoint_data_properties()
+        # if element == AxiomsType.OBJECT_PROPERTY_DOMAIN:
+        #     return self.get_owl_object_property_domains()
+        # if element == AxiomsType.OBJECT_PROPERTY_RANGE:
+        #     return self.get_owl_object_property_ranges()
+        # if element == AxiomsType.DATA_PROPERTY_DOMAIN:
+        #     return self.get_owl_data_property_domains()
+        # if element == AxiomsType.DATA_PROPERTY_RANGE:
+        #     return self.get_owl_data_property_ranges()
+        # if element == AxiomsType.DATATYPE_DEFINITION:
+        #     return self.get_owl_datatype_definitions()
+        # if element == AxiomsType.ANNOTATION_PROPERTY_DOMAINS:
+        #     return self.get_owl_annotation_property_domains()
+        # if element == AxiomsType.ANNOTATION_PROPERTY_RANGES:
+        #     return self.get_owl_annotation_property_ranges()
+        # raise ValueError
+        method_name = self._GET_DISPATCH.get(element)
+        if method_name is None:
+            raise ValueError
+        return getattr(self, method_name)()
 
     def nothing_to_owl_class(self) -> OWLClass:
         """
@@ -2474,12 +2817,18 @@ class RDFXMLGetter:
         if not isinstance(entity.property, DataPropertyClass):
             return None
         if entity not in self.data_some_values_from:
-            data_range = self.graph.value(entity.storid, OWL.someValuesFrom)
+            data_range_iri = self.graph.value(entity.storid, OWL.someValuesFrom)
             expressions = [self.to_owl_data_property(entity.property)]
-            if not data_range or None in expressions:
+            if not data_range_iri or None in expressions:
+                return None
+            if isinstance(entity.value, ConstrainedDatatype):
+                data_range = self.to_owl_datatype_restriction(entity.value)
+            else:
+                data_range = OWLDatatype(data_range_iri)
+            if not data_range:
                 return None
             self.data_some_values_from[entity] = OWLDataSomeValuesFrom(
-                expressions, OWLDatatype(data_range)
+                expressions, data_range
             )
         return self.data_some_values_from[entity]
 
@@ -2504,12 +2853,18 @@ class RDFXMLGetter:
         if not isinstance(entity.property, DataPropertyClass):
             return None
         if entity not in self.data_all_values_from:
-            data_range = self.graph.value(entity.storid, OWL.allValuesFrom)
+            data_range_iri = self.graph.value(entity.storid, OWL.allValuesFrom)
             expressions = [self.to_owl_data_property(entity.property)]
-            if not data_range or None in expressions:
+            if not data_range_iri or None in expressions:
+                return None
+            if isinstance(entity.value, ConstrainedDatatype):
+                data_range = self.to_owl_datatype_restriction(entity.value)
+            else:
+                data_range = OWLDatatype(data_range_iri)
+            if not data_range:
                 return None
             self.data_all_values_from[entity] = OWLDataAllValuesFrom(
-                expressions, OWLDatatype(data_range)
+                expressions, data_range
             )
         return self.data_all_values_from[entity]
 
@@ -2888,7 +3243,9 @@ class RDFXMLGetter:
 
         if not main_class or not classes:
             return None
-        if len(classes) < 3:
+        # OWL 2 spec §9.1.4: DisjointUnion(C CE1 ... CEn) requires n >= 2
+        # disjoint class expressions, not 3.
+        if len(classes) < 2:
             return None
         # if any(not isinstance(c, ThingClass) for c in classes):
         #     return None
@@ -4769,7 +5126,9 @@ class RDFXMLGetter:
 
     def get_owl_data_range(self, *params: tuple[OWLObject, ...]) -> OWLDataRange:
         """
-        Attempts to construct an OWLDataRange instance from the provided OWLObject parameters by evaluating a predefined sequence of conversion strategies. This method aggregates specific factory functions—such as those for datatypes, intersections, unions, complements, one-of enumerations, and datatype restrictions—and delegates the matching process to the internal _map_functions utility. The utility applies each strategy to the input arguments in order, returning the result of the first successful conversion. If the supplied parameters cannot be interpreted by any of the registered strategies, the method raises a TypeError, indicating that the input does not correspond to a valid OWL data range structure.
+        Attempts to construct an OWLDataRange instance from the provided OWLObject parameters by evaluating a predefined sequence of conversion strategies. This method aggregates specific factory functions—such as those for datatypes, intersections, unions, complements, one-of enumerations, and datatype restrictions—and delegates the matching process to the internal _map_functions utility. The utility applies each strategy to the input arguments in order, returning the result of the first successful conversion.
+
+        Before dispatching, the first argument is normalised so that callers may pass raw storids (URIRef/BNode obtained from ``graph.value(...)``) or an already-converted ``OWLDataRange``: storids are resolved against the world to the underlying owlready2 entity, and pre-converted ranges are returned as-is. Named-datatype URIRefs that do not resolve to a Python entity fall back to a plain ``OWLDatatype`` wrapper. If no strategy applies, a ``TypeError`` is raised by the underlying utility.
 
         :param params: A variable-length sequence of OWLObject instances to be processed by conversion functions to generate an OWLDataRange.
         :type params: tuple[OWLObject, ...]
@@ -4778,6 +5137,20 @@ class RDFXMLGetter:
 
         :rtype: OWLDataRange
         """
+
+        if params:
+            # Normalize the first parameter to allow passing raw storids or pre-converted OWLDataRange instances
+            head = params[0]
+            # If the head is already an OWLDataRange, return it directly
+            if isinstance(head, OWLDataRange):
+                return head
+            if isinstance(head, (URIRef, BNode)):
+                # Attempt to resolve the storid to an owlready2 entity
+                resolved = self.world._get_by_storid(head)
+                if resolved is not None:
+                    params = (resolved, *params[1:])
+                else:
+                    return OWLDatatype(head)
 
         functions: list[typing.Callable] = [
             self.to_owl_datatype,
@@ -4937,10 +5310,15 @@ class RDFXMLGetter:
                 data_range = self.to_owl_data_intersection_of(data_range)
             elif isinstance(data_range, ConstrainedDatatype):
                 data_range = self.to_owl_datatype_restriction(data_range)
-            else:
+            elif hasattr(data_range, "storid"):
                 data_range = OWLDatatype(
                     self.graph.value(data_range.storid, OWL.onDatatype)
                 )
+            else:
+                # Named datatype: owlready2 maps known XSD types (xsd:integer,
+                # xsd:string, etc.) to plain Python types (int, str). Wrap via
+                # the generic data-range resolver which understands those.
+                data_range = self.get_owl_data_range(data_range)
             self.datatype_definitions[datatype] = OWLDatatypeDefinition(
                 obj,
                 data_range,
@@ -5164,14 +5542,27 @@ class RDFXMLGetter:
                     iri_property
                 )
                 return iri_property
-            else:
-                iri_property = URIRef(_universal_abbrev_2_iri.get(property))
-                if iri_property is None:
-                    return
-                self.annotation_properties[iri_property] = OWLAnnotationProperty(
-                    iri_property
-                )
-                return iri_property
+            # First try the universal abbreviation table (for RDF/RDFS/OWL
+            # reserved storids that are stable across worlds).
+            raw_iri = _universal_abbrev_2_iri.get(property)
+            if raw_iri is None:
+                # Fall back to the per-world storid table so that storids
+                # allocated by owlready2 for non-built-in IRIs (e.g. DC,
+                # SKOS, DCTERMS, custom predicates) still resolve to a real
+                # IRI when surfaced from a SPARQL result.
+                raw_iri = self._world._unabbreviate(property)
+            if raw_iri is None:
+                return None
+            iri_property = URIRef(raw_iri)
+            self.annotation_properties[iri_property] = OWLAnnotationProperty(
+                iri_property
+            )
+            return iri_property
+        elif isinstance(property, URIRef):
+            if str(property) in RDFXMLGetter.ALL_KNOWN_ANNOTATION_IRIS:
+                self.annotation_properties[property] = OWLAnnotationProperty(property)
+                return property
+            return None
         elif isinstance(property, AnnotationPropertyClass):
             self.annotation_properties[property] = OWLAnnotationProperty(property.iri)
             return property
@@ -5187,22 +5578,50 @@ class RDFXMLGetter:
         :rtype: typing.Optional[list[OWLAnnotation]]
         """
 
-        query: str = """
-        SELECT ?comment ?literal
-        WHERE {
+        # The predicate matches either:
+        #  (a) a predicate declared `rdf:type owl:AnnotationProperty`,
+        #  (b) any IRI in ALL_KNOWN_ANNOTATION_IRIS — DC, DCTERMS, SKOS,
+        #      FOAF, PROV, SDO, IAO/oboInOwl, SKOS-XL — supplied to SPARQL
+        #      via the _ANNOTATION_PREDICATE_IRI_LIST VALUES block, or
+        #  (c) any other IRI predicate (caught by the third UNION branch),
+        #      which surfaces custom undeclared annotation properties that
+        #      OWL 2 §3.1 permits on the ontology subject as long as the
+        #      object is a literal.
+        # Routed through rdflib (world.sparql_query) because owlready2's
+        # SPARQL→SQL translator does not handle VALUES inside UNION.
+        query: str = f"""
+        SELECT DISTINCT ?comment ?literal
+        WHERE {{
             ?ontology rdf:type owl:Ontology .
             ?ontology ?comment ?literal .
-            ?comment rdf:type owl:AnnotationProperty .
+            {{ ?comment rdf:type owl:AnnotationProperty . }}
+            UNION
+            {{ VALUES ?comment {{ {RDFXMLGetter._ANNOTATION_PREDICATE_IRI_LIST} }} }}
+            UNION
+            {{ FILTER(?comment != rdf:type) }}
             FILTER(isIRI(?comment))
             FILTER(isLiteral(?literal))
-        }
+        }}
         """
         annotations: list[OWLAnnotation] = []
-        for cls in self.world.sparql(query):
-            cls[0] = self._to_annotation_property(cls[0])
+        for cls in self.world.sparql_query(query):
+            predicate = self._to_annotation_property(cls[0])
+            if predicate is None:
+                # Custom undeclared annotation property: wrap the raw URIRef
+                # so the user does not lose their ontology metadata. Falls
+                # through the third UNION branch above.
+                if isinstance(cls[0], URIRef):
+                    predicate = cls[0]
+                    self.annotation_properties[predicate] = OWLAnnotationProperty(
+                        predicate
+                    )
+                else:
+                    continue
+            if predicate not in self.annotation_properties:
+                continue
             annotations.append(
                 OWLAnnotation(
-                    self.annotation_properties[cls[0]], OWLLiteral(Literal(cls[1]))
+                    self.annotation_properties[predicate], OWLLiteral(Literal(cls[1]))
                 )
             )
         return annotations if len(annotations) > 0 else None
@@ -5229,27 +5648,83 @@ class RDFXMLGetter:
         """
 
         annotations: list[OWLAnnotation] = []
-        query: str = (
-            f"SELECT ?comment ?literal\n"
-            "WHERE {\n"
-            "\t{?axiom rdf:type owl:Axiom .} UNION {?axiom rdf:type owl:Annotation .}\n"
-            f"\t?axiom owl:annotatedSource {'??' if source else '?source'} .\n"
-            f"\t?axiom owl:annotatedProperty {'??' if property else '?property'} .\n"
-            f"\t?axiom owl:annotatedTarget {'??' if target else '?target'} .\n"
-            "\t?axiom ?comment ?literal .\n"
-            "\t?comment rdf:type owl:AnnotationProperty .\n"
-            "\tFILTER(isIRI(?comment))\n"
-            "\tFILTER(isLiteral(?literal))\n"
-            "\tFILTER(isBlank(?axiom))\n"
-            "}"
-        )
 
-        params = tuple(filter(bool, (source, property, target)))
-        for cls in self.world.sparql(query, params, error_on_undefined_entities=False):
-            cls[0] = self._to_annotation_property(cls[0])
+        # ----------------------------------------------------------------
+        # PREVIOUS IMPLEMENTATION — kept for reference. Used owlready2's
+        # `??` positional parameters via `self.world.sparql(...)`. Replaced
+        # because the strict ``?comment rdf:type owl:AnnotationProperty``
+        # filter dropped DC/SKOS/DCTERMS/etc. axiom annotations and because
+        # owlready2's SPARQL→SQL translator cannot handle ``VALUES`` inside
+        # ``UNION`` (which the new query needs).
+        #
+        # query: str = (
+        #     f"SELECT ?comment ?literal\n"
+        #     "WHERE {\n"
+        #     "\t{?axiom rdf:type owl:Axiom .} UNION {?axiom rdf:type owl:Annotation .}\n"
+        #     f"\t?axiom owl:annotatedSource {'??' if source else '?source'} .\n"
+        #     f"\t?axiom owl:annotatedProperty {'??' if property else '?property'} .\n"
+        #     f"\t?axiom owl:annotatedTarget {'??' if target else '?target'} .\n"
+        #     "\t?axiom ?comment ?literal .\n"
+        #     "\t?comment rdf:type owl:AnnotationProperty .\n"
+        #     "\tFILTER(isIRI(?comment))\n"
+        #     "\tFILTER(isLiteral(?literal))\n"
+        #     "\tFILTER(isBlank(?axiom))\n"
+        #     "}"
+        # )
+        # params = tuple(filter(bool, (source, property, target)))
+        # for cls in self.world.sparql(query, params, error_on_undefined_entities=False):
+        #     cls[0] = self._to_annotation_property(cls[0])
+        #     annotations.append(
+        #         OWLAnnotation(
+        #             self.annotation_properties[cls[0]], OWLLiteral(Literal(cls[1]))
+        #         )
+        #     )
+        # return annotations if len(annotations) > 0 else None
+        # ----------------------------------------------------------------
+
+        def _term(entity, var_name: str) -> str:
+            if not entity:
+                return f"?{var_name}"
+            if hasattr(entity, "iri"):
+                iri = getattr(entity, "iri")
+            elif hasattr(entity, "storid"):
+                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
+                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
+                iri = entity.storid
+            else:
+                iri = entity
+            if iri is None:
+                raise ValueError(f"Entity {entity} does not have an IRI")
+            return f"<{iri}>"
+
+        # Routed through rdflib (sparql_query) so that VALUES inside UNION
+        # works — owlready2's SPARQL→SQL translator cannot handle that combo.
+        # Parameters are inlined as IRIs because rdflib does not support
+        # owlready2's `??` positional placeholders.
+        query: str = f"""
+        SELECT DISTINCT ?comment ?literal
+        WHERE {{
+            {{ ?axiom rdf:type owl:Axiom . }} UNION {{ ?axiom rdf:type owl:Annotation . }}
+            ?axiom owl:annotatedSource {_term(source, "source")} .
+            ?axiom owl:annotatedProperty {_term(property, "property")} .
+            ?axiom owl:annotatedTarget {_term(target, "target")} .
+            ?axiom ?comment ?literal .
+            {{ ?comment rdf:type owl:AnnotationProperty . }}
+            UNION
+            {{ VALUES ?comment {{ {RDFXMLGetter._ANNOTATION_PREDICATE_IRI_LIST} }} }}
+            FILTER(isIRI(?comment))
+            FILTER(isLiteral(?literal))
+            FILTER(isBlank(?axiom))
+        }}
+        """
+        for cls in self.world.sparql_query(query):
+            predicate = self._to_annotation_property(cls[0])
+            if predicate is None or predicate not in self.annotation_properties:
+                continue
             annotations.append(
                 OWLAnnotation(
-                    self.annotation_properties[cls[0]], OWLLiteral(Literal(cls[1]))
+                    self.annotation_properties[predicate],
+                    OWLLiteral(Literal(cls[1])),
                 )
             )
         return annotations if len(annotations) > 0 else None
@@ -5273,21 +5748,71 @@ class RDFXMLGetter:
         """
 
         annotations: list[OWLAnnotation] = []
-        query: str = """
-        SELECT ?comment ?literal
-        WHERE {
-            ??1 rdf:type ??2 .
-            ??1 ?comment ?literal .
-            ?comment rdf:type owl:AnnotationProperty .
+
+        # ----------------------------------------------------------------
+        # PREVIOUS IMPLEMENTATION — kept for reference. Used owlready2's
+        # `??1`/`??2` positional parameters and the strict
+        # ``?comment rdf:type owl:AnnotationProperty`` filter. Replaced for
+        # the same reasons as in get_owl_axiom_annotations_for: missed
+        # well-known annotation vocabularies and incompatible with VALUES.
+        #
+        # query: str = """
+        # SELECT ?comment ?literal
+        # WHERE {
+        #     ??1 rdf:type ??2 .
+        #     ??1 ?comment ?literal .
+        #     ?comment rdf:type owl:AnnotationProperty .
+        #     FILTER(isIRI(?comment))
+        #     FILTER(isLiteral(?literal))
+        # }
+        # """
+        # for cls in self.world.sparql(query, (source, target)):
+        #     cls[0] = self._to_annotation_property(cls[0])
+        #     annotations.append(
+        #         OWLAnnotation(
+        #             self.annotation_properties[cls[0]], OWLLiteral(Literal(cls[1]))
+        #         )
+        #     )
+        # return annotations if len(annotations) > 0 else None
+        # ----------------------------------------------------------------
+
+        def _term(entity, var_name: str) -> str:
+            if not entity:
+                return f"?{var_name}"
+            if hasattr(entity, "iri"):
+                iri = getattr(entity, "iri")
+            elif hasattr(entity, "storid"):
+                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
+                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
+                iri = entity.storid
+            else:
+                iri = entity
+            if iri is None:
+                raise ValueError(f"Entity {entity} does not have an IRI")
+            return f"<{iri}>"
+
+        query: str = f"""
+        SELECT DISTINCT ?comment ?literal
+        WHERE {{
+            {_term(source, "source")} rdf:type {_term(target, "target")} .
+            {_term(source, "source")} ?comment ?literal .
+            {{ ?comment rdf:type owl:AnnotationProperty . }}
+            UNION
+            {{ VALUES ?comment {{ {RDFXMLGetter._ANNOTATION_PREDICATE_IRI_LIST} }} }}
             FILTER(isIRI(?comment))
             FILTER(isLiteral(?literal))
-        }
+        }}
         """
-        for cls in self.world.sparql(query, (source, target)):
-            cls[0] = self._to_annotation_property(cls[0])
+        for cls in self.world.sparql_query(query):
+            if not isinstance(cls[0], (URIRef, AnnotationPropertyClass)):
+                continue
+            predicate = self._to_annotation_property(cls[0])
+            if predicate is None or predicate not in self.annotation_properties:
+                continue
             annotations.append(
                 OWLAnnotation(
-                    self.annotation_properties[cls[0]], OWLLiteral(Literal(cls[1]))
+                    self.annotation_properties[predicate],
+                    OWLLiteral(Literal(cls[1])),
                 )
             )
         return annotations if len(annotations) > 0 else None
@@ -5998,8 +6523,6 @@ class RDFXMLGetter:
 
     def get_owl_disjoint_unions(self) -> list[OWLDisjointUnion]:
         """
-        Executes a SPARQL query to identify classes defined as disjoint unions of other classes via the `owl:disjointUnionOf` property. The method iterates over the query results to aggregate member classes into a mapping, ensuring that the class itself is not included as a member. It then processes these mappings by invoking `to_owl_disjoint_union`, which populates an internal registry of disjoint unions. To prevent redundant processing, the method skips any classes already present in this registry. The result is a list of `OWLDisjointUnion` objects representing the disjoint union axioms found in the ontology.
-
         :return: A list of OWLDisjointUnion instances representing all disjoint union axioms found in the ontology.
 
         :rtype: list[OWLDisjointUnion]
@@ -6115,7 +6638,7 @@ class RDFXMLGetter:
         :rtype: list[OWLDataComplementOf]
         """
 
-        # owl:datatypeComplementOf are not handled by owlready2
+        # owl:datatypeComplementOf are handled by parsing RDF and creating OWLDataComplementOf objects
         query = """
         SELECT DISTINCT ?class1 ?class2
         WHERE {
@@ -6133,12 +6656,28 @@ class RDFXMLGetter:
             FILTER(?class1 != ?class2)
         }
         """
-        logger.warning("OWLDataComplementOf is not handled")
         for cls in self.graph.query(query):
-            data_range = self.ontology.search_one(iri=cls[1])
-            if data_range is None:
+            # Resolve the complemented data range. ``search_one`` only finds
+            # entities in the user ontology, which misses built-in XSD types
+            # (xsd:integer etc.). Fall back to building an OWLDatatype
+            # straight from the URIRef so the complement axiom is still
+            # surfaced. The Not(..) instance is used solely as a cache key
+            # and is built from whichever object we have available.
+            target = cls[1]
+            data_range = self.ontology.search_one(iri=target)
+            cache_key = Not(data_range if data_range is not None else target)
+            if cache_key in self.data_complements_of:
                 continue
-            self.to_owl_data_complement_of(Not(data_range), data_range)
+            if data_range is not None:
+                owl_range = self.get_owl_data_range(data_range)
+            else:
+                # target is a URIRef to a built-in datatype (e.g. xsd:integer).
+                # Construct an OWLDatatype directly — get_owl_data_range would
+                # try to resolve the URIRef as a storid integer and crash.
+                owl_range = OWLDatatype(target)
+            if owl_range is None:
+                continue
+            self.data_complements_of[cache_key] = OWLDataComplementOf(owl_range)
 
         return list(self.data_complements_of.values())
 
@@ -6734,49 +7273,121 @@ class RDFXMLGetter:
         :rtype: list[OWLAnnotation]
         """
 
-        target_owl_str: str = (
-            "\t?assertion owl:targetIndividual ?? .\n"
+        # ----------------------------------------------------------------
+        # PREVIOUS IMPLEMENTATION — kept for reference. Used owlready2's
+        # `??` positional parameters and the strict
+        # ``?comment rdf:type owl:AnnotationProperty`` filter. Replaced to
+        # widen the predicate filter to ALL_KNOWN_ANNOTATION_IRIS (DC,
+        # DCTERMS, SKOS, FOAF, PROV, SDO, IAO/oboInOwl, SKOS-XL).
+        #
+        # target_owl_str: str = (
+        #     "\t?assertion owl:targetIndividual ?? .\n"
+        #     if property_type == OWLNegativeObjectPropertyAssertion
+        #     else "\t?assertion owl:targetValue ?? .\n"
+        # )
+        # target_owl_type: str = (
+        #     "\t?target rdf:type owl:NamedIndividual .\n"
+        #     if property_type == OWLNegativeObjectPropertyAssertion
+        #     else ""
+        # )
+        # query_annotation: str = (
+        #     "SELECT DISTINCT ?comment ?literal\n"
+        #     "WHERE {\n"
+        #     "\t?assertion rdf:type owl:NegativePropertyAssertion .\n"
+        #     "\t?assertion owl:sourceIndividual ?? .\n"
+        #     "\t?assertion owl:assertionProperty ?? .\n"
+        #     f"{target_owl_str}"
+        #     "\t?assertion ?comment ?literal .\n"
+        #     "\t?source rdf:type owl:NamedIndividual .\n"
+        #     f"{target_owl_type}"
+        #     "\t?comment rdf:type owl:AnnotationProperty .\n"
+        #     "\tFILTER(isBlank(?assertion))\n"
+        #     "\tFILTER(isLiteral(?literal))\n"
+        #     "\tFILTER(isIRI(?comment))\n"
+        #     "}"
+        # )
+        # annotations: set[OWLAnnotation] = set()
+        # for ann in self.world.sparql(query_annotation, params):
+        #     label, literal = ann
+        #     if label not in self.annotation_properties:
+        #         if type(label) == int:
+        #             if label in RDFXMLGetter.STANDARD_ANNOTATIONS:
+        #                 self.annotation_properties[label] = OWLAnnotationProperty(
+        #                     RDFXMLGetter.STANDARD_ANNOTATIONS[label].iri
+        #                 )
+        #             else:
+        #                 iri_label = _universal_abbrev_2_iri.get(label)
+        #                 if iri_label is None:
+        #                     continue
+        #                 self.annotation_properties[label] = OWLAnnotationProperty(
+        #                     iri_label
+        #                 )
+        #         elif isinstance(label, AnnotationPropertyClass):
+        #             self.annotation_properties[label] = OWLAnnotationProperty(label.iri)
+        #         else:
+        #             raise TypeError
+        #     annotations.add(
+        #         OWLAnnotation(
+        #             self.annotation_properties[label], OWLLiteral(Literal(literal))
+        #         )
+        #     )
+        # return list(annotations)
+        # ----------------------------------------------------------------
+
+        def _term(entity, var_name: str) -> str:
+            if not entity:
+                return f"?{var_name}"
+            if hasattr(entity, "iri"):
+                iri = getattr(entity, "iri")
+            elif hasattr(entity, "storid"):
+                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
+                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
+                iri = entity.storid
+            else:
+                iri = entity
+            if iri is None:
+                raise ValueError(f"Entity {entity} does not have an IRI")
+            return f"<{iri}>"
+
+        source, prop_entity, target_entity = params
+        target_line: str = (
+            f"?assertion owl:targetIndividual {_term(target_entity, 'target')} ."
             if property_type == OWLNegativeObjectPropertyAssertion
-            else "\t?assertion owl:targetValue ?? .\n"
+            else f"?assertion owl:targetValue {_term(target_entity, 'target')} ."
         )
-        target_owl_type: str = (
-            "\t?target rdf:type owl:NamedIndividual .\n"
+        target_type_line: str = (
+            f"{_term(target_entity, 'target')} rdf:type owl:NamedIndividual ."
             if property_type == OWLNegativeObjectPropertyAssertion
             else ""
         )
-        query_annotation: str = (
-            "SELECT DISTINCT ?comment ?literal\n"
-            "WHERE {\n"
-            "\t?assertion rdf:type owl:NegativePropertyAssertion .\n"
-            "\t?assertion owl:sourceIndividual ?? .\n"
-            "\t?assertion owl:assertionProperty ?? .\n"
-            f"{target_owl_str}"
-            "\t?assertion ?comment ?literal .\n"
-            "\t?source rdf:type owl:NamedIndividual .\n"
-            f"{target_owl_type}"
-            "\t?comment rdf:type owl:AnnotationProperty .\n"
-            "\tFILTER(isBlank(?assertion))\n"
-            "\tFILTER(isLiteral(?literal))\n"
-            "\tFILTER(isIRI(?comment))\n"
-            "}"
-        )
+        query_annotation: str = f"""
+        SELECT DISTINCT ?comment ?literal
+        WHERE {{
+            ?assertion rdf:type owl:NegativePropertyAssertion .
+            ?assertion owl:sourceIndividual {_term(source, "source")} .
+            ?assertion owl:assertionProperty {_term(prop_entity, "property")} .
+            {target_line}
+            ?assertion ?comment ?literal .
+            {_term(source, "source")} rdf:type owl:NamedIndividual .
+            {target_type_line}
+            {{ ?comment rdf:type owl:AnnotationProperty . }}
+            UNION
+            {{ VALUES ?comment {{ {RDFXMLGetter._ANNOTATION_PREDICATE_IRI_LIST} }} }}
+            FILTER(isBlank(?assertion))
+            FILTER(isLiteral(?literal))
+            FILTER(isIRI(?comment))
+        }}
+        """
         annotations: set[OWLAnnotation] = set()
-        for ann in self.world.sparql(query_annotation, params):
+        for ann in self.world.sparql_query(query_annotation):
             label, literal = ann
-            if label not in self.annotation_properties:
-                if type(label) == int:
-                    if label not in RDFXMLGetter.STANDARD_ANNOTATIONS:
-                        continue
-                    self.annotation_properties[label] = OWLAnnotationProperty(
-                        RDFXMLGetter.STANDARD_ANNOTATIONS[label].iri
-                    )
-                elif isinstance(label, AnnotationPropertyClass):
-                    self.annotation_properties[label] = OWLAnnotationProperty(label.iri)
-                else:
-                    raise TypeError
+            predicate = self._to_annotation_property(label)
+            if predicate is None or predicate not in self.annotation_properties:
+                continue
             annotations.add(
                 OWLAnnotation(
-                    self.annotation_properties[label], OWLLiteral(Literal(literal))
+                    self.annotation_properties[predicate],
+                    OWLLiteral(Literal(literal)),
                 )
             )
         return list(annotations)
@@ -6880,6 +7491,7 @@ class RDFXMLGetter:
             ?individual1 ?property ?individual2 .
             ?individual1 rdf:type owl:NamedIndividual .
             ?individual2 rdf:type owl:NamedIndividual .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         # _ = self.get_owl_individuals()
@@ -6989,7 +7601,7 @@ class RDFXMLGetter:
         """
 
         for cls in self.world.sparql_query(query1):
-            self.to_owl_different_individuals(cls)
+            self.to_owl_different_individuals(tuple(cls))
 
         for cls in self.world.sparql_query(query2):
             self.to_owl_different_individuals(cls[0])
@@ -7018,24 +7630,34 @@ class RDFXMLGetter:
             ]
         )
 
-        # Add standard annotation properties if not already in the set
+        # Standard annotation properties: the full ALL_KNOWN_ANNOTATION_IRIS
+        # set (OWL 2 reserved + DC/DCTERMS/SKOS/FOAF/PROV/SDO/IAO/SKOS-XL).
+        # This replaces the hard-coded inline list that only covered a small
+        # subset.
         standard_props = set(
-            [
-                RDFS.label,
-                RDFS.comment,
-                OWL.versionInfo,
-                OWL.Annotation,
-                URIRef("http://www.w3.org/2004/02/skos/core#prefLabel"),
-                URIRef("http://www.w3.org/2004/02/skos/core#altLabel"),
-                URIRef("http://purl.org/dc/elements/1.1/title"),
-                URIRef("http://purl.org/dc/elements/1.1/description"),
-                URIRef("http://purl.org/dc/terms/title"),
-                URIRef("http://purl.org/dc/terms/description"),
-            ]
-        )
+            URIRef(iri) for iri in RDFXMLGetter.ALL_KNOWN_ANNOTATION_IRIS
+        ) | {OWL.Annotation}
+
+        # Ontology-level annotations may use predicates not declared as
+        # ``owl:AnnotationProperty`` and not present in the well-known set
+        # (custom labels, deprecated tags, etc.). Collect the ontology
+        # subjects so the triple loop can accept any literal-valued
+        # predicate on them as an annotation, per OWL 2 §3.1.
+        ontology_subjects = {
+            s for s, _, _ in self.graph.triples((None, RDF.type, OWL.Ontology))
+        }
 
         for s, p, o in self.graph.triples((None, None, None)):
-            if isinstance(s, URIRef) and p in standard_props | annotation_props:
+            is_known_pred = (
+                isinstance(s, URIRef) and p in standard_props | annotation_props
+            )
+            is_ontology_literal = (
+                s in ontology_subjects
+                and isinstance(p, URIRef)
+                and p != RDF.type
+                and isinstance(o, Literal)
+            )
+            if is_known_pred or is_ontology_literal:
                 if s in self.annotations:
                     continue
                 if p in standard_props:
@@ -7043,7 +7665,7 @@ class RDFXMLGetter:
                         IRI(self._get_element_namespace(p), p)
                     )
                 else:
-                    p = [
+                    matching_props = [
                         a
                         for a in self.annotation_properties
                         if (
@@ -7051,7 +7673,25 @@ class RDFXMLGetter:
                             if isinstance(a, AnnotationPropertyClass)
                             else a == p
                         )
-                    ][0]
+                    ]
+                    if not matching_props:
+                        # For ontology-level annotations with custom predicates
+                        # (OWL 2 §3.1), create the annotation property on the fly
+                        is_ontology_level_annotation = (
+                            s in ontology_subjects
+                            and isinstance(p, URIRef)
+                            and p != RDF.type
+                            and isinstance(o, Literal)
+                        )
+                        if is_ontology_level_annotation:
+                            self.annotation_properties[p] = OWLAnnotationProperty(
+                                IRI(self._get_element_namespace(p), p)
+                            )
+                        else:
+                            # If no matching property found and not an ontology annotation, skip
+                            continue
+                    else:
+                        p = matching_props[0]
 
                 if o in self.individuals:
                     o = self.individuals[o]
@@ -7256,7 +7896,7 @@ class RDFXMLGetter:
         """
 
         for cls in self.world.sparql_query(query1):
-            self.to_owl_disjoint_object_properties(cls)
+            self.to_owl_disjoint_object_properties(tuple(cls))
 
         for cls in self.world.sparql_query(query2):
             self.to_owl_disjoint_object_properties(cls[0])
@@ -7276,6 +7916,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:FunctionalProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7297,6 +7938,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:InverseFunctionalProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7316,6 +7958,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:ReflexiveProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7337,6 +7980,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:IrreflexiveProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7356,6 +8000,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:SymmetricProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7375,6 +8020,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:AsymmetricProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7394,6 +8040,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:TransitiveProperty .
+            ?property rdf:type owl:ObjectProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7413,6 +8060,7 @@ class RDFXMLGetter:
         SELECT DISTINCT ?property
         WHERE {
             ?property rdf:type owl:FunctionalProperty .
+            ?property rdf:type owl:DatatypeProperty .
         }
         """
         for cls in self.world.sparql_query(query):
@@ -7497,7 +8145,7 @@ class RDFXMLGetter:
         """
 
         for cls in self.world.sparql_query(query1):
-            self.to_owl_disjoint_data_properties(cls)
+            self.to_owl_disjoint_data_properties(tuple(cls))
 
         for cls in self.world.sparql_query(query2):
             self.to_owl_disjoint_data_properties(cls[0])
@@ -7593,13 +8241,29 @@ class RDFXMLGetter:
         :rtype: list[OWLDatatypeDefinition]
         """
 
-        # ?restriction owl:onDatatype ?onDatatype .
+        # Per OWL 2 spec §9.4 DatatypeDefinition(DT DR) is encoded as:
+        #   T(DT) owl:equivalentClass T(DR)
+        # where T(DR) is either (a) a named datatype IRI such as xsd:integer
+        # or (b) a blank node carrying facets / unionOf / intersectionOf.
+        # The previous query only kept case (b) via FILTER(isBlank(...)),
+        # which dropped the legal ``myType ≡ xsd:integer`` form. The query
+        # now matches both shapes via UNION while still constraining the
+        # subject to be an rdfs:Datatype so it does not collide with the
+        # owl:Class equivalent-class axioms handled elsewhere.
+        # OWL 1 has no DatatypeDefinition construct, so this scope is OWL 2.
         query = """
         SELECT DISTINCT ?class1 ?restriction
         WHERE {
+            ?class1 rdf:type rdfs:Datatype .
             ?class1 owl:equivalentClass ?restriction .
-            ?restriction ?facet ?value .
-            FILTER(isBlank(?restriction))
+            {
+                ?restriction ?facet ?value .
+                FILTER(isBlank(?restriction))
+            }
+            UNION
+            {
+                FILTER(isIRI(?restriction))
+            }
         }
         """
         for cls in self.world.sparql_query(query):

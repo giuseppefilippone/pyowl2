@@ -63,6 +63,15 @@ class OWLFacet:
     MAX_INCLUSIVE: URIRef = XSD.maxInclusive
     MAX_EXCLUSIVE: URIRef = XSD.maxExclusive
 
+    # Maps the symbolic enum form (OWLFacetTypes) to the XSD URIRef the OWL 2
+    # spec requires on the wire.
+    _FACET_TYPE_TO_URI: dict = {
+        OWLFacetTypes.MIN_INCLUSIVE: XSD.minInclusive,
+        OWLFacetTypes.MIN_EXCLUSIVE: XSD.minExclusive,
+        OWLFacetTypes.MAX_INCLUSIVE: XSD.maxInclusive,
+        OWLFacetTypes.MAX_EXCLUSIVE: XSD.maxExclusive,
+    }
+
     def __init__(
         self, constraint: typing.Union[URIRef, IRI], value: OWLLiteral
     ) -> None:
@@ -75,6 +84,12 @@ class OWLFacet:
         :type value: OWLLiteral
         """
 
+        # Accept OWLFacetTypes enum values transparently by mapping them to
+        # the corresponding XSD URIRef. Without this conversion the constraint
+        # would be stored as a plain str and rejected by rdflib when used as
+        # a predicate in graph.add().
+        if isinstance(constraint, OWLFacetTypes):
+            constraint = OWLFacet._FACET_TYPE_TO_URI[constraint]
         if isinstance(constraint, IRI):
             assert constraint.to_uriref() in OWLFacet.valid_restrictions
         elif isinstance(constraint, URIRef):

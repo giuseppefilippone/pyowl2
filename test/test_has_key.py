@@ -9,7 +9,6 @@ from .helpers import NS, roundtrip
 
 class TestHasKey(unittest.TestCase):
 
-    @unittest.expectedFailure
     def test_has_key(self):
         """OWLHasKey mapper: property IRIs not converted to rdflib terms."""
         person = OWLClass(IRI(NS, "Person"))

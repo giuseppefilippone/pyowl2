@@ -1053,7 +1053,9 @@ Module Contents
 
    .. py:method:: get_owl_data_range(*params: tuple[pyowl2.abstracts.object.OWLObject, Ellipsis]) -> pyowl2.abstracts.data_range.OWLDataRange
 
-      Attempts to construct an OWLDataRange instance from the provided OWLObject parameters by evaluating a predefined sequence of conversion strategies. This method aggregates specific factory functions—such as those for datatypes, intersections, unions, complements, one-of enumerations, and datatype restrictions—and delegates the matching process to the internal _map_functions utility. The utility applies each strategy to the input arguments in order, returning the result of the first successful conversion. If the supplied parameters cannot be interpreted by any of the registered strategies, the method raises a TypeError, indicating that the input does not correspond to a valid OWL data range structure.
+      Attempts to construct an OWLDataRange instance from the provided OWLObject parameters by evaluating a predefined sequence of conversion strategies. This method aggregates specific factory functions—such as those for datatypes, intersections, unions, complements, one-of enumerations, and datatype restrictions—and delegates the matching process to the internal _map_functions utility. The utility applies each strategy to the input arguments in order, returning the result of the first successful conversion.
+
+      Before dispatching, the first argument is normalised so that callers may pass raw storids (URIRef/BNode obtained from ``graph.value(...)``) or an already-converted ``OWLDataRange``: storids are resolved against the world to the underlying owlready2 entity, and pre-converted ranges are returned as-is. Named-datatype URIRefs that do not resolve to a Python entity fall back to a plain ``OWLDatatype`` wrapper. If no strategy applies, a ``TypeError`` is raised by the underlying utility.
 
       :param params: A variable-length sequence of OWLObject instances to be processed by conversion functions to generate an OWLDataRange.
       :type params: tuple[OWLObject, ...]
@@ -1208,8 +1210,6 @@ Module Contents
 
 
    .. py:method:: get_owl_disjoint_unions() -> list[pyowl2.axioms.class_axiom.disjoint_union.OWLDisjointUnion]
-
-      Executes a SPARQL query to identify classes defined as disjoint unions of other classes via the `owl:disjointUnionOf` property. The method iterates over the query results to aggregate member classes into a mapping, ensuring that the class itself is not included as a member. It then processes these mappings by invoking `to_owl_disjoint_union`, which populates an internal registry of disjoint unions. To prevent redundant processing, the method skips any classes already present in this registry. The result is a list of `OWLDisjointUnion` objects representing the disjoint union axioms found in the ontology.
 
       :return: A list of OWLDisjointUnion instances representing all disjoint union axioms found in the ontology.
 
@@ -2666,8 +2666,30 @@ Module Contents
 
 
 
+   .. py:attribute:: ALL_KNOWN_ANNOTATION_IRIS
+      :type:  frozenset[str]
+
+
+   .. py:attribute:: OWL2_BUILTIN_ANNOTATION_IRIS
+      :type:  frozenset[str]
+
+
    .. py:attribute:: STANDARD_ANNOTATIONS
       :type:  dict[int, owlready2.AnnotationPropertyClass]
+
+
+   .. py:attribute:: WELL_KNOWN_ANNOTATION_IRIS
+      :type:  frozenset[str]
+
+
+   .. py:attribute:: _ANNOTATION_PREDICATE_IRI_LIST
+      :type:  str
+      :value: ''
+
+
+
+   .. py:attribute:: _GET_DISPATCH
+      :type:  dict[AxiomsType, str]
 
 
    .. py:attribute:: _annotation_assertions
@@ -2826,6 +2848,10 @@ Module Contents
       :type:  rdflib.Graph
 
 
+   .. py:attribute:: _graph_sparql_cache
+      :type:  dict
+
+
    .. py:attribute:: _has_keys
       :type:  dict[owlready2.ThingClass, pyowl2.axioms.has_key.OWLHasKey]
 
@@ -2924,6 +2950,10 @@ Module Contents
 
    .. py:attribute:: _same_individuals
       :type:  dict[tuple[owlready2.NamedIndividual, Ellipsis], pyowl2.axioms.assertion.OWLSameIndividual]
+
+
+   .. py:attribute:: _sparql_cache
+      :type:  dict
 
 
    .. py:attribute:: _subannotation_properties_of

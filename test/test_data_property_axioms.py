@@ -42,7 +42,6 @@ class TestDataPropertyAxioms(unittest.TestCase):
         )
         self.assertGreaterEqual(len(results), 1)
 
-    @unittest.expectedFailure
     def test_disjoint_data_properties(self):
         """OWLDisjointDataProperties getter returns empty."""
         has_name = DataPropertyExpr(IRI(NS, "hasName"))
