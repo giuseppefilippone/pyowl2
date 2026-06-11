@@ -14,6 +14,17 @@ owlready2 = "^0.47"
 rdflib = "^7.1.4"
 tabulate = "^0.9.0"
 
+[[tool.poetry.source]]
+name = "pypi"
+priority = "primary"
+
+# Fallback mirror. Aliyun lags official PyPI by hours/days, so keep it
+# supplemental — freshly released deps (e.g. pyowl2) resolve from PyPI first.
+[[tool.poetry.source]]
+name = "pypi-mirror"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "supplemental"
+
 [tool.poetry.group.dev.dependencies]
 pytest = "^5.2"
 flake8 = "^4.0.1"
