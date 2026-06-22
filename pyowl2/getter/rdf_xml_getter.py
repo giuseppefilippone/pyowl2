@@ -5682,21 +5682,6 @@ class RDFXMLGetter:
         # return annotations if len(annotations) > 0 else None
         # ----------------------------------------------------------------
 
-        def _term(entity, var_name: str) -> str:
-            if not entity:
-                return f"?{var_name}"
-            if hasattr(entity, "iri"):
-                iri = getattr(entity, "iri")
-            elif hasattr(entity, "storid"):
-                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
-                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
-                iri = entity.storid
-            else:
-                iri = entity
-            if iri is None:
-                raise ValueError(f"Entity {entity} does not have an IRI")
-            return f"<{iri}>"
-
         # Routed through rdflib (sparql_query) so that VALUES inside UNION
         # works — owlready2's SPARQL→SQL translator cannot handle that combo.
         # Parameters are inlined as IRIs because rdflib does not support
@@ -5705,9 +5690,9 @@ class RDFXMLGetter:
         SELECT DISTINCT ?comment ?literal
         WHERE {{
             {{ ?axiom rdf:type owl:Axiom . }} UNION {{ ?axiom rdf:type owl:Annotation . }}
-            ?axiom owl:annotatedSource {_term(source, "source")} .
-            ?axiom owl:annotatedProperty {_term(property, "property")} .
-            ?axiom owl:annotatedTarget {_term(target, "target")} .
+            ?axiom owl:annotatedSource {self._term(source, "source")} .
+            ?axiom owl:annotatedProperty {self._term(property, "property")} .
+            ?axiom owl:annotatedTarget {self._term(target, "target")} .
             ?axiom ?comment ?literal .
             {{ ?comment rdf:type owl:AnnotationProperty . }}
             UNION
@@ -5728,6 +5713,36 @@ class RDFXMLGetter:
                 )
             )
         return annotations if len(annotations) > 0 else None
+
+    def _term(self, entity, var_name: str) -> str:
+        if not entity:
+            return f"?{var_name}"
+        if getattr(entity, "iri", None):
+            iri = entity.iri
+        elif hasattr(entity, "storid") or isinstance(entity, int):
+            # storid is owlready2's internal int abbreviation, NOT an IRI.
+            # Callers may pass either an entity carrying `.storid` or the bare
+            # int storid itself. This query runs through rdflib (sparql_query),
+            # which matches on real IRIs, so the storid must be unabbreviated
+            # first. Built-in RDF/RDFS/OWL storids live in the universal table,
+            # not the per-world resources table, so check it first;
+            # _unabbreviate raises on storids it cannot find.
+            storid = entity if isinstance(entity, int) else entity.storid
+            iri = _universal_abbrev_2_iri.get(storid)
+            if iri is None:
+                try:
+                    iri = self._world._unabbreviate(storid)
+                except (TypeError, IndexError):
+                    iri = None
+        else:
+            iri = entity
+        if iri is None:
+            # Anonymous entity (blank node / class expression such as
+            # `Car & speed.some(VeryHigh)`) has no addressable IRI. Leave the
+            # term as an unbound variable so the triple still matches the blank
+            # node structurally via the other bound terms.
+            return f"?{var_name}"
+        return f"<{iri}>"
 
     def get_owl_declaration_annotations_for(
         self,
@@ -5776,26 +5791,11 @@ class RDFXMLGetter:
         # return annotations if len(annotations) > 0 else None
         # ----------------------------------------------------------------
 
-        def _term(entity, var_name: str) -> str:
-            if not entity:
-                return f"?{var_name}"
-            if hasattr(entity, "iri"):
-                iri = getattr(entity, "iri")
-            elif hasattr(entity, "storid"):
-                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
-                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
-                iri = entity.storid
-            else:
-                iri = entity
-            if iri is None:
-                raise ValueError(f"Entity {entity} does not have an IRI")
-            return f"<{iri}>"
-
         query: str = f"""
         SELECT DISTINCT ?comment ?literal
         WHERE {{
-            {_term(source, "source")} rdf:type {_term(target, "target")} .
-            {_term(source, "source")} ?comment ?literal .
+            {self._term(source, "source")} rdf:type {self._term(target, "target")} .
+            {self._term(source, "source")} ?comment ?literal .
             {{ ?comment rdf:type owl:AnnotationProperty . }}
             UNION
             {{ VALUES ?comment {{ {RDFXMLGetter._ANNOTATION_PREDICATE_IRI_LIST} }} }}
@@ -7334,29 +7334,14 @@ class RDFXMLGetter:
         # return list(annotations)
         # ----------------------------------------------------------------
 
-        def _term(entity, var_name: str) -> str:
-            if not entity:
-                return f"?{var_name}"
-            if hasattr(entity, "iri"):
-                iri = getattr(entity, "iri")
-            elif hasattr(entity, "storid"):
-                # owlready2 entities with a storid (classes, properties, individuals) are looked up by storid in the SPARQL query, but we want to surface
-                # their real IRIs in the annotation results. So we need to convert the entity to its IRI here for the query.
-                iri = entity.storid
-            else:
-                iri = entity
-            if iri is None:
-                raise ValueError(f"Entity {entity} does not have an IRI")
-            return f"<{iri}>"
-
         source, prop_entity, target_entity = params
         target_line: str = (
-            f"?assertion owl:targetIndividual {_term(target_entity, 'target')} ."
+            f"?assertion owl:targetIndividual {self._term(target_entity, 'target')} ."
             if property_type == OWLNegativeObjectPropertyAssertion
-            else f"?assertion owl:targetValue {_term(target_entity, 'target')} ."
+            else f"?assertion owl:targetValue {self._term(target_entity, 'target')} ."
         )
         target_type_line: str = (
-            f"{_term(target_entity, 'target')} rdf:type owl:NamedIndividual ."
+            f"{self._term(target_entity, 'target')} rdf:type owl:NamedIndividual ."
             if property_type == OWLNegativeObjectPropertyAssertion
             else ""
         )
@@ -7364,11 +7349,11 @@ class RDFXMLGetter:
         SELECT DISTINCT ?comment ?literal
         WHERE {{
             ?assertion rdf:type owl:NegativePropertyAssertion .
-            ?assertion owl:sourceIndividual {_term(source, "source")} .
-            ?assertion owl:assertionProperty {_term(prop_entity, "property")} .
+            ?assertion owl:sourceIndividual {self._term(source, "source")} .
+            ?assertion owl:assertionProperty {self._term(prop_entity, "property")} .
             {target_line}
             ?assertion ?comment ?literal .
-            {_term(source, "source")} rdf:type owl:NamedIndividual .
+            {self._term(source, "source")} rdf:type owl:NamedIndividual .
             {target_type_line}
             {{ ?comment rdf:type owl:AnnotationProperty . }}
             UNION
