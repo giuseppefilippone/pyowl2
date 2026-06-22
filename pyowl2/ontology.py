@@ -76,6 +76,10 @@ class OWLOntology:
             self._clear.clear()
         else:
             self._ontology: Ontology = self._world.get_ontology(ontology_path).load()
+            try:
+                self._ontology.set_base_iri(self.ontology_iri, rename_entities=True)
+            except Exception as e:
+                logger.warning("Failed to set base IRI: %s", e)
 
         self._mapper: RDFXMLMapper = RDFXMLMapper(
             self._world.as_rdflib_graph(), OWL1_annotations
