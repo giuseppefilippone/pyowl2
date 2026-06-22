@@ -1,42 +1,18 @@
-# .github/workflows/publish.yml
-#
-# Publishes PyOWL2 (a pure-Python package) to PyPI.
-#
-# WHY THIS REPLACES THE OLD WORKFLOW
-# ----------------------------------
-# PyOWL2 produces a single architecture-independent wheel:
-#   pyowl2-<version>-py3-none-any.whl
-# Building it on a 12-way (OS x Python) matrix created 12 artifacts that ALL
-# contained that identical filename. `download-artifact` with
-# `merge-multiple: true` unpacked them into one ./dist directory, so the same
-# wheel path was written by several extractions at once and ended up corrupted,
-# making `twine check` fail with:
-#   zipfile.BadZipFile: Bad magic number for central directory
-#
-# A pure-Python project must build the wheel + sdist exactly ONCE. The matrix is
-# kept only for running the test suite (where it adds value), not for building.
-#
-# Refs:
-#   - https://github.com/pypa/gh-action-pypi-publish  (build once; multiple build
-#     jobs only for C-extension projects)
-#   - https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
-
 name: Publish to PyPI
 
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"   # publish only on version tags (e.g. v1.0.9)
-  workflow_dispatch:               # allow manual triggering from the Actions tab
+      - "v[0-9]+.[0-9]+.[0-9]+"   # run only on version tags, e.g. v1.0.10
+  workflow_dispatch:               # allow manual test/build runs (publish stays tag-gated)
 
 permissions:
   contents: read
 
 jobs:
   # ---------------------------------------------------------------------------
-  # 1) TEST across the OS/Python matrix.
-  #    This is the correct use of a matrix: verify the code RUNS everywhere.
-  #    It does not build or upload any distribution artifacts.
+  # 1) TEST across the OS/Python matrix using Poetry.
+  #    The matrix verifies the code RUNS everywhere; it builds nothing.
   # ---------------------------------------------------------------------------
   test:
     name: Test (py${{ matrix.python-version }} / ${{ matrix.os }})
@@ -49,24 +25,28 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # Install Poetry BEFORE setup-python. pipx is preinstalled on GitHub runners.
+      - name: Install Poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          # To enable dependency caching, commit a poetry.lock and add: cache: poetry
 
-      - name: Install package + test dependencies
-        # Adjust the extras name ([test]) to match your pyproject.toml.
+      - name: Install dependencies
+        # `env use python` pins the project venv to the matrix interpreter (not the
+        # Python pipx installed Poetry with), so each matrix leg is meaningful.
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -e ".[test]"
+          poetry env use python
+          poetry install --with dev
 
       - name: Run tests
-        run: python -m pytest   # adjust to your actual test command
+        run: poetry run pytest
 
   # ---------------------------------------------------------------------------
-  # 2) BUILD the distributions ONCE.
-  #    A pure-Python project needs exactly one wheel (py3-none-any) and one sdist.
-  #    Both are OS- and Python-version independent, so a single ubuntu job suffices.
+  # 2) BUILD the sdist + wheel ONCE. Pure-Python output is OS/Python independent.
   # ---------------------------------------------------------------------------
   build:
     name: Build sdist + wheel
@@ -75,50 +55,50 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install Poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Build distributions
-        run: pipx run build        # writes dist/*.whl and dist/*.tar.gz
+        run: poetry build              # writes dist/*.whl and dist/*.tar.gz
 
-      - name: Validate metadata (same check the publish action runs)
-        run: pipx run twine check --strict dist/*
+      - name: Validate metadata (same check the publish step runs)
+        run: pipx run twine check dist/*
 
       - name: Upload distributions
         uses: actions/upload-artifact@v5
         with:
-          name: dist               # a SINGLE artifact with a SINGLE set of files
+          name: dist                   # a SINGLE artifact with a SINGLE set of files
           path: dist/
 
   # ---------------------------------------------------------------------------
-  # 3) PUBLISH to PyPI via Trusted Publishing (OIDC) - no API token needed.
-  #    Prerequisites on PyPI: configure a Trusted Publisher for this repo +
-  #    workflow filename, and create a GitHub environment named "pypi".
-  #    (To use an API token instead, drop `id-token`/`environment` and pass
-  #    `password: ${{ secrets.PYPI_API_TOKEN }}` to the publish step.)
+  # 3) PUBLISH to PyPI via Trusted Publishing (OIDC).
+  #    Guarded to tags so a manual workflow_dispatch tests/builds but never
+  #    publishes unless run against a version tag.
   # ---------------------------------------------------------------------------
   pypi-publish:
     name: Publish to PyPI
     needs: [build]
-    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest             # gh-action-pypi-publish is Docker-based (Linux only)
     environment:
       name: pypi
       url: https://pypi.org/project/pyowl2/
     permissions:
-      id-token: write              # mandatory for Trusted Publishing
+      id-token: write                  # mandatory for Trusted Publishing
     steps:
       - name: Download distributions
         uses: actions/download-artifact@v6
         with:
-          name: dist               # download exactly the one artifact built above
+          name: dist                   # exactly the one artifact built above — nothing to collide
           path: dist/
-          # No merge-multiple: there is only one artifact, so nothing can collide.
 
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          attestations: true
           print-hash: true
-          # verify-metadata defaults to true; attestations are generated by
-          # default under Trusted Publishing (gh-action-pypi-publish >= v1.11).

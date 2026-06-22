@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyowl2"
-version = "1.0.9"
+version = "1.0.8"
 description = "A python implementation of the OWL 2 standard. See https://www.w3.org/TR/owl2-syntax/ and https://www.w3.org/TR/owl2-mapping-to-rdf/"
 license = "CC-BY-SA-4.0"
 readme = "README.md"
@@ -26,9 +26,9 @@ url = "https://mirrors.aliyun.com/pypi/simple/"
 priority = "supplemental"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^5.2"
-flake8 = "^4.0.1"
-pytest-cov = "^3.0.0"
+pytest = "^9.0"
+pytest-cov = "^7.0"
+flake8 = "^7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
